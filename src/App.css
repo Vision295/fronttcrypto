@@ -1,5 +1,26 @@
 
 
+.App {
+
+}
+
+.crypto-item-button{
+  font-family: 'Pixelify Sans';
+}
+
+.App-logo {
+
+}
+
+.Bitcoin-logo {
+  height: 40vmin; /* Set the height of the Bitcoin logo */
+  cursor: pointer; /* Change cursor to pointer on hover */
+  transition: transform 0.1s ease-in-out; /* Smooth transition for transform property */
+}
+
+.Bitcoin-logo:active {
+  transform: scale(0.95); /* Scale down the logo when active */
+}
 
 
 body {
@@ -11,10 +32,7 @@ body {
 }
 
 
-.shop-item button {
-  font-family: 'Pixelify Sans';
 
-}
 
 
 
@@ -28,39 +46,53 @@ body {
 
 .App-header {
   font-family: 'Pixelify Sans';
-
+  background-color: #000000; /* Bright header background */
+  /* min-height: 100vh; Minimum height of 100% viewport height */
+  /* display: flex; Use flexbox for layout */
+  /* flex-direction: row; Arrange children in a row */
+  /* align-items: flex-start; Align items to the start of the flex container */
+  /* justify-content: space-between; Distribute space between items */
+  font-size: calc(10px + 1vmin); /* Responsive font size */
   color: #069506;  /* Ensure text in header is dark in day mode */
   font-size: 14px;
   /* 100% of the viewport height */
   line-height: 0.5; 
 }
 
-
-
-
+.App-shop, .App-leaderboard {
+  color: #069506; 
+  font-size: 14px;
+  /* 100% of the viewport height */
+  line-height: 0.5; 
+  /* width: 20%; Set width to 20% */
+  /* height: 100vh; Full height of the webpage */
+  /* padding: 20px; Padding inside the container */
+  /* background-color: #e6e6e6; Light gray background for shop and leaderboard */
+  /* border-radius: 10px; Rounded corners */
+  /* display: flex; Use flexbox for layout */
+  /* flex-direction: column; Arrange children in a column */
+  /* align-items: center; Center align items horizontally */
+  /* justify-content: flex-start; Align items to the top */
+  /* overflow-y: auto; Make the section scrollable */
+ /* Ensure text is dark in day mode */
+}
 
 .App-market {
-  color: #069506;
   position: absolute; /* Position button relative to its container */
   top: 10px; /* 10px from the top */
   right: 250px; /* 10px from the right */
 }
 
 .App-sidebar{
-  font-family: 'Pixelify Sans';
   position: absolute;
   top:10px;
   right:600px;
 }
 
 .App-main {
-  color: #069506;
   font-family: 'Pixelify Sans';
   font-size: 14px;
-  
-
-  
-
+  color: #069506; 
    /* 100% of the viewport height */
   line-height: 0.5; 
   /* flex-grow: 1; Allow the main section to grow */
@@ -71,19 +103,112 @@ body {
   /* position: relative; Set relative positioning for child elements */
 }
 
-
+/* .App-link { */
+  /* color: #61dafb; Set link color */
+/* } */
 
 .shop-item {
   
-
+  /* background-color: #f0f0f0; Light gray background for shop items */
+  /* padding: 5px; Reduce padding to fit content */
+  /* margin: 10px 0; Margin between items */
+  /* border-radius: 5px; Rounded corners */
+  /* text-align: center; Center align text */
+  /* width: 80%; Adjust the width to make the boxes smaller */
+  /* height: auto; Allow height to adjust based on content */
+  /* font-size: 0.8em; Reduce font size to fit content */
+  /* display: flex; Use flexbox for layout */
+  /* flex-direction: column; Arrange children in a column */
+  /* justify-content: center; Center align items vertically */
   color: #069506;  /* Ensure text is dark in day mode */
 }
 
+.shop-item button {
+  font-family: 'Pixelify Sans';
+  /* margin-top: 5px; Margin above the button */
+  /* padding: 5px 10px; Padding inside the button */
+  cursor: pointer; /* Change cursor to pointer on hover */
+}
+
+/* @keyframes App-logo-spin { */
+  /* from { */
+    /* transform: rotate(0deg); Start rotation at 0 degrees */
+  /* } */
+  /* to { */
+    /* transform: rotate(360deg); End rotation at 360 degrees */
+  /* } */
+/* } */
+
+/* .Options-button { */
+  /* position: absolute; */
+  /* top: 10px; */
+  /* left: 10px; */
+  /* padding: 10px 20px; */
+  /* background-color: #4a4f57; */
+  /* color: white; */
+  /* border: none; */
+  /* border-radius: 5px; */
+  /* cursor: pointer; */
+/* } */
 
 
 
 
+/* .Options-modal { */
+  /* position: fixed; */
+  /* top: 0; */
+  /* left: 0; */
+  /* width: 100%; */
+  /* height: 100%; */
+  /* background-color: rgba(0, 0, 0, 0.5); */
+  /* display: flex; */
+  /* justify-content: center; */
+  /* align-items: center; */
+/* } */
 
+/* .Options-content { */
+  /* background-color: #282c34; */
+  /* padding: 20px; */
+  /* border-radius: 10px; */
+  /* color: white; */
+  /* text-align: center; */
+  /* width: 300px; */
+/* } */
+
+.Bitcoin-container {
+  /* font-family: 'Courier'; */
+  /* position: relative; Position container for relative positioning of animation */
+}
+
+/* .Click-animation { */
+  /* position: absolute; */
+  /* font-size: 1.5rem; */
+  /* font-weight: bold; */
+  /* color: orange; Change color to orange */
+  /* animation: fadeUp 0.3s ease-out; Quicker animation */
+  /* pointer-events: none; Prevent interaction with the animation */
+/* } */
+
+/* @keyframes fadeUp { */
+  /* 0% { */
+    /* opacity: 1; */
+    /* transform: translateY(0); */
+  /* } */
+  /* 100% { */
+    /* opacity: 0; */
+    /* transform: translateY(-20px); */
+  /* } */
+/* } */
+
+.Sell-BTC-Button{
+  font-family: 'Pixelify Sans';
+  cursor:pointer;
+}
+
+.Bitcoin-button{
+  font-family: 'Pixelify Sans';
+  cursor:pointer;
+}
 
 @import url("https://fonts.googleapis.com/css2?family=Pixelify+Sans&display=swap");
 
@@ -103,24 +228,4 @@ body {
   width: 50px;
   height: 50px;
   object-fit: contain; /* Ensures the entire image fits inside the box */
-}
-
-.usd-balance {
-  color: #069506;  /* Green for USD */
-}
-
-.btc-balance {
-  color: #2a0695;  /* Purple for BTC */
-}
-
-.eth-balance {
-  color: #4b6a9e;  /* Blue for ETH */
-}
-
-.bnb-balance {
-  color: #f3b63e;  /* Yellow for BNB */
-}
-
-.tcr-balance {
-  color: #ff6347;  /* Tomato red for TCR */
 }
