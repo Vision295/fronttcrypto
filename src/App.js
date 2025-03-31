@@ -8,8 +8,11 @@ import './App.css';
 const API_BASE_URL = 'http://localhost:5000'; // Revert back to localhost
 
 function App() {
-  // Set the balance states
   const [USD, setUSD] = useState(10000);
+  const [maxUSD, setMaxUSD] = useState(10000); // Nouveau state pour le score maximum
+  const [username, setUsername] = useState(""); // Nouveau state pour le pseudo
+  const [isUsernameSet, setIsUsernameSet] = useState(false); // Vérifie si le pseudo est défini
+
   const [BTC, setBTC] = useState(0);
   const [ETH, setETH] = useState(0);
   const [BNB, setBNB] = useState(0);
@@ -71,6 +74,49 @@ function App() {
     }, 5000);
     return () => clearInterval(interval);
   }, []);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setMaxUSD(prevMax => Math.max(prevMax, USD)); // Met à jour le score maximum
+      if (isUsernameSet) {
+        fetch(`${API_BASE_URL}/api/users`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name: username, score: maxUSD }),
+        })
+          .then(() => {
+            // Rafraîchir les données du leaderboard après mise à jour
+            fetch(`${API_BASE_URL}/api/users`)
+              .then(response => response.json())
+              .then(data => setUserData(data))
+              .catch(error => console.error("Error fetching leaderboard data:", error));
+          })
+          .catch(error => console.error("Error updating score:", error));
+      }
+    }, 10000); // Mise à jour toutes les 10 secondes
+    return () => clearInterval(interval);
+  }, [USD, maxUSD, username, isUsernameSet]);
+
+  const handleUsernameSubmit = () => {
+    if (username.trim()) {
+      setIsUsernameSet(true);
+
+      // Mise à jour immédiate du leaderboard
+      fetch(`${API_BASE_URL}/api/users`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: username, score: maxUSD }),
+      })
+        .then(() => {
+          // Rafraîchir les données du leaderboard après mise à jour
+          fetch(`${API_BASE_URL}/api/users`)
+            .then(response => response.json())
+            .then(data => setUserData(data))
+            .catch(error => console.error("Error fetching leaderboard data:", error));
+        })
+        .catch(error => console.error("Error updating score:", error));
+    }
+  };
 
   // Handle click event for a crypto logo
   const handleCryptoClick = (crypto, event) => {
@@ -188,6 +234,23 @@ function App() {
     return () => clearInterval(interval); // Cleanup interval on component unmount
   }, []);
 
+  if (!isUsernameSet) {
+    return (
+      <div className="App">
+        <header className="App-header">
+          <h1>Enter your username</h1>
+          <input
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            placeholder="Your username"
+          />
+          <button onClick={handleUsernameSubmit}>Start</button>
+        </header>
+      </div>
+    );
+  }
+
   return (
     <div className="App">
         <div className="App-main">
@@ -195,6 +258,7 @@ function App() {
           <h1>Crypto Market Simulator</h1>
           <div className="balances">
             <p>USD Balance: ${USD.toFixed(2)}</p>
+            <p>Max USD Balance: ${maxUSD.toFixed(2)}</p> {/* Affiche le score maximum */}
             <p>BTC Balance: {BTC.toFixed(6)} BTC (per second: {cps.BTC.toFixed(6)})</p>
             <p>ETH Balance: {ETH.toFixed(6)} ETH (per second: {cps.ETH.toFixed(6)})</p>
             <p>BNB Balance: {BNB.toFixed(6)} BNB (per second: {cps.BNB.toFixed(6)})</p>
