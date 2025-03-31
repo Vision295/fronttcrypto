@@ -8,7 +8,7 @@ import './App.css';
 const API_BASE_URL = 'http://localhost:5000'; // Revert back to localhost
 
 function App() {
-  const [USD, setUSD] = useState(10000);
+  const [USD, setUSD] = useState(1000000);
   const [maxUSD, setMaxUSD] = useState(10000); // Nouveau state pour le score maximum
   const [username, setUsername] = useState(""); // Nouveau state pour le pseudo
   const [isUsernameSet, setIsUsernameSet] = useState(false); // Vérifie si le pseudo est défini
@@ -204,8 +204,9 @@ function App() {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
-        console.log("Fetched user data:", data);
-        setUserData(data);
+        // Trier les données par score décroissant avant de les afficher
+        const sortedData = data.sort((a, b) => b.score - a.score);
+        setUserData(sortedData);
       } catch (error) {
         console.error('Error fetching user data:', error);
       }
@@ -218,7 +219,6 @@ function App() {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
-        console.log("Fetched currency data:", data);
         setCurrencyData(data);
       } catch (error) {
         console.error('Error fetching currency data:', error);
