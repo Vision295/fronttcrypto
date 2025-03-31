@@ -306,7 +306,7 @@ function App() {
 
 
         <div className="App-market">
-          <h2>Crypto Market</h2>
+
           {['BTC', 'ETH', 'BNB', 'TCR'].map(crypto => (
             availableCryptos.includes(crypto) && (
               <div key={crypto} className="market-item">
@@ -342,7 +342,7 @@ function App() {
           )}
         </div>
         <div className="App-currencies">
-          <h2>Currencies</h2>
+          <h2>Crypto-Market</h2>
           {currencyData.length > 0 ? (
             <table>
               <thead>
