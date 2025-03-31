@@ -1,202 +1,126 @@
-.App {
-  text-align: center; /* Center align text within the App component */
-}
 
-.App-logo {
-  height: 40vmin; /* Set the height of the logo */
-  pointer-events: none; /* Disable pointer events on the logo */
-}
 
-.Bitcoin-logo {
-  height: 40vmin; /* Set the height of the Bitcoin logo */
-  cursor: pointer; /* Change cursor to pointer on hover */
-  transition: transform 0.1s ease-in-out; /* Smooth transition for transform property */
-}
 
-.Bitcoin-logo:active {
-  transform: scale(0.95); /* Scale down the logo when active */
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear; /* Spin animation for the logo */
-  }
-}
 
 body {
-  overflow: hidden; /* Prevent scrolling on the base window */
-  background-color: #f9f9f9; /* Brighter background for day mode */
-  color: #000000; /* Dark text for better contrast in day mode */
+
+  /* font-family: 'Courier'; */
+  /* overflow: hidden;   Prevent scrolling on the base window */
+  background-color: #000000; /*Brighter background for day mode */
+  /* color: #000000; Dark text for better contrast in day mode */
 }
 
-body.dark-mode {
-  background-color: #121212; /* Dark background */
-  color: #ffffff; /* Light text for night mode */
+
+.shop-item button {
+  font-family: 'Pixelify Sans';
+
 }
 
-body.dark-mode .App-header {
-  background-color: #1e1e1e; /* Darker header background */
-  color: #ffffff; /* Light text for header in night mode */
-}
 
-body.dark-mode .App-shop, 
-body.dark-mode .App-leaderboard {
-  background-color: #2a2a2a; /* Darker shop and leaderboard background */
-  color: #ffffff; /* Light text for shop and leaderboard in night mode */
-}
 
-body.dark-mode .shop-item {
-  background-color: #3a3a3a; /* Darker shop item background */
-  color: #ffffff; /* Light text for shop items in night mode */
-}
 
-body.dark-mode .DarkMode-button {
-  background-color: #444444; /* Darker button background */
-  color: #ffffff; /* Light text for button in night mode */
-}
 
-body.dark-mode .Options-modal {
-  background-color: rgba(0, 0, 0, 0.8); /* Darker modal background */
-}
 
-body.dark-mode .Options-content {
-  background-color: #1e1e1e; /* Darker modal content background */
-  color: #ffffff; /* Light text for modal content */
-}
+
+
+
+
 
 .App-header {
-  background-color: #ffffff; /* Bright header background */
-  min-height: 100vh; /* Minimum height of 100% viewport height */
-  display: flex; /* Use flexbox for layout */
-  flex-direction: row; /* Arrange children in a row */
-  align-items: flex-start; /* Align items to the start of the flex container */
-  justify-content: space-between; /* Distribute space between items */
-  font-size: calc(10px + 2vmin); /* Responsive font size */
-  color: #000000; /* Ensure text in header is dark in day mode */
+  font-family: 'Pixelify Sans';
+
+  color: #069506;  /* Ensure text in header is dark in day mode */
+  font-size: 14px;
+  /* 100% of the viewport height */
+  line-height: 0.5; 
 }
 
-.App-shop, .App-leaderboard {
-  width: 20%; /* Set width to 20% */
-  height: 100vh; /* Full height of the webpage */
-  padding: 20px; /* Padding inside the container */
-  background-color: #e6e6e6; /* Light gray background for shop and leaderboard */
-  border-radius: 10px; /* Rounded corners */
-  display: flex; /* Use flexbox for layout */
-  flex-direction: column; /* Arrange children in a column */
-  align-items: center; /* Center align items horizontally */
-  justify-content: flex-start; /* Align items to the top */
-  overflow-y: auto; /* Make the section scrollable */
-  color: #000000; /* Ensure text is dark in day mode */
+
+
+
+
+.App-market {
+  color: #069506;
+  position: absolute; /* Position button relative to its container */
+  top: 10px; /* 10px from the top */
+  right: 250px; /* 10px from the right */
+}
+
+.App-sidebar{
+  font-family: 'Pixelify Sans';
+  position: absolute;
+  top:10px;
+  right:600px;
 }
 
 .App-main {
-  flex-grow: 1; /* Allow the main section to grow */
-  display: flex; /* Use flexbox for layout */
-  flex-direction: column; /* Arrange children in a column */
-  align-items: center; /* Center align items horizontally */
-  justify-content: center; /* Center align items vertically */
-  position: relative; /* Set relative positioning for child elements */
+  color: #069506;
+  font-family: 'Pixelify Sans';
+  font-size: 14px;
+  
+
+  
+
+   /* 100% of the viewport height */
+  line-height: 0.5; 
+  /* flex-grow: 1; Allow the main section to grow */
+  /* display: flex; Use flexbox for layout */
+  /* flex-direction: column; Arrange children in a column */
+  /* align-items: center; Center align items horizontally */
+  /* justify-content: center; Center align items vertically */
+  /* position: relative; Set relative positioning for child elements */
 }
 
-.App-link {
-  color: #61dafb; /* Set link color */
-}
+
 
 .shop-item {
-  background-color: #f0f0f0; /* Light gray background for shop items */
-  padding: 5px; /* Reduce padding to fit content */
-  margin: 10px 0; /* Margin between items */
-  border-radius: 5px; /* Rounded corners */
-  text-align: center; /* Center align text */
-  width: 80%; /* Adjust the width to make the boxes smaller */
-  height: auto; /* Allow height to adjust based on content */
-  font-size: 0.8em; /* Reduce font size to fit content */
-  display: flex; /* Use flexbox for layout */
-  flex-direction: column; /* Arrange children in a column */
-  justify-content: center; /* Center align items vertically */
-  color: #000000; /* Ensure text is dark in day mode */
+  
+
+  color: #069506;  /* Ensure text is dark in day mode */
 }
 
-.shop-item button {
-  margin-top: 5px; /* Margin above the button */
-  padding: 5px 10px; /* Padding inside the button */
-  cursor: pointer; /* Change cursor to pointer on hover */
+
+
+
+
+
+
+@import url("https://fonts.googleapis.com/css2?family=Pixelify+Sans&display=swap");
+
+.vertical-line{
+  position: absolute; /* Position button relative to its container */
+  top: 10px; /* 10px from the top */
+  right: 540px; /* 10px from the right */
+  font-size: 14px;
+  color: #069506;
+  font-family: 'Pixelify Sans';
+  /* 100% of the viewport height */
+  line-height: 0.5; 
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg); /* Start rotation at 0 degrees */
-  }
-  to {
-    transform: rotate(360deg); /* End rotation at 360 degrees */
-  }
+
+ .Crypto-logo{
+  width: 50px;
+  height: 50px;
+  object-fit: contain; /* Ensures the entire image fits inside the box */
 }
 
-.Options-button {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  padding: 10px 20px;
-  background-color: #4a4f57;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+.usd-balance {
+  color: #069506;  /* Green for USD */
 }
 
-.DarkMode-button {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  padding: 10px 20px;
-  background-color: #d9d9d9; /* Light gray button background */
-  color: #000000; /* Dark text for button */
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+.btc-balance {
+  color: #2a0695;  /* Purple for BTC */
 }
 
-.Options-modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.eth-balance {
+  color: #4b6a9e;  /* Blue for ETH */
 }
 
-.Options-content {
-  background-color: #282c34;
-  padding: 20px;
-  border-radius: 10px;
-  color: white;
-  text-align: center;
-  width: 300px;
+.bnb-balance {
+  color: #f3b63e;  /* Yellow for BNB */
 }
 
-.Bitcoin-container {
-  position: relative; /* Position container for relative positioning of animation */
-}
-
-.Click-animation {
-  position: absolute;
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: orange; /* Change color to orange */
-  animation: fadeUp 0.3s ease-out; /* Quicker animation */
-  pointer-events: none; /* Prevent interaction with the animation */
-}
-
-@keyframes fadeUp {
-  0% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  100% {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
+.tcr-balance {
+  color: #ff6347;  /* Tomato red for TCR */
 }

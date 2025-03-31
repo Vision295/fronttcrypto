@@ -3,12 +3,12 @@
   "name": "Idle Crypto Mining & Trading Game",
   "icons": [
     {
-      "src": "tcrypto.ico",
+      "src": "bitcoin_cut.ico",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
     },
     {
-      "src": "tcrypto.png",
+      "src": "bitcoin.png",
       "type": "image/png",
       "sizes": "192x192"
     }
