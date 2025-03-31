@@ -206,12 +206,25 @@ function App() {
         const data = await response.json();
         // Trier les données par score décroissant avant de les afficher
         const sortedData = data.sort((a, b) => b.score - a.score);
-        setUserData(sortedData);
+        setUserData((prevData) => {
+          // Comparer les anciennes et nouvelles données pour éviter un rendu inutile
+          if (JSON.stringify(prevData) !== JSON.stringify(sortedData)) {
+            return sortedData;
+          }
+          return prevData;
+        });
       } catch (error) {
         console.error('Error fetching user data:', error);
       }
     };
 
+    // Fetch data every 500ms
+    const interval = setInterval(fetchUserData, 500);
+
+    return () => clearInterval(interval); // Cleanup interval on component unmount
+  }, []);
+
+  useEffect(() => {
     const fetchCurrencyData = async () => {
       try {
         const response = await fetch(`${API_BASE_URL}/api/currencies`);
@@ -226,10 +239,7 @@ function App() {
     };
 
     // Fetch data every 500ms
-    const interval = setInterval(() => {
-      fetchUserData();
-      fetchCurrencyData();
-    }, 500);
+    const interval = setInterval(fetchCurrencyData, 500);
 
     return () => clearInterval(interval); // Cleanup interval on component unmount
   }, []);
