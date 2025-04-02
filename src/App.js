@@ -3,9 +3,13 @@ import bitcoin from './bitcoin1.png';
 import ethereum from './ethereum1.png';
 import binance from './binance1.png';
 import tcrypto from './tcrypto1.png';
+import { Line } from 'react-chartjs-2';
+import 'chart.js/auto'; // Import Chart.js
 import './App.css';
 
-const API_BASE_URL = 'http://localhost:5000'; // Revert back to localhost
+const ip = "localhost";
+const port = 5000;
+const API_BASE_URL = `http://${ip}:${port}`; // Revert back to localhost
 
 function App() {
   const [USD, setUSD] = useState(1000000);
@@ -43,6 +47,7 @@ function App() {
   // Animation states
   const [clickAnimation, setClickAnimation] = useState(false);
   const [animationPosition, setAnimationPosition] = useState({ top: 0, left: 0 });
+  const [buttonAnimation, setButtonAnimation] = useState({}); // State to track button animations
 
   // Increment crypto balances based on production per second
   useEffect(() => {
@@ -61,6 +66,38 @@ function App() {
     BNB: 300,
     TCR: 1,
   });
+
+  const [priceHistory, setPriceHistory] = useState({
+    BTC: [],
+    ETH: [],
+    BNB: [],
+    TCR: [],
+  });
+
+  useEffect(() => {
+    const fetchPrices = async () => {
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/crypto-prices`);
+        const prices = await response.json();
+
+        setPriceHistory((prev) => {
+          const updatedHistory = { ...prev };
+          Object.keys(prices).forEach((crypto) => {
+            const newHistory = [...(prev[crypto] || []), prices[crypto]];
+            updatedHistory[crypto] = newHistory.slice(-20); // Keep only the last 20 points
+          });
+          return updatedHistory;
+        });
+
+        setCryptoPrices(prices);
+      } catch (error) {
+        console.error('Error fetching crypto prices:', error);
+      }
+    };
+
+    const interval = setInterval(fetchPrices, 5000); // Fetch prices every 5 seconds
+    return () => clearInterval(interval);
+  }, []);
 
   // Simulate price fluctuations for cryptos every 5 seconds
   useEffect(() => {
@@ -96,6 +133,17 @@ function App() {
     }, 10000); // Mise à jour toutes les 10 secondes
     return () => clearInterval(interval);
   }, [USD, maxUSD, username, isUsernameSet]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setUSD((prevUSD) => {
+        const newUSD = prevUSD + cps.BTC * cryptoPrices.BTC + cps.ETH * cryptoPrices.ETH + cps.BNB * cryptoPrices.BNB + cps.TCR * cryptoPrices.TCR;
+        setMaxUSD((prevMax) => Math.max(prevMax, newUSD)); // Ensure maxUSD is updated whenever USD increases
+        return newUSD;
+      });
+    }, 1000); // Update every second
+    return () => clearInterval(interval);
+  }, [cps, cryptoPrices]); // Ensure this effect runs whenever `cps` or `cryptoPrices` changes
 
   const handleUsernameSubmit = () => {
     if (username.trim()) {
@@ -160,25 +208,29 @@ function App() {
   const handleBuyItem = (crypto, index) => {
     const cryptoKey = cryptoMap[crypto]; // Convertir en BTC, ETH, BNB, TCR
     if (!cryptoKey) return; // Sécurité
-  
+
     const items = shopItems[crypto];
     const item = items[index];
-  
+
     if (USD >= item.cost) {
       setUSD(prev => prev - item.cost);
       const newItems = [...items];
       newItems[index] = {
         ...item,
         count: item.count + 1,
-        cost: item.cost * 2, 
+        cost: item.cost * 2,
       };
       setShopItems(prev => ({ ...prev, [crypto]: newItems }));
-  
+
       // Mettre à jour correctement le CPS
       setCps(prev => ({
         ...prev,
-        [cryptoKey]: prev[cryptoKey] + item.bps, 
+        [cryptoKey]: prev[cryptoKey] + item.bps,
       }));
+
+      // Trigger animation for the buy button
+      setButtonAnimation((prev) => ({ ...prev, [`buy-${crypto}-${index}`]: true }));
+      setTimeout(() => setButtonAnimation((prev) => ({ ...prev, [`buy-${crypto}-${index}`]: false })), 300);
     }
   };
 
@@ -189,8 +241,72 @@ function App() {
     if (balances[crypto] > 0) {
       const sellAmount = balances[crypto];
       setBalance(0); // Reset the crypto balance
-      setUSD(prev => prev + sellAmount * cryptoPrices[crypto]); // Add USD equivalent
+      const usdGained = sellAmount * cryptoPrices[crypto];
+      setUSD((prev) => {
+        const newUSD = prev + usdGained;
+        setMaxUSD((prevMax) => Math.max(prevMax, newUSD)); // Update max USD balance
+        return newUSD;
+      });
+
+      // Trigger animation for the sell button
+      setButtonAnimation((prev) => ({ ...prev, [`sell-${crypto}`]: true }));
+      setTimeout(() => setButtonAnimation((prev) => ({ ...prev, [`sell-${crypto}`]: false })), 300);
     }
+  };
+
+  const renderGraph = (crypto) => {
+    const data = {
+      labels: priceHistory[crypto]?.map((_, index) => index + 1), // Use indices as labels
+      datasets: [
+        {
+          label: `${crypto} Price`,
+          data: priceHistory[crypto],
+          segment: {
+            borderColor: (ctx) => {
+              const { p0, p1 } = ctx;
+              return p1.raw > p0.raw ? 'green' : 'red'; // Green for upward, red for downward
+            },
+          },
+          pointBackgroundColor: '#d3d3d3', // Unified white/gray color for all points
+          borderWidth: 2,
+          backgroundColor: '#ffffff', // White background for the chart
+          fill: false,
+          tension: 0.1,
+        },
+      ],
+    };
+
+    const options = {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        x: {
+          grid: {
+            display: false, // Remove grid lines on the x-axis
+          },
+        },
+        y: {
+          grid: {
+            display: false, // Remove grid lines on the y-axis
+          },
+        },
+      },
+    };
+
+    return (
+      <div key={crypto} className="chart-container">
+        <Line data={data} options={options} />
+        <div className="chart-buttons">
+          <button
+            className={buttonAnimation[`sell-${crypto}`] ? 'button-animation' : ''}
+            onClick={() => handleSellCrypto(crypto)}
+          >
+            Sell All {crypto}
+          </button>
+          <button>Buy {crypto}</button>
+        </div>
+      </div>
+    );
   };
 
   const [userData, setUserData] = useState([]); // State to store fetched user data
@@ -343,7 +459,12 @@ function App() {
                     <p>Cost: ${item.cost.toFixed(2)}</p>
                     <p>Count: {item.count}</p>
                     <p>BPS: {item.bps}</p>
-                    <button onClick={() => handleBuyItem(crypto, index)}>Buy</button>
+                    <button
+                      className={buttonAnimation[`buy-${crypto}-${index}`] ? 'button-animation' : ''}
+                      onClick={() => handleBuyItem(crypto, index)}
+                    >
+                      Buy
+                    </button>
                   </div>
                 ))}
               </div>
@@ -383,17 +504,9 @@ function App() {
       
 
 
-        <div className="App-market">
-
-          {['BTC', 'ETH', 'BNB', 'TCR'].map(crypto => (
-            availableCryptos.includes(crypto) && (
-              <div key={crypto} className="market-item">
-                <p>{crypto} Price: ${cryptoPrices[crypto].toFixed(2)}</p>
-                <p>{crypto} per second: {cps[crypto].toFixed(6)}</p>
-                <button onClick={() => handleSellCrypto(crypto)}>Sell All {crypto}</button>
-              </div>
-            )
-          ))}
+        <div className="App-currencies">
+          <h2>Crypto-Market</h2>
+          {['TCR', 'BNB', 'ETH', 'BTC'].map((crypto) => renderGraph(crypto))}
         </div>
 
         <div className="App-leaderboard">
@@ -411,33 +524,6 @@ function App() {
                   <tr key={index}>
                     <td>{user.name}</td>
                     <td>{user.score}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          ) : (
-            <p>No data available.</p>
-          )}
-        </div>
-        <div className="App-currencies">
-          <h2>Crypto-Market</h2>
-          {currencyData.length > 0 ? (
-            <table>
-              <thead>
-                <tr>
-                  <th>Currency</th>
-                  <th>Value</th>
-                  <th>Total</th>
-                  <th>Available</th>
-                </tr>
-              </thead>
-              <tbody>
-                {currencyData.map((currency, index) => (
-                  <tr key={index}>
-                    <td>{currency.name}</td>
-                    <td>{currency.value}</td>
-                    <td>{currency.total}</td>
-                    <td>{currency.available}</td>
                   </tr>
                 ))}
               </tbody>

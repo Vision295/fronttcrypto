@@ -8,10 +8,18 @@
   font-family: 'Press Start 2P';
 }
 
-.App-currencies{
-  position: absolute; /* Position button relative to its container */
+.App-currencies {
+  position: absolute; /* Position the crypto market section */
   top: 10px; /* 10px from the top */
-  right: 250px; /* 10px from the right */
+  right: 10px; /* Adjusted to prevent overlapping with the shop */
+  width: 300px; /* Fixed width to avoid encroaching on the shop */
+  display: flex;
+  flex-direction: column; /* Align graphs in a vertical column */
+  align-items: center; /* Center align the graphs */
+  gap: 20px; /* Add spacing between graphs */
+  padding: 20px;
+  background-color: #000000; /* Match the rest of the app's theme */
+  z-index: 1; /* Ensure it stays above other elements */
 }
 
 .App-logo {
@@ -287,4 +295,72 @@ button {
 
 button:hover {
   background-color: rgb(26, 139, 51);
+}
+
+.App-market {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  background-color: #f9f9f9;
+  padding: 20px;
+}
+
+.App-market > div {
+  width: 45%;
+  margin: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.chart-container {
+  width: 95%; /* Increased width for the graphs */
+  max-width: 600px; /* Limit the maximum width */
+  height: 200px; /* Keep the height unchanged */
+  background-color: #ffffff; /* White background for the chart itself */
+  border: 1px solid #ccc; /* Light gray border */
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-bottom: 20px; /* Add space between graphs */
+}
+
+.chart-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.chart-buttons button {
+  font-family: 'Pixelify Sans';
+  background-color: #069506; /* Match theme color */
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.chart-buttons button:hover {
+  background-color: #047a04; /* Darker green on hover */
+}
+
+.button-animation {
+  animation: button-click 0.3s ease-in-out;
+}
+
+@keyframes button-click {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
