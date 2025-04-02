@@ -5,7 +5,9 @@ import binance from './binance1.png';
 import tcrypto from './tcrypto1.png';
 import './App.css';
 
-const API_BASE_URL = 'http://localhost:5000'; // Revert back to localhost
+const ip = "10.56.106.143";
+const port = 5000;
+const API_BASE_URL = `http://${ip}:${port}`; // Revert back to localhost
 
 function App() {
   const [USD, setUSD] = useState(1000000);
