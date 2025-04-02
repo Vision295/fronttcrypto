@@ -52,6 +52,13 @@ body {
   font-family: 'Pixelify Sans';
   background-color: #000000; /* Bright header background */
 
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Center vertically */
+  align-items: center; /* Center horizontally */
+  height: 100vh; /* Full screen height */
+  text-align: center;
+
   font-size: calc(10px + 1vmin); /* Responsive font size */
   color: #069506;  /* Ensure text in header is dark in day mode */
   font-size: 14px;
