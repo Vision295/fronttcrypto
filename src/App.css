@@ -301,3 +301,19 @@ body {
 .chart-buttons button:hover {
   background-color: #047a04; /* Darker green on hover */
 }
+
+.button-animation {
+  animation: button-click 0.3s ease-in-out;
+}
+
+@keyframes button-click {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
