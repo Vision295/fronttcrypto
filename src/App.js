@@ -1,8 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import bitcoin from './bitcoin1.png';
-import ethereum from './ethereum1.png';
-import binance from './binance1.png';
-import tcrypto from './tcrypto1.png';
+
+import bitcoin from './bitcoinBTC.png';
+import ethereum from './ethereumETH.png';
+import binancecoin from './binancecoinBNB.png';
+import avalanche from './avalancheAVAX.png';
+import cardano from './cardanoADA.png';
+import dogecoin from './dogecoinDOGE.png';
+import litecoin from './litecoinLTC.png';
+
+import polkadot from './polkadotDOT.png';
+import shibainu from './shibainuSHIB.png';
+import solana from './solanaSOL.png';
+import terraclassic from './terraclassicLUNC.png';
+import tetherusdt from './tetherusdtUSDT.png';
+import xrp from './xrpXRP.png';
+
 import './App.css';
 
 const API_BASE_URL = 'http://localhost:5000'; // Revert back to localhost
@@ -56,10 +68,21 @@ function App() {
   }, [cps]); // Ensure this effect runs whenever `cps` changes
 
   const [cryptoPrices, setCryptoPrices] = useState({
-    BTC: 30000,
-    ETH: 2000,
-    BNB: 300,
     TCR: 1,
+    DOGE: 0.06,
+    SHIB: 0.00001,
+    LUNC: 0.0001,
+    USDT: 1,
+    USDC: 1,
+    XRP: 0.5,
+    ADA: 0.4,
+    DOT: 5,
+    SOL: 20,
+    LTC: 70,
+    AVAX: 15,
+    BNB: 300,
+    ETH: 2000,
+    BTC: 30000,
   });
 
   // Simulate price fluctuations for cryptos every 5 seconds
@@ -70,6 +93,17 @@ function App() {
         ETH: parseFloat((prevPrices.ETH * (0.98 + Math.random() * 0.04)).toFixed(2)),
         BNB: parseFloat((prevPrices.BNB * (0.98 + Math.random() * 0.04)).toFixed(2)),
         TCR: parseFloat((prevPrices.TCR * (0.98 + Math.random() * 0.04)).toFixed(2)),
+        DOGE: parseFloat((prevPrices.DOGE * (0.98 + Math.random() * 0.04)).toFixed(2)),
+        SHIB: parseFloat((prevPrices.SHIB * (0.98 + Math.random() * 0.04)).toFixed(2)),
+        LUNC: parseFloat((prevPrices.LUNC * (0.98 + Math.random() * 0.04)).toFixed(2)),
+        USDT: parseFloat((prevPrices.USDT * (0.98 + Math.random() * 0.04)).toFixed(2)),
+        USDC: parseFloat((prevPrices.USDC * (0.98 + Math.random() * 0.04)).toFixed(2)),
+        XRP: parseFloat((prevPrices.XRP * (0.98 + Math.random() * 0.04)).toFixed(2)),
+        ADA: parseFloat((prevPrices.ADA * (0.98 + Math.random() * 0.04)).toFixed(2)),
+        DOT: parseFloat((prevPrices.DOT * (0.98 + Math.random() * 0.04)).toFixed(2)),
+        SOL: parseFloat((prevPrices.SOL * (0.98 + Math.random() * 0.04)).toFixed(2)),
+        LTC: parseFloat((prevPrices.LTC * (0.98 + Math.random() * 0.04)).toFixed(2)),
+        AVAX: parseFloat((prevPrices.AVAX * (0.98 + Math.random() * 0.04)).toFixed(2)),
       }));
     }, 5000);
     return () => clearInterval(interval);
@@ -143,8 +177,9 @@ function App() {
 
   // Handle buying a crypto from the shop
   const handleBuyCrypto = (crypto) => {
-    if (USD >= 1000) { // Example cost to unlock a crypto
-      setUSD(prev => prev - 1000);
+    const unlockCost = cryptoPrices[cryptoMap[crypto]] * 1000; // Example cost to unlock
+    if (USD >= unlockCost) {
+      setUSD(prev => prev - unlockCost);
       setAvailableCryptos(prev => [...prev, crypto]);
     }
   };
@@ -152,9 +187,20 @@ function App() {
   // Used in the next function to map the full crypto name to the short version to actually increase the CPS
   const cryptoMap = {
     Tcrypto: "TCR",
-    BinanceCoin: "BNB",
-    Ethereum: "ETH",
-    Bitcoin: "BTC"
+    dogecoinDOGE: "DOGE",
+    shibainuSHIB: "SHIB",
+    terraclassicLUNC: "LUNC",
+    tetherusdtUSDT: "USDT",
+    usdcUSDC: "USDC",
+    xrpXRP: "XRP",
+    cardanoADA: "ADA",
+    polkadotDOT: "DOT",
+    solanaSOL: "SOL",
+    litecoinLTC: "LTC",
+    avalancheAVAX: "AVAX",
+    binancecoinBNB: "BNB",
+    ethereumETH: "ETH",
+    bitcoinBTC: "BTC",
   };
 
   const handleBuyItem = (crypto, index) => {
@@ -265,38 +311,17 @@ function App() {
             <p>TCR Balance: {TCR.toFixed(6)} TCR (per second: {cps.TCR.toFixed(6)})</p>
           </div>
           <div className="Crypto-container">
-            {availableCryptos.includes('Bitcoin') && (
-              <img
-                src={bitcoin}
-                className="Crypto-logo"
-                alt="Bitcoin"
-                onClick={(e) => handleCryptoClick('BTC', e)}
-              />
-            )}
-            {availableCryptos.includes('Ethereum') && (
-              <img
-                src={ethereum}
-                className="Crypto-logo"
-                alt="Ethereum"
-                onClick={(e) => handleCryptoClick('ETH', e)}
-              />
-            )}
-            {availableCryptos.includes('BinanceCoin') && (
-              <img
-                src={binance}
-                className="Crypto-logo"
-                alt="BinanceCoin"
-                onClick={(e) => handleCryptoClick('BNB', e)}
-              />
-            )}
-            {availableCryptos.includes('Tcrypto') && (
-              <img
-                src={tcrypto}
-                className="Crypto-logo"
-                alt="Tcrypto"
-                onClick={(e) => handleCryptoClick('TCR', e)}
-              />
-            )}
+            {Object.keys(cryptoMap).map((crypto) => (
+              availableCryptos.includes(crypto) && (
+                <img
+                  key={crypto}
+                  src={eval(crypto.toLowerCase())} // Dynamically load the image
+                  className="Crypto-logo"
+                  alt={crypto}
+                  onClick={(e) => handleCryptoClick(cryptoMap[crypto], e)}
+                />
+              )
+            ))}
             {clickAnimation && (
               <span
                 className="Click-animation"
@@ -314,24 +339,13 @@ function App() {
       <header className="App-header">
         <div className="App-sidebar">
           <h2>Shop</h2>
-          {['Tcrypto', 'BinanceCoin', 'Ethereum', 'Bitcoin'].map(crypto => (
-            !availableCryptos.includes(crypto) ? (
+          {Object.keys(cryptoMap).map((crypto) => (
+            !availableCryptos.includes(crypto) && (
               <div key={crypto} className="shop-item">
                 <p>{crypto}</p>
-                <button onClick={() => handleBuyCrypto(crypto)}>Unlock {crypto} ($1000)</button>
-              </div>
-            ) : (
-              <div key={crypto}>
-                <h3>{crypto} Shop</h3>
-                {shopItems[crypto].map((item, index) => (
-                  <div key={index} className="shop-item">
-                    <p>{item.name}</p>
-                    <p>Cost: ${item.cost.toFixed(2)}</p>
-                    <p>Count: {item.count}</p>
-                    <p>BPS: {item.bps}</p>
-                    <button onClick={() => handleBuyItem(crypto, index)}>Buy</button>
-                  </div>
-                ))}
+                <button onClick={() => handleBuyCrypto(crypto)}>
+                  Unlock {crypto} (${(cryptoPrices[cryptoMap[crypto]] * 1000).toFixed(2)})
+                </button>
               </div>
             )
           ))}
@@ -371,11 +385,11 @@ function App() {
 
         <div className="App-market">
           <h2>Crypto Market</h2>
-          {['BTC', 'ETH', 'BNB', 'TCR'].map(crypto => (
+          {['BTC', 'ETH', 'BNB', 'TCR', 'DOGE', 'SHIB', 'LUNC', 'USDT', 'USDC', 'XRP', 'ADA', 'DOT', 'SOL', 'LTC', 'AVAX'].map(crypto => (
             availableCryptos.includes(crypto) && (
               <div key={crypto} className="market-item">
                 <p>{crypto} Price: ${cryptoPrices[crypto].toFixed(2)}</p>
-                <p>{crypto} per second: {cps[crypto].toFixed(6)}</p>
+                <p>{crypto} per second: {cps[crypto]?.toFixed(6) || 0}</p>
                 <button onClick={() => handleSellCrypto(crypto)}>Sell All {crypto}</button>
               </div>
             )
