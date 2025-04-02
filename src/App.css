@@ -45,6 +45,13 @@ input::placeholder {
 
 
 
+input[type="text"] {
+  font-size: 25px; /* Change this to the size you want */
+  width: 250px;  /* Adjust width */
+  height: 25px;  /* Adjust height */
+  padding: 10px; /* Add space inside */
+
+}
 
 
 
