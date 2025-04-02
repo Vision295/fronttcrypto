@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
 .App {
 
 }
@@ -46,10 +48,10 @@ input::placeholder {
 
 
 input[type="text"] {
-  font-size: 25px; /* Change this to the size you want */
+
   width: 250px;  /* Adjust width */
   height: 25px;  /* Adjust height */
-  padding: 10px; /* Add space inside */
+  padding: 100px; /* Add space inside */
 
 }
 
@@ -82,6 +84,7 @@ input[type="text"] {
   padding: 10px;
   font-size: 10px;
   margin: 10px 0;
+  font-family:'Press Start 2P';
 }
 
 .App-header button {
@@ -243,7 +246,7 @@ input[type="text"] {
   cursor:pointer;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
 
 .vertical-line{
   position: absolute; /* Position button relative to its container */
