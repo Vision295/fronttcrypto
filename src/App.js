@@ -7,7 +7,7 @@ import { Line } from 'react-chartjs-2';
 import 'chart.js/auto'; // Import Chart.js
 import './App.css';
 
-const ip = "localhost";
+const ip = process.env.REACT_APP_SERVER_IP || "localhost"; // Use environment variable or default to localhost
 const port = 5000;
 const API_BASE_URL = `http://${ip}:${port}`; // Revert back to localhost
 
