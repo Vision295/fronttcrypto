@@ -45,6 +45,7 @@ function App() {
   // Animation states
   const [clickAnimation, setClickAnimation] = useState(false);
   const [animationPosition, setAnimationPosition] = useState({ top: 0, left: 0 });
+  const [buttonAnimation, setButtonAnimation] = useState({}); // State to track button animations
 
   // Increment crypto balances based on production per second
   useEffect(() => {
@@ -131,6 +132,17 @@ function App() {
     return () => clearInterval(interval);
   }, [USD, maxUSD, username, isUsernameSet]);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setUSD((prevUSD) => {
+        const newUSD = prevUSD + cps.BTC * cryptoPrices.BTC + cps.ETH * cryptoPrices.ETH + cps.BNB * cryptoPrices.BNB + cps.TCR * cryptoPrices.TCR;
+        setMaxUSD((prevMax) => Math.max(prevMax, newUSD)); // Ensure maxUSD is updated whenever USD increases
+        return newUSD;
+      });
+    }, 1000); // Update every second
+    return () => clearInterval(interval);
+  }, [cps, cryptoPrices]); // Ensure this effect runs whenever `cps` or `cryptoPrices` changes
+
   const handleUsernameSubmit = () => {
     if (username.trim()) {
       setIsUsernameSet(true);
@@ -194,25 +206,29 @@ function App() {
   const handleBuyItem = (crypto, index) => {
     const cryptoKey = cryptoMap[crypto]; // Convertir en BTC, ETH, BNB, TCR
     if (!cryptoKey) return; // Sécurité
-  
+
     const items = shopItems[crypto];
     const item = items[index];
-  
+
     if (USD >= item.cost) {
       setUSD(prev => prev - item.cost);
       const newItems = [...items];
       newItems[index] = {
         ...item,
         count: item.count + 1,
-        cost: item.cost * 2, 
+        cost: item.cost * 2,
       };
       setShopItems(prev => ({ ...prev, [crypto]: newItems }));
-  
+
       // Mettre à jour correctement le CPS
       setCps(prev => ({
         ...prev,
-        [cryptoKey]: prev[cryptoKey] + item.bps, 
+        [cryptoKey]: prev[cryptoKey] + item.bps,
       }));
+
+      // Trigger animation for the buy button
+      setButtonAnimation((prev) => ({ ...prev, [`buy-${crypto}-${index}`]: true }));
+      setTimeout(() => setButtonAnimation((prev) => ({ ...prev, [`buy-${crypto}-${index}`]: false })), 300);
     }
   };
 
@@ -229,6 +245,10 @@ function App() {
         setMaxUSD((prevMax) => Math.max(prevMax, newUSD)); // Update max USD balance
         return newUSD;
       });
+
+      // Trigger animation for the sell button
+      setButtonAnimation((prev) => ({ ...prev, [`sell-${crypto}`]: true }));
+      setTimeout(() => setButtonAnimation((prev) => ({ ...prev, [`sell-${crypto}`]: false })), 300);
     }
   };
 
@@ -254,11 +274,33 @@ function App() {
       ],
     };
 
+    const options = {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        x: {
+          grid: {
+            display: false, // Remove grid lines on the x-axis
+          },
+        },
+        y: {
+          grid: {
+            display: false, // Remove grid lines on the y-axis
+          },
+        },
+      },
+    };
+
     return (
       <div key={crypto} className="chart-container">
-        <Line data={data} options={{ responsive: true, maintainAspectRatio: false }} />
+        <Line data={data} options={options} />
         <div className="chart-buttons">
-          <button onClick={() => handleSellCrypto(crypto)}>Sell All {crypto}</button>
+          <button
+            className={buttonAnimation[`sell-${crypto}`] ? 'button-animation' : ''}
+            onClick={() => handleSellCrypto(crypto)}
+          >
+            Sell All {crypto}
+          </button>
           <button>Buy {crypto}</button>
         </div>
       </div>
@@ -411,7 +453,12 @@ function App() {
                     <p>Cost: ${item.cost.toFixed(2)}</p>
                     <p>Count: {item.count}</p>
                     <p>BPS: {item.bps}</p>
-                    <button onClick={() => handleBuyItem(crypto, index)}>Buy</button>
+                    <button
+                      className={buttonAnimation[`buy-${crypto}-${index}`] ? 'button-animation' : ''}
+                      onClick={() => handleBuyItem(crypto, index)}
+                    >
+                      Buy
+                    </button>
                   </div>
                 ))}
               </div>
