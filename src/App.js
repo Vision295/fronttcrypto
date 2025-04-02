@@ -248,14 +248,18 @@ function App() {
     return (
       <div className="App">
         <header className="App-header">
-          <h1>Enter your username</h1>
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            placeholder="Your username"
-          />
-          <button onClick={handleUsernameSubmit}>Start</button>
+          <h1 className = "UsernameTitle">Welcome to</h1>
+          <h1 className = "UsernameTitle2">TCrypto</h1>
+
+            <h1 className = "Ask-username">Enter your username</h1>
+            <input
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              placeholder="Your username"
+            />
+            <button onClick={handleUsernameSubmit}>Start</button>
+
         </header>
       </div>
     );

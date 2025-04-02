@@ -52,14 +52,26 @@ input[type="text"] {
   width: 250px;  /* Adjust width */
   height: 25px;  /* Adjust height */
   padding: 100px; /* Add space inside */
-
 }
 
 
 
 
+.UsernameTitle{
+  font-size:20px;
+}
 
+.UsernameTitle2{
+  font-size:100px;
+}
 
+.Ask-username{
+  font-size:16px;
+}
+
+.App-username{
+
+}
 
 
 .App-header {
@@ -75,7 +87,7 @@ input[type="text"] {
 
 
   color: #069506;  /* Ensure text in header is dark in day mode */
-  font-size: 10px;
+
 
   line-height: 0.5; 
 }
