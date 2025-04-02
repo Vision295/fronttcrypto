@@ -303,7 +303,7 @@ function App() {
           >
             Sell All {crypto}
           </button>
-          <button>Buy {crypto}</button>
+          <button onClick={() => handleBuyCryptoPopup(crypto)}>Buy {crypto}</button>
         </div>
       </div>
     );
@@ -311,6 +311,38 @@ function App() {
 
   const [userData, setUserData] = useState([]); // State to store fetched user data
   const [currencyData, setCurrencyData] = useState([]); // State to store fetched currency data
+
+  const [showPopup, setShowPopup] = useState(false); // State to control popup visibility
+  const [selectedCrypto, setSelectedCrypto] = useState(null); // State to track selected crypto
+  const [cryptoAmount, setCryptoAmount] = useState(0); // State to track entered amount
+
+  const handleBuyCryptoPopup = (crypto) => {
+    setSelectedCrypto(crypto);
+    setCryptoAmount(0); // Reset the input field
+    setShowPopup(true); // Show the popup
+  };
+
+  const handleCryptoAmountChange = (value) => {
+    const cryptoPrice = cryptoPrices[selectedCrypto];
+    const maxAffordable = Math.floor(USD / cryptoPrice); // Calculate the maximum affordable amount
+    setCryptoAmount(Math.min(value, maxAffordable)); // Set the amount, ensuring it doesn't exceed the maximum
+  };
+
+  const handleConfirmBuyCrypto = () => {
+    if (cryptoAmount > 0) {
+      const cryptoPrice = cryptoPrices[selectedCrypto];
+      const totalCost = cryptoAmount * cryptoPrice;
+
+      setUSD((prev) => prev - totalCost); // Deduct the cost from USD balance
+      const setBalance = { BTC: setBTC, ETH: setETH, BNB: setBNB, TCR: setTCR }[selectedCrypto];
+      setBalance((prev) => prev + cryptoAmount); // Add the purchased crypto to the balance
+      setShowPopup(false); // Close the popup
+    }
+  };
+
+  const handleCancelBuyCrypto = () => {
+    setShowPopup(false); // Close the popup without making a purchase
+  };
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -534,10 +566,31 @@ function App() {
           )}
         </div>
       </header>
+
+      {showPopup && (
+        <div className="popup">
+          <div className="popup-content">
+            <h3>Buy {selectedCrypto}</h3>
+            <p>Price per unit: ${cryptoPrices[selectedCrypto]}</p>
+            <input
+              type="number"
+              value={cryptoAmount}
+              onChange={(e) => handleCryptoAmountChange(Number(e.target.value))}
+              placeholder="Enter amount"
+            />
+            <p>
+              ${USD.toFixed(2)} - ${cryptoAmount * cryptoPrices[selectedCrypto]} = $
+              {(USD - cryptoAmount * cryptoPrices[selectedCrypto]).toFixed(2)}
+            </p>
+            <div className="popup-buttons">
+              <button onClick={handleConfirmBuyCrypto}>Confirm</button>
+              <button onClick={() => setShowPopup(false)}>Cancel</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
-
-
 
 export default App;
