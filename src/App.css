@@ -266,6 +266,8 @@ input[type="text"] {
 button {
   font-family: 'Press Start 2P';
   cursor:pointer;
+
+  border: 2px solid white;
 }
 
 button:hover {
