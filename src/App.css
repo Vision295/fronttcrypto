@@ -1,5 +1,27 @@
-.crypto-item-button {
-  font-family: 'Pixelify Sans';
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+.App {
+
+}
+
+.crypto-item-button{
+  font-family: 'Press Start 2P';
+}
+
+.App-currencies {
+  position: absolute; /* Position the crypto market section */
+  top: 10px; /* 10px from the top */
+  right: 10px; /* Adjusted to prevent overlapping with the shop */
+  width: 300px; /* Fixed width to avoid encroaching on the shop */
+  display: flex;
+  flex-direction: column; /* Align graphs in a vertical column */
+  align-items: center; /* Center align the graphs */
+  gap: 20px; /* Add spacing between graphs */
+  padding: 20px;
+  background-color: #000000; /* Match the rest of the app's theme */
+  z-index: 1; /* Ensure it stays above other elements */
+  font-size: 20px;
+  line-height: 1; 
 }
 
 .Bitcoin-logo {
@@ -16,38 +38,108 @@ body {
   background-color: #000000; /* Brighter background for day mode */
 }
 
+
+input::placeholder {
+  font-family: 'Press Start 2P';
+  font-size: 10px;
+  color: #565f56; 
+  opacity: 0.7; /* Adjust opacity */
+}
+
+
+
+input[type="text"] {
+
+  width: 250px;  /* Adjust width */
+  height: 25px;  /* Adjust height */
+  padding: 100px; /* Add space inside */
+}
+
+
+
+
+.UsernameTitle{
+  font-size:20px;
+}
+
+.UsernameTitle2{
+  font-size:100px;
+}
+
+.Ask-username{
+  font-size:16px;
+}
+
+.pixel-input{
+  border:2px solid ;
+  border-radius:0;
+}
+
+.App-username{
+
+}
+
+
 .App-header {
-  font-family: 'Pixelify Sans';
+  font-family: 'Press Start 2P';
   background-color: #000000; /* Bright header background */
-  font-size: calc(10px + 1vmin); /* Responsive font size */
-  color: #069506; /* Ensure text in header is dark in day mode */
-  font-size: 14px;
-  line-height: 0.5;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Center vertically */
+  align-items: center; /* Center horizontally */
+  height: 100vh; /* Full screen height */
+  text-align: center;
+
+
+  color: #069506;  /* Ensure text in header is dark in day mode */
+
+
+  line-height: 0.5; 
 }
 
 .App-header input {
   padding: 10px;
-  font-size: 16px;
+  font-size: 10px;
   margin: 10px 0;
+  font-family:'Press Start 2P';
 }
 
 .App-header button {
   padding: 10px 20px;
-  font-size: 16px;
+  font-size: 10px;
   cursor: pointer;
 }
 
-.App-shop,
 .App-leaderboard {
-  color: #069506;
-  font-size: 14px;
-  line-height: 0.5;
+  position: absolute; /* Position button relative to its container */
+  top: 300px; /* 10px from the top */
+  left: 10px; /* 10px from the right */
+  color: #069506; 
+  font-size: 10px;
+  line-height: 1; 
 }
 
-.App-market {
-  position: absolute;
-  top: 10px;
-  right: 250px;
+.LdTitle{
+  color: #228B22; 
+}
+
+.App-shop{
+  color: #069506; 
+  font-size: 10px;
+  line-height: 1; 
+}
+
+.LdName{
+  font-size : 15px;
+  padding: 15px;
+  color:	#2E8B57;
+}
+
+.LdScore{
+  font-size: 15px;
+  padding: 15px;
+  color:	#2E8B57;
 }
 
 .App-sidebar {
@@ -57,10 +149,17 @@ body {
 }
 
 .App-main {
-  font-family: 'Pixelify Sans';
-  font-size: 14px;
-  color: #069506;
-  line-height: 0.5;
+  font-family: 'Press Start 2P';
+  font-size: 10px;
+  color: #069506; 
+   /* 100% of the viewport height */
+  line-height: 0.5; 
+  /* flex-grow: 1; Allow the main section to grow */
+  /* display: flex; Use flexbox for layout */
+  /* flex-direction: column; Arrange children in a column */
+  /* align-items: center; Center align items horizontally */
+  /* justify-content: center; Center align items vertically */
+  /* position: relative; Set relative positioning for child elements */
 }
 
 .shop-item {
@@ -68,7 +167,9 @@ body {
 }
 
 .shop-item button {
-  font-family: 'Pixelify Sans';
+  font-family: 'Press Start 2P';
+  /* margin-top: 5px; Margin above the button */
+  /* padding: 5px 10px; Padding inside the button */
   cursor: pointer; /* Change cursor to pointer on hover */
 }
 
@@ -77,31 +178,179 @@ body {
   cursor: pointer;
 }
 
-.Bitcoin-button {
-  font-family: 'Pixelify Sans';
-  cursor: pointer;
-}
+/* .Click-animation { */
+  /* position: absolute; */
+  /* font-size: 1.5rem; */
+  /* font-weight: bold; */
+  /* color: orange; Change color to orange */
+  /* animation: fadeUp 0.3s ease-out; Quicker animation */
+  /* pointer-events: none; Prevent interaction with the animation */
+/* } */
 
-@import url("https://fonts.googleapis.com/css2?family=Pixelify+Sans&display=swap");
+/* @keyframes fadeUp { */
+  /* 0% { */
+    /* opacity: 1; */
+    /* transform: translateY(0); */
+  /* } */
+  /* 100% { */
+    /* opacity: 0; */
+    /* transform: translateY(-20px); */
+  /* } */
+/* } */
 
-.vertical-line {
-  position: absolute;
-  top: 10px;
-  right: 540px;
-  font-size: 14px;
+
+
+
+
+.vertical-line{
+  position: absolute; /* Position button relative to its container */
+  top: 10px; /* 10px from the top */
+  right: 540px; /* 10px from the right */
+  font-size: 10px;
   color: #069506;
-  font-family: 'Pixelify Sans';
-  line-height: 0.5;
+  font-family: 'Press Start 2P';
+  /* 100% of the viewport height */
+  line-height: 0.5; 
 }
 
 .Crypto-logo {
   width: 50px;
   height: 50px;
   object-fit: contain; /* Ensures the entire image fits inside the box */
-  cursor: pointer;
-  transition: transform 0.1s ease-in-out;
 }
 
-.Crypto-logo:active {
-  transform: scale(0.95);
+button {
+  font-family: 'Press Start 2P';
+  cursor:pointer;
+
+  border: 2px solid white;
+}
+
+button:hover {
+  background-color: rgb(26, 139, 51);
+}
+
+.App-market {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  background-color: #f9f9f9;
+  padding: 20px;
+}
+
+
+
+.App-market > div {
+  width: 45%;
+  margin: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.chart-container {
+  width: 95%; /* Increased width for the graphs */
+  max-width: 600px; /* Limit the maximum width */
+  height: 200px; /* Keep the height unchanged */
+  background-color: #ffffff; /* White background for the chart itself */
+  border: 1px solid #ccc; /* Light gray border */
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-bottom: 20px; /* Add space between graphs */
+}
+
+.chart-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.chart-buttons button { 
+  background-color: #069506;
+}
+
+.chart-buttons button:hover {
+  background-color: #047a04; /* Darker green on hover */
+}
+
+.button-animation {
+  animation: button-click 0.3s ease-in-out;
+}
+
+@keyframes button-click {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8); /* Black background with transparency */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.popup-content {
+  background-color: #000000; /* Match the webpage's black background */
+  color: #069506; /* Green text */
+  padding: 20px;
+  border: 2px solid #069506; /* Green border */
+  border-radius: 8px;
+  text-align: center;
+  width: 300px;
+}
+
+.popup-content input {
+  width: 80%;
+  padding: 10px;
+  margin: 10px 0;
+  font-family: 'Press Start 2P';
+  font-size: 12px;
+  color: #069506;
+  background-color: #000000;
+  border: 2px solid #069506;
+  text-align: center;
+}
+
+.popup-content p {
+  margin: 10px 0;
+  font-family: 'Press Start 2P';
+  font-size: 12px;
+  color: #069506;
+}
+
+.popup-buttons {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 10px;
+}
+
+.popup-buttons button {
+  font-family: 'Press Start 2P';
+  padding: 10px 20px;
+  background-color: #069506;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.popup-buttons button:hover {
+  background-color: #047a04; /* Darker green on hover */
 }
