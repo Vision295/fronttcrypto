@@ -124,27 +124,32 @@ input[type="text"] {
   position: absolute; /* Position button relative to its container */
   top: 300px; /* 10px from the top */
   left: 10px; /* 10px from the right */
-}
-
-.App-shop, .App-leaderboard {
   color: #069506; 
   font-size: 10px;
-  /* 100% of the viewport height */
   line-height: 1; 
-  /* width: 20%; Set width to 20% */
-  /* height: 100vh; Full height of the webpage */
-  /* padding: 20px; Padding inside the container */
-  /* background-color: #e6e6e6; Light gray background for shop and leaderboard */
-  /* border-radius: 10px; Rounded corners */
-  /* display: flex; Use flexbox for layout */
-  /* flex-direction: column; Arrange children in a column */
-  /* align-items: center; Center align items horizontally */
-  /* justify-content: flex-start; Align items to the top */
-  /* overflow-y: auto; Make the section scrollable */
- /* Ensure text is dark in day mode */
 }
 
+.LdTitle{
+  color: #228B22; 
+}
 
+.App-shop{
+  color: #069506; 
+  font-size: 10px;
+  line-height: 1; 
+}
+
+.LdName{
+  font-size : 15px;
+  padding: 15px;
+  color:	#2E8B57;
+}
+
+.LdScore{
+  font-size: 15px;
+  padding: 15px;
+  color:	#2E8B57;
+}
 
 .App-sidebar{
   position: absolute;

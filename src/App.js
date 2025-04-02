@@ -543,13 +543,13 @@ function App() {
         </div>
 
         <div className="App-leaderboard">
-          <h2>Leaderboard</h2>
+          <h2 className = "LdTitle">Leaderboard</h2>
           {userData.length > 0 ? (
             <table>
               <thead>
                 <tr>
-                  <th>Name</th>
-                  <th>Score</th>
+                  <th className="LdName">Name</th>
+                  <th className="LdScore">Score</th>
                 </tr>
               </thead>
               <tbody>
