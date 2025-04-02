@@ -373,6 +373,7 @@ function App() {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               placeholder="Your username"
+              className="pixel-input"
             />
             <button onClick={handleUsernameSubmit}>Start</button>
 
