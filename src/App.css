@@ -6,6 +6,12 @@
   font-family: 'Pixelify Sans';
 }
 
+.App-currencies{
+  position: absolute; /* Position button relative to its container */
+  top: 10px; /* 10px from the top */
+  right: 250px; /* 10px from the right */
+}
+
 .App-logo {
 
 }
@@ -87,11 +93,7 @@ body {
  /* Ensure text is dark in day mode */
 }
 
-.App-market {
-  position: absolute; /* Position button relative to its container */
-  top: 10px; /* 10px from the top */
-  right: 250px; /* 10px from the right */
-}
+
 
 .App-sidebar{
   position: absolute;
