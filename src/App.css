@@ -51,15 +51,11 @@ body {
 .App-header {
   font-family: 'Pixelify Sans';
   background-color: #000000; /* Bright header background */
-  /* min-height: 100vh; Minimum height of 100% viewport height */
-  /* display: flex; Use flexbox for layout */
-  /* flex-direction: row; Arrange children in a row */
-  /* align-items: flex-start; Align items to the start of the flex container */
-  /* justify-content: space-between; Distribute space between items */
+
   font-size: calc(10px + 1vmin); /* Responsive font size */
   color: #069506;  /* Ensure text in header is dark in day mode */
   font-size: 14px;
-  /* 100% of the viewport height */
+
   line-height: 0.5; 
 }
 
