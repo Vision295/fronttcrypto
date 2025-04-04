@@ -55,70 +55,35 @@ const cryptoUnlockOrder = ["SHIB", "DOGE", "LTC", "ADA", "DOT", "SOL", "AVAX", "
 function App() {
   // User state
   const [USD, setUSD] = useState(1000000);
-  const [maxUSD, setMaxUSD] = useState(1000000);
-  const [username, setUsername] = useState("");
-  const [isUsernameSet, setIsUsernameSet] = useState(false);
-  
-  // Crypto balances state
-  const [cryptoBalances, setCryptoBalances] = useState({
-    SHIB: 0,
-    DOGE: 0,
-    LTC: 0,
-    ADA: 0,
-    DOT: 0,
-    SOL: 0,
-    AVAX: 0,
-    BNB: 0,
-    XRP: 0,
-    ETH: 0,
-    BTC: 0,
-  });
-  
-  // Crypto generation per second state
-  const [cps, setCps] = useState({
-    SHIB: 0,
-    DOGE: 0,
-    LTC: 0,
-    ADA: 0,
-    DOT: 0,
-    SOL: 0,
-    AVAX: 0,
-    BNB: 0,
-    XRP: 0,
-    ETH: 0,
-    BTC: 0,
-  });
+  const [maxUSD, setMaxUSD] = useState(1000000); // Initialiser maxUSD avec la même valeur que USD
+  const [username, setUsername] = useState(""); // Nouveau state pour le pseudo
+  const [isUsernameSet, setIsUsernameSet] = useState(false); // Vérifie si le pseudo est défini
 
-  // Shop and marketplace states
-  const [availableCryptos, setAvailableCryptos] = useState(['SHIB']);  // Start with SHIB
-  const [cryptoPrices, setCryptoPrices] = useState({
-    SHIB: 0.00001,
-    DOGE: 0.06,
-    LTC: 70,
-    ADA: 0.4,
-    DOT: 5,
-    SOL: 20,
-    AVAX: 15,
-    BNB: 300,
-    XRP: 0.5,
-    ETH: 2000,
-    BTC: 30000,
-  });
-  
-  // Shop items configuration
-  const [shopItems, setShopItems] = useState(() => {
-    const items = {};
-    Object.keys(cryptoFullNames).forEach(crypto => {
-      // Create miners with progressively higher costs and returns based on crypto value
-      const baseCost = cryptoPrices[crypto] * 10;
-      items[crypto] = [
-        { name: 'ASIC Miner', cost: baseCost, count: 0, bps: 0.001 * cryptoPrices[crypto] },
-        { name: 'GPU Miner', cost: baseCost * 10, count: 0, bps: 0.004 * cryptoPrices[crypto] },
-        { name: 'Mining Slave', cost: baseCost * 100, count: 0, bps: 0.01 * cryptoPrices[crypto] },
-        { name: 'Mining Farm', cost: baseCost * 1000, count: 0, bps: 0.03 * cryptoPrices[crypto] },
-      ];
-    });
-    return items;
+  const [BTC, setBTC] = useState(0);
+  const [ETH, setETH] = useState(0);
+  const [BNB, setBNB] = useState(0);
+  const [TCR, setTCR] = useState(0);
+  const [cps, setCps] = useState({ BTC: 0, ETH: 0, BNB: 0, TCR: 0 }); // Crypto per second for each crypto
+
+  // Shop and market states
+  const [availableCryptos, setAvailableCryptos] = useState(['Tcrypto']); // Initially only Tcrypto is available
+  const [shopItems, setShopItems] = useState({
+    Tcrypto: [
+      { name: 'ASIC Miner', cost: 10, count: 0, bps: 0.001 },
+      { name: 'GPU Miner', cost: 100, count: 0, bps: 0.004 },
+    ],
+    BinanceCoin: [
+      { name: 'ASIC Miner', cost: 20, count: 0, bps: 0.002 },
+      { name: 'GPU Miner', cost: 200, count: 0, bps: 0.008 },
+    ],
+    Ethereum: [
+      { name: 'ASIC Miner', cost: 30, count: 0, bps: 0.003 },
+      { name: 'GPU Miner', cost: 300, count: 0, bps: 0.012 },
+    ],
+    Bitcoin: [
+      { name: 'ASIC Miner', cost: 40, count: 0, bps: 0.004 },
+      { name: 'GPU Miner', cost: 400, count: 0, bps: 0.016 },
+    ],
   });
 
   // Animation states
@@ -200,66 +165,16 @@ function App() {
     return () => clearInterval(interval);
   }, []);
 
-  // Update price history for charts
   useEffect(() => {
-    setPriceHistory(prev => {
-      const newHistory = { ...prev };
-      Object.keys(cryptoPrices).forEach(crypto => {
-        newHistory[crypto] = [...prev[crypto].slice(-19), cryptoPrices[crypto]];
+    const interval = setInterval(() => {
+      setUSD((prevUSD) => {
+        // Calculez uniquement les gains basés sur les cryptos produits
+        const earnedUSD = cps.BTC * cryptoPrices.BTC + cps.ETH * cryptoPrices.ETH + cps.BNB * cryptoPrices.BNB + cps.TCR * cryptoPrices.TCR;
+        return prevUSD + earnedUSD; // Ajoutez les gains au solde existant
       });
-      return newHistory;
-    });
-  }, [cryptoPrices]);
-
-  // Fetch user data for leaderboard
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const response = await fetch(`${API_BASE_URL}/api/users`);
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
-        // Sort data by score in descending order
-        const sortedData = data.sort((a, b) => b.score - a.score);
-        
-        // Find current user's rank
-        const userIndex = sortedData.findIndex(user => user.name === username);
-        setUserRank(userIndex !== -1 ? userIndex + 1 : null);
-        
-        setUserData(sortedData);
-      } catch (error) {
-        console.error('Error fetching user data:', error);
-      }
-    };
-
-    if (isUsernameSet) {
-      // Fetch data every 2 seconds
-      const interval = setInterval(fetchUserData, 2000);
-      return () => clearInterval(interval);
-    }
-  }, [isUsernameSet, username]);
-
-  // Update server with user's score
-  useEffect(() => {
-    const updateUserScore = async () => {
-      if (isUsernameSet && username) {
-        try {
-          await fetch(`${API_BASE_URL}/api/users`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ name: username, score: maxUSD }),
-          });
-        } catch (error) {
-          console.error("Error updating score:", error);
-        }
-      }
-    };
-
-    // Update score every 5 seconds
-    const interval = setInterval(updateUserScore, 5000);
+    }, 1000); // Mise à jour toutes les secondes
     return () => clearInterval(interval);
-  }, [isUsernameSet, username, maxUSD]);
+  }, [cps, cryptoPrices]); // Dépend uniquement de `cps` et `cryptoPrices`
 
   // Handle username submission
   const handleUsernameSubmit = () => {
@@ -333,67 +248,27 @@ function App() {
     }
   };
 
-  // Show popup for buying crypto
-  const handleBuyCryptoPopup = (crypto) => {
-    setSelectedCrypto(crypto);
-    setCryptoAmount(0); // Reset the input field
-    setBuyOrSell('buy');
-    setShowPopup(true);
-  };
-
-  // Show popup for selling crypto
-  const handleSellCryptoPopup = (crypto) => {
-    setSelectedCrypto(crypto);
-    setCryptoAmount(cryptoBalances[crypto]); // Default to selling all
-    setBuyOrSell('sell');
-    setShowPopup(true);
-  };
-
-  // Handle crypto amount change in popup
-  const handleCryptoAmountChange = (value) => {
-    if (buyOrSell === 'buy') {
-      const cryptoPrice = cryptoPrices[selectedCrypto];
-      const maxAffordable = Math.floor(USD / cryptoPrice);
-      setCryptoAmount(Math.min(Math.max(0, value), maxAffordable));
-    } else {
-      setCryptoAmount(Math.min(Math.max(0, value), cryptoBalances[selectedCrypto]));
-    }
-  };
-
-  // Confirm crypto transaction
-  const handleConfirmTransaction = () => {
-    if (cryptoAmount <= 0) {
-      setShowPopup(false);
-      return;
-    }
-
-    const cryptoPrice = cryptoPrices[selectedCrypto];
-    
-    if (buyOrSell === 'buy') {
-      const totalCost = cryptoAmount * cryptoPrice;
-      setUSD(prev => prev - totalCost);
-      setCryptoBalances(prev => ({
-        ...prev,
-        [selectedCrypto]: prev[selectedCrypto] + cryptoAmount
-      }));
-    } else {
-      const totalGain = cryptoAmount * cryptoPrice;
-      setUSD(prev => {
-        const newUSD = prev + totalGain;
-        setMaxUSD(prevMax => Math.max(prevMax, newUSD));
+  // Handle selling a crypto
+  const handleSellCrypto = (crypto) => {
+    const balances = { BTC, ETH, BNB, TCR };
+    const setBalance = { BTC: setBTC, ETH: setETH, BNB: setBNB, TCR: setTCR }[crypto];
+    if (balances[crypto] > 0) {
+      const sellAmount = balances[crypto];
+      setBalance(0); // Réinitialisez le solde de la crypto
+      const usdGained = sellAmount * cryptoPrices[crypto];
+      setUSD((prev) => {
+        const newUSD = prev + usdGained;
+        setMaxUSD((prevMax) => Math.max(prevMax, newUSD)); // Mettez à jour maxUSD uniquement lors de la vente
         return newUSD;
       });
-      setCryptoBalances(prev => ({
-        ...prev,
-        [selectedCrypto]: prev[selectedCrypto] - cryptoAmount
-      }));
-    }
 
-    setShowPopup(false);
+      // Animation pour le bouton de vente
+      setButtonAnimation((prev) => ({ ...prev, [`sell-${crypto}`]: true }));
+      setTimeout(() => setButtonAnimation((prev) => ({ ...prev, [`sell-${crypto}`]: false })), 300);
+    }
   };
 
-  // Render crypto price chart
-  const renderChart = (crypto) => {
+  const renderGraph = (crypto) => {
     const data = {
       labels: priceHistory[crypto]?.map((_, index) => index + 1),
       datasets: [
