@@ -13,7 +13,7 @@ const API_BASE_URL = `http://${ip}:${port}`; // Revert back to localhost
 
 function App() {
   const [USD, setUSD] = useState(1000000);
-  const [maxUSD, setMaxUSD] = useState(10000); // Nouveau state pour le score maximum
+  const [maxUSD, setMaxUSD] = useState(1000000); // Initialiser maxUSD avec la même valeur que USD
   const [username, setUsername] = useState(""); // Nouveau state pour le pseudo
   const [isUsernameSet, setIsUsernameSet] = useState(false); // Vérifie si le pseudo est défini
 
@@ -114,36 +114,14 @@ function App() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setMaxUSD(prevMax => Math.max(prevMax, USD)); // Met à jour le score maximum
-      if (isUsernameSet) {
-        fetch(`${API_BASE_URL}/api/users`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ name: username, score: maxUSD }),
-        })
-          .then(() => {
-            // Rafraîchir les données du leaderboard après mise à jour
-            fetch(`${API_BASE_URL}/api/users`)
-              .then(response => response.json())
-              .then(data => setUserData(data))
-              .catch(error => console.error("Error fetching leaderboard data:", error));
-          })
-          .catch(error => console.error("Error updating score:", error));
-      }
-    }, 10000); // Mise à jour toutes les 10 secondes
-    return () => clearInterval(interval);
-  }, [USD, maxUSD, username, isUsernameSet]);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
       setUSD((prevUSD) => {
-        const newUSD = prevUSD + cps.BTC * cryptoPrices.BTC + cps.ETH * cryptoPrices.ETH + cps.BNB * cryptoPrices.BNB + cps.TCR * cryptoPrices.TCR;
-        setMaxUSD((prevMax) => Math.max(prevMax, newUSD)); // Ensure maxUSD is updated whenever USD increases
-        return newUSD;
+        // Calculez uniquement les gains basés sur les cryptos produits
+        const earnedUSD = cps.BTC * cryptoPrices.BTC + cps.ETH * cryptoPrices.ETH + cps.BNB * cryptoPrices.BNB + cps.TCR * cryptoPrices.TCR;
+        return prevUSD + earnedUSD; // Ajoutez les gains au solde existant
       });
-    }, 1000); // Update every second
+    }, 1000); // Mise à jour toutes les secondes
     return () => clearInterval(interval);
-  }, [cps, cryptoPrices]); // Ensure this effect runs whenever `cps` or `cryptoPrices` changes
+  }, [cps, cryptoPrices]); // Dépend uniquement de `cps` et `cryptoPrices`
 
   const handleUsernameSubmit = () => {
     if (username.trim()) {
@@ -240,15 +218,15 @@ function App() {
     const setBalance = { BTC: setBTC, ETH: setETH, BNB: setBNB, TCR: setTCR }[crypto];
     if (balances[crypto] > 0) {
       const sellAmount = balances[crypto];
-      setBalance(0); // Reset the crypto balance
+      setBalance(0); // Réinitialisez le solde de la crypto
       const usdGained = sellAmount * cryptoPrices[crypto];
       setUSD((prev) => {
         const newUSD = prev + usdGained;
-        setMaxUSD((prevMax) => Math.max(prevMax, newUSD)); // Update max USD balance
+        setMaxUSD((prevMax) => Math.max(prevMax, newUSD)); // Mettez à jour maxUSD uniquement lors de la vente
         return newUSD;
       });
 
-      // Trigger animation for the sell button
+      // Animation pour le bouton de vente
       setButtonAnimation((prev) => ({ ...prev, [`sell-${crypto}`]: true }));
       setTimeout(() => setButtonAnimation((prev) => ({ ...prev, [`sell-${crypto}`]: false })), 300);
     }
