@@ -1,266 +1,265 @@
+/* 
+ * Crypto Miner Game - App.css
+ * This CSS file defines the styling for the crypto mining and trading simulator.
+ * It includes styles for the main UI, crypto currency display, charts, shop items,
+ * popup dialogs, and leaderboard.
+ */
+
+/* Import pixel font for the retro gaming style */
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
-.App {
-
-}
-
-.crypto-item-button{
-  font-family: 'Press Start 2P';
-}
-
-.App-currencies {
-  position: absolute; /* Position the crypto market section */
-  top: 10px; /* 10px from the top */
-  right: 10px; /* Adjusted to prevent overlapping with the shop */
-  width: 300px; /* Fixed width to avoid encroaching on the shop */
-  display: flex;
-  flex-direction: column; /* Align graphs in a vertical column */
-  align-items: center; /* Center align the graphs */
-  gap: 20px; /* Add spacing between graphs */
-  padding: 20px;
-  background-color: #000000; /* Match the rest of the app's theme */
-  z-index: 1; /* Ensure it stays above other elements */
-  font-size: 20px;
-  line-height: 1; 
-}
-
-.Bitcoin-logo {
-  height: 40vmin; /* Set the height of the Bitcoin logo */
-  cursor: pointer; /* Change cursor to pointer on hover */
-  transition: transform 0.1s ease-in-out; /* Smooth transition for transform property */
-}
-
-.Bitcoin-logo:active {
-  transform: scale(0.95); /* Scale down the logo when active */
-}
-
+/* Global styles */
 body {
-  background-color: #000000; /* Brighter background for day mode */
+  background-color: #000000;
+  font-family: 'Press Start 2P', cursive;
+  margin: 0;
+  padding: 0;
+  color: #069506; /* Green terminal text color */
 }
 
+button {
+  font-family: 'Press Start 2P', cursive;
+  cursor: pointer;
+  border: 2px solid #069506;
+  background-color: #000000;
+  color: #069506;
+  padding: 8px 15px;
+  transition: background-color 0.2s ease;
+}
+
+button:hover {
+  background-color: #069506;
+  color: #000000;
+}
+
+input {
+  font-family: 'Press Start 2P', cursive;
+  background-color: #000000;
+  border: 2px solid #069506;
+  color: #069506;
+  padding: 8px;
+}
 
 input::placeholder {
-  font-family: 'Press Start 2P';
+  font-family: 'Press Start 2P', cursive;
   font-size: 10px;
   color: #565f56; 
-  opacity: 0.7; /* Adjust opacity */
+  opacity: 0.7;
 }
 
-
-
-input[type="text"] {
-
-  width: 250px;  /* Adjust width */
-  height: 25px;  /* Adjust height */
-  padding: 100px; /* Add space inside */
+.pixel-input {
+  border: 2px solid #069506;
+  border-radius: 0;
+  padding: 10px;
+  width: 250px;
 }
 
-
-
-
-.UsernameTitle{
-  font-size:20px;
+/* App layout sections */
+.App {
+  display: flex;
+  position: relative;
+  height: 100vh;
+  overflow: auto;
 }
 
-.UsernameTitle2{
-  font-size:100px;
-}
-
-.Ask-username{
-  font-size:16px;
-}
-
-.pixel-input{
-  border:2px solid ;
-  border-radius:0;
-}
-
-.App-username{
-
-}
-
-
+/* Username screen styles */
 .App-header {
-  font-family: 'Press Start 2P';
-  background-color: #000000; /* Bright header background */
-
+  font-family: 'Press Start 2P', cursive;
+  background-color: #000000;
   display: flex;
   flex-direction: column;
-  justify-content: center; /* Center vertically */
-  align-items: center; /* Center horizontally */
-  height: 100vh; /* Full screen height */
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
   text-align: center;
-
-
-  color: #069506;  /* Ensure text in header is dark in day mode */
-
-
-  line-height: 0.5; 
+  color: #069506;
 }
 
 .App-header input {
   padding: 10px;
   font-size: 10px;
   margin: 10px 0;
-  font-family:'Press Start 2P';
 }
 
 .App-header button {
   padding: 10px 20px;
   font-size: 10px;
-  cursor: pointer;
+  margin-top: 20px;
 }
 
-.App-leaderboard {
-  position: absolute; /* Position button relative to its container */
-  top: 300px; /* 10px from the top */
-  left: 10px; /* 10px from the right */
-  color: #069506; 
-  font-size: 10px;
-  line-height: 1; 
+.UsernameTitle {
+  font-size: 20px;
+  margin-bottom: 0;
 }
 
-.LdTitle{
-  color: #228B22; 
+.UsernameTitle2 {
+  font-size: 60px;
+  margin-top: 10px;
 }
 
-.App-shop{
-  color: #069506; 
-  font-size: 10px;
-  line-height: 1; 
+.Ask-username {
+  font-size: 16px;
+  margin-top: 40px;
 }
 
-.LdName{
-  font-size : 15px;
-  padding: 15px;
-  color:	#2E8B57;
-}
-
-.LdScore{
-  font-size: 15px;
-  padding: 15px;
-  color:	#2E8B57;
-}
-
-.App-sidebar {
-  position: absolute;
-  top: 10px;
-  right: 600px;
-}
-
+/* Main game screen layout */
 .App-main {
-  font-family: 'Press Start 2P';
-  font-size: 10px;
-  color: #069506; 
-   /* 100% of the viewport height */
-  line-height: 0.5; 
-  /* flex-grow: 1; Allow the main section to grow */
-  /* display: flex; Use flexbox for layout */
-  /* flex-direction: column; Arrange children in a column */
-  /* align-items: center; Center align items horizontally */
-  /* justify-content: center; Center align items vertically */
-  /* position: relative; Set relative positioning for child elements */
-}
-
-.shop-item {
-  color: #069506; /* Ensure text is dark in day mode */
-}
-
-.shop-item button {
-  font-family: 'Press Start 2P';
-  /* margin-top: 5px; Margin above the button */
-  /* padding: 5px 10px; Padding inside the button */
-  cursor: pointer; /* Change cursor to pointer on hover */
-}
-
-.Sell-BTC-Button {
-  font-family: 'Pixelify Sans';
-  cursor: pointer;
-}
-
-/* .Click-animation { */
-  /* position: absolute; */
-  /* font-size: 1.5rem; */
-  /* font-weight: bold; */
-  /* color: orange; Change color to orange */
-  /* animation: fadeUp 0.3s ease-out; Quicker animation */
-  /* pointer-events: none; Prevent interaction with the animation */
-/* } */
-
-/* @keyframes fadeUp { */
-  /* 0% { */
-    /* opacity: 1; */
-    /* transform: translateY(0); */
-  /* } */
-  /* 100% { */
-    /* opacity: 0; */
-    /* transform: translateY(-20px); */
-  /* } */
-/* } */
-
-
-
-
-
-.vertical-line{
-  position: absolute; /* Position button relative to its container */
-  top: 10px; /* 10px from the top */
-  right: 540px; /* 10px from the right */
+  padding: 20px;
   font-size: 10px;
   color: #069506;
-  font-family: 'Press Start 2P';
-  /* 100% of the viewport height */
-  line-height: 0.5; 
+  width: 100%;
+  max-width: 600px;
+  margin-left: 20px;
+}
+
+.App-main h1 {
+  font-size: 24px;
+  margin-bottom: 30px;
+}
+
+/* Balances container */
+.balances-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.balance-item {
+  border: 1px solid #069506;
+  padding: 10px;
+  background-color: #000000;
+}
+
+.crypto-balances {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+/* Clickable crypto logos */
+.Crypto-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 20px;
 }
 
 .Crypto-logo {
   width: 50px;
   height: 50px;
-  object-fit: contain; /* Ensures the entire image fits inside the box */
+  object-fit: contain;
+  cursor: pointer;
+  transition: transform 0.1s ease-in-out;
+  border: 1px solid #069506;
+  padding: 5px;
+  background-color: #000000;
 }
 
-button {
-  font-family: 'Press Start 2P';
-  cursor:pointer;
-
-  border: 2px solid white;
+.Crypto-logo:active {
+  transform: scale(0.95);
 }
 
-button:hover {
-  background-color: rgb(26, 139, 51);
+/* Shop sidebar */
+.App-sidebar {
+  position: absolute;
+  top: 10px;
+  right: 600px;
+  width: 250px;
+  padding: 10px;
+  background-color: #000000;
+  border: 1px solid #069506;
+  max-height: 90vh;
+  overflow-y: auto;
 }
 
-.App-market {
+.App-sidebar h2 {
+  font-size: 18px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.App-sidebar h3 {
+  font-size: 14px;
+  margin-top: 20px;
+  border-bottom: 1px solid #069506;
+  padding-bottom: 5px;
+}
+
+.shop-item {
+  color: #069506;
+  border: 1px solid #069506;
+  margin: 10px 0;
+  padding: 10px;
+  font-size: 10px;
+}
+
+.shop-item p {
+  margin: 5px 0;
+}
+
+.shop-item button {
+  margin-top: 10px;
+  width: 100%;
+}
+
+/* Vertical line divider */
+.vertical-line {
+  position: absolute;
+  top: 10px;
+  right: 540px;
+  font-size: 10px;
+  color: #069506;
+  line-height: 0.5;
+  height: 90vh;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  background-color: #f9f9f9;
-  padding: 20px;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
+/* Crypto currency market charts */
+.App-currencies {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+  background-color: #000000;
+  z-index: 1;
+  max-height: 90vh;
+  overflow-y: auto;
+  border: 1px solid #069506;
+}
 
-
-.App-market > div {
-  width: 45%;
-  margin: 10px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+.App-currencies h2 {
+  font-size: 18px;
+  text-align: center;
+  margin-bottom: 20px;
+  color: #069506;
 }
 
 .chart-container {
-  width: 95%; /* Increased width for the graphs */
-  max-width: 600px; /* Limit the maximum width */
-  height: 200px; /* Keep the height unchanged */
-  background-color: #ffffff; /* White background for the chart itself */
-  border: 1px solid #ccc; /* Light gray border */
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  height: 200px;
+  background-color: #000000;
+  border: 1px solid #069506;
+  border-radius: 0;
   padding: 10px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  margin-bottom: 20px; /* Add space between graphs */
+  margin-bottom: 20px;
+}
+
+.chart-container h3 {
+  font-size: 12px;
+  text-align: center;
+  margin-bottom: 10px;
+  color: #069506;
 }
 
 .chart-buttons {
@@ -269,14 +268,20 @@ button:hover {
   margin-top: 10px;
 }
 
-.chart-buttons button { 
-  background-color: #069506;
+.chart-buttons button {
+  background-color: #000000;
+  border: 1px solid #069506;
+  color: #069506;
+  padding: 5px 10px;
+  font-size: 8px;
 }
 
 .chart-buttons button:hover {
-  background-color: #047a04; /* Darker green on hover */
+  background-color: #069506;
+  color: #000000;
 }
 
+/* Button animation */
 .button-animation {
   animation: button-click 0.3s ease-in-out;
 }
@@ -293,13 +298,14 @@ button:hover {
   }
 }
 
+/* Buy/Sell popup */
 .popup {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.8); /* Black background with transparency */
+  background-color: rgba(0, 0, 0, 0.8);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -307,50 +313,138 @@ button:hover {
 }
 
 .popup-content {
-  background-color: #000000; /* Match the webpage's black background */
-  color: #069506; /* Green text */
+  background-color: #000000;
+  color: #069506;
   padding: 20px;
-  border: 2px solid #069506; /* Green border */
-  border-radius: 8px;
+  border: 2px solid #069506;
+  border-radius: 0;
   text-align: center;
   width: 300px;
+}
+
+.popup-content h3 {
+  font-size: 16px;
+  margin-bottom: 20px;
 }
 
 .popup-content input {
   width: 80%;
   padding: 10px;
   margin: 10px 0;
-  font-family: 'Press Start 2P';
   font-size: 12px;
-  color: #069506;
-  background-color: #000000;
-  border: 2px solid #069506;
   text-align: center;
 }
 
 .popup-content p {
   margin: 10px 0;
-  font-family: 'Press Start 2P';
   font-size: 12px;
-  color: #069506;
 }
 
 .popup-buttons {
   display: flex;
   justify-content: space-around;
-  margin-top: 10px;
+  margin-top: 20px;
 }
 
 .popup-buttons button {
-  font-family: 'Press Start 2P';
   padding: 10px 20px;
-  background-color: #069506;
-  color: #ffffff;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+  background-color: #000000;
+  color: #069506;
+  border: 1px solid #069506;
 }
 
 .popup-buttons button:hover {
-  background-color: #047a04; /* Darker green on hover */
+  background-color: #069506;
+  color: #000000;
+}
+
+/* Leaderboard styles */
+.App-leaderboard {
+  position: absolute;
+  top: 300px;
+  left: 10px;
+  color: #069506;
+  font-size: 10px;
+  line-height: 1;
+  width: 300px;
+  padding: 10px;
+  border: 1px solid #069506;
+  background-color: #000000;
+}
+
+.LdTitle {
+  font-size: 16px;
+  text-align: center;
+  margin-bottom: 15px;
+  color: #228B22;
+}
+
+.App-leaderboard table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.App-leaderboard th, .App-leaderboard td {
+  border: 1px solid #069506;
+  padding: 8px;
+  text-align: center;
+}
+
+.App-leaderboard th {
+  background-color: #000000;
+}
+
+.LdRank {
+  width: 20%;
+  font-size: 12px;
+  color: #2E8B57;
+}
+
+.LdName {
+  width: 50%;
+  font-size: 12px;
+  color: #2E8B57;
+}
+
+.LdScore {
+  width: 30%;
+  font-size: 12px;
+  color: #2E8B57;
+}
+
+.current-user {
+  background-color: rgba(6, 149, 6, 0.2);
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+  .App-currencies {
+    width: 400px;
+  }
+  
+  .App-sidebar {
+    right: 450px;
+  }
+  
+  .vertical-line {
+    right: 420px;
+  }
+}
+
+@media (max-width: 900px) {
+  .App {
+    flex-direction: column;
+    overflow-y: auto;
+  }
+  
+  .App-main, .App-sidebar, .App-currencies, .App-leaderboard {
+    position: static;
+    width: 90%;
+    margin: 20px auto;
+  }
+  
+  .vertical-line {
+    display: none;
+  }
 }
