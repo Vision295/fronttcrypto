@@ -1,15 +1,42 @@
 import React, { useState, useEffect } from 'react';
-import bitcoin from './bitcoin1.png';
-import ethereum from './ethereum1.png';
-import binance from './binance1.png';
-import tcrypto from './tcrypto1.png';
+
 import { Line } from 'react-chartjs-2';
 import 'chart.js/auto'; // Import Chart.js
+
+import bitcoin from './bitcoinBTC.png';
+import ethereum from './ethereumETH.png';
+import binancecoin from './binancecoinBNB.png';
+import avalanche from './avalancheAVAX.png';
+import cardano from './cardanoADA.png';
+import dogecoin from './dogecoinDOGE.png';
+import litecoin from './litecoinLTC.png';
+
+import polkadot from './polkadotDOT.png';
+import shibainu from './shibainuSHIB.png';
+import solana from './solanaSOL.png';
+import terraclassic from './terraclassicLUNC.png';
+import tetherusdt from './tetherusdtUSDT.png';
+import xrp from './xrpXRP.png';
+
 import './App.css';
 
 const ip = "localhost";
 const port = 5000;
 const API_BASE_URL = `http://${ip}:${port}`; // Revert back to localhost
+
+const cryptoImages = {
+  SHIB: shibainu,
+  DOGE: dogecoin,
+  LTC: litecoin,
+  ADA: cardano,
+  DOT: polkadot,
+  SOL: solana,
+  AVAX: avalanche,
+  BNB: binancecoin,
+  XRP: xrp,
+  ETH: ethereum,
+  BTC: bitcoin,
+};
 
 function App() {
   const [USD, setUSD] = useState(1000000);
@@ -20,23 +47,70 @@ function App() {
   const [BTC, setBTC] = useState(0);
   const [ETH, setETH] = useState(0);
   const [BNB, setBNB] = useState(0);
-  const [TCR, setTCR] = useState(0);
-  const [cps, setCps] = useState({ BTC: 0, ETH: 0, BNB: 0, TCR: 0 }); // Crypto per second for each crypto
+  const [SHIB, setSHIB] = useState(0);
+  const [DOGE, setDOGE] = useState(0);
+  const [LTC, setLTC] = useState(0);
+  const [ADA, setADA] = useState(0);
+  const [DOT, setDOT] = useState(0);
+  const [SOL, setSOL] = useState(0);
+  const [AVAX, setAVAX] = useState(0);
+  const [XRP, setXRP] = useState(0);
+  const [cps, setCps] = useState({
+    SHIB: 0,
+    DOGE: 0,
+    LTC: 0,
+    ADA: 0,
+    DOT: 0,
+    SOL: 0,
+    AVAX: 0,
+    BNB: 0,
+    XRP: 0,
+    ETH: 0,
+    BTC: 0,
+  });
 
   // Shop and market states
-  const [availableCryptos, setAvailableCryptos] = useState(['Tcrypto']); // Initially only Tcrypto is available
+  const [availableCryptos, setAvailableCryptos] = useState(['Shibainu']); // Initially only Tcrypto is available
   const [shopItems, setShopItems] = useState({
-    Tcrypto: [
+    Shibainu: [
       { name: 'ASIC Miner', cost: 10, count: 0, bps: 0.001 },
       { name: 'GPU Miner', cost: 100, count: 0, bps: 0.004 },
     ],
-    BinanceCoin: [
+    DogeCoin: [
       { name: 'ASIC Miner', cost: 20, count: 0, bps: 0.002 },
       { name: 'GPU Miner', cost: 200, count: 0, bps: 0.008 },
     ],
-    Ethereum: [
+    LiteCoin: [
       { name: 'ASIC Miner', cost: 30, count: 0, bps: 0.003 },
       { name: 'GPU Miner', cost: 300, count: 0, bps: 0.012 },
+    ],
+    Cardano: [
+      { name: 'ASIC Miner', cost: 40, count: 0, bps: 0.004 },
+      { name: 'GPU Miner', cost: 400, count: 0, bps: 0.016 },
+    ],
+    Polkadot: [
+      { name: 'ASIC Miner', cost: 40, count: 0, bps: 0.004 },
+      { name: 'GPU Miner', cost: 400, count: 0, bps: 0.016 },
+    ],
+    Solana: [
+      { name: 'ASIC Miner', cost: 40, count: 0, bps: 0.004 },
+      { name: 'GPU Miner', cost: 400, count: 0, bps: 0.016 },
+    ],
+    Avalanche: [
+      { name: 'ASIC Miner', cost: 40, count: 0, bps: 0.004 },
+      { name: 'GPU Miner', cost: 400, count: 0, bps: 0.016 },
+    ],
+    BinanceCoin: [
+      { name: 'ASIC Miner', cost: 40, count: 0, bps: 0.004 },
+      { name: 'GPU Miner', cost: 400, count: 0, bps: 0.016 },
+    ],
+    Xrp: [
+      { name: 'ASIC Miner', cost: 40, count: 0, bps: 0.004 },
+      { name: 'GPU Miner', cost: 400, count: 0, bps: 0.016 },
+    ],
+    Ethereum: [
+      { name: 'ASIC Miner', cost: 40, count: 0, bps: 0.004 },
+      { name: 'GPU Miner', cost: 400, count: 0, bps: 0.016 },
     ],
     Bitcoin: [
       { name: 'ASIC Miner', cost: 40, count: 0, bps: 0.004 },
@@ -52,26 +126,47 @@ function App() {
   // Increment crypto balances based on production per second
   useEffect(() => {
     const interval = setInterval(() => {
-      setBTC(prev => prev + cps.BTC);
-      setETH(prev => prev + cps.ETH);
+      setSHIB(prev => prev + cps.SHIB);
+      setDOGE(prev => prev + cps.DOGE);
+      setLTC(prev => prev + cps.LTC);
+      setADA(prev => prev + cps.ADA);
+      setDOT(prev => prev + cps.DOT);
+      setSOL(prev => prev + cps.SOL);
+      setAVAX(prev => prev + cps.AVAX);
       setBNB(prev => prev + cps.BNB);
-      setTCR(prev => prev + cps.TCR);
+      setXRP(prev => prev + cps.XRP);
+      setETH(prev => prev + cps.ETH);
+      setBTC(prev => prev + cps.BTC);
     }, 1000);
     return () => clearInterval(interval);
   }, [cps]); // Ensure this effect runs whenever `cps` changes
 
   const [cryptoPrices, setCryptoPrices] = useState({
-    BTC: 30000,
-    ETH: 2000,
+    SHIB: 0.00001,
+    DOGE: 0.06,
+    LTC: 70,
+    ADA: 0.4,
+    DOT: 5,
+    SOL: 20,
+    AVAX: 15,
     BNB: 300,
-    TCR: 1,
+    XRP: 0.5,
+    ETH: 2000,
+    BTC: 30000,
   });
 
   const [priceHistory, setPriceHistory] = useState({
-    BTC: [],
-    ETH: [],
+    SHIB: [],
+    DOGE: [],
+    LTC: [],
+    ADA: [],
+    DOT: [],
+    SOL: [],
+    AVAX: [],
     BNB: [],
-    TCR: [],
+    XRP: [],
+    ETH: [],
+    BTC: [],
   });
 
   useEffect(() => {
@@ -103,10 +198,17 @@ function App() {
   useEffect(() => {
     const interval = setInterval(() => {
       setCryptoPrices(prevPrices => ({
-        BTC: parseFloat((prevPrices.BTC * (0.98 + Math.random() * 0.04)).toFixed(2)),
-        ETH: parseFloat((prevPrices.ETH * (0.98 + Math.random() * 0.04)).toFixed(2)),
+        SHIB: parseFloat((prevPrices.SHIB * (0.98 + Math.random() * 0.04)).toFixed(2)),
+        DOGE: parseFloat((prevPrices.DOGE * (0.98 + Math.random() * 0.04)).toFixed(2)),
+        LTC: parseFloat((prevPrices.LTC * (0.98 + Math.random() * 0.04)).toFixed(2)),
+        ADA: parseFloat((prevPrices.ADA * (0.98 + Math.random() * 0.04)).toFixed(2)),
+        DOT: parseFloat((prevPrices.DOT * (0.98 + Math.random() * 0.04)).toFixed(2)),
+        SOL: parseFloat((prevPrices.SOL * (0.98 + Math.random() * 0.04)).toFixed(2)),
+        AVAX: parseFloat((prevPrices.AVAX * (0.98 + Math.random() * 0.04)).toFixed(2)),
         BNB: parseFloat((prevPrices.BNB * (0.98 + Math.random() * 0.04)).toFixed(2)),
-        TCR: parseFloat((prevPrices.TCR * (0.98 + Math.random() * 0.04)).toFixed(2)),
+        XRP: parseFloat((prevPrices.XRP * (0.98 + Math.random() * 0.04)).toFixed(2)),
+        ETH: parseFloat((prevPrices.ETH * (0.98 + Math.random() * 0.04)).toFixed(2)),
+        BTC: parseFloat((prevPrices.BTC * (0.98 + Math.random() * 0.04)).toFixed(2)),
       }));
     }, 5000);
     return () => clearInterval(interval);
@@ -146,7 +248,7 @@ function App() {
 
   // Handle click event for a crypto logo
   const handleCryptoClick = (crypto, event) => {
-    const setBalance = { BTC: setBTC, ETH: setETH, BNB: setBNB, TCR: setTCR }[crypto];
+    const setBalance = { SHIB: setSHIB, DOGE: setDOGE, LTC: setLTC, ADA: setADA, DOT: setDOT, SOL: setSOL, AVAX: setAVAX, BNB: setBNB, XRP: setXRP, ETH: setETH, BTC: setBTC }[crypto];
     setBalance(prev => prev + 1);
 
     // Get the bounding rectangle of the image
@@ -177,10 +279,17 @@ function App() {
 
   // Used in the next function to map the full crypto name to the short version to actually increase the CPS
   const cryptoMap = {
-    Tcrypto: "TCR",
+    Shibainu: "SHIB",
+    DogeCoin: "DOGE",
+    LiteCoin: "LTC",
+    Cardano: "ADA",
+    Polkadot: "DOT",
+    Solana: "SOL",
+    Avalanche: "AVAX",
     BinanceCoin: "BNB",
+    Xrp: "XRP",
     Ethereum: "ETH",
-    Bitcoin: "BTC"
+    Bitcoin: "BTC",
   };
 
   const handleBuyItem = (crypto, index) => {
@@ -215,7 +324,7 @@ function App() {
   // Handle selling a crypto
   const handleSellCrypto = (crypto) => {
     const balances = { BTC, ETH, BNB, TCR };
-    const setBalance = { BTC: setBTC, ETH: setETH, BNB: setBNB, TCR: setTCR }[crypto];
+    const setBalance = { SHIB: setSHIB, DOGE: setDOGE, LTC: setLTC, ADA: setADA, DOT: setDOT, SOL: setSOL, AVAX: setAVAX, BNB: setBNB, XRP: setXRP, ETH: setETH, BTC: setBTC }[crypto];
     if (balances[crypto] > 0) {
       const sellAmount = balances[crypto];
       setBalance(0); // Réinitialisez le solde de la crypto
@@ -312,7 +421,7 @@ function App() {
       const totalCost = cryptoAmount * cryptoPrice;
 
       setUSD((prev) => prev - totalCost); // Deduct the cost from USD balance
-      const setBalance = { BTC: setBTC, ETH: setETH, BNB: setBNB, TCR: setTCR }[selectedCrypto];
+      const setBalance = { SHIB: setSHIB, DOGE: setDOGE, LTC: setLTC, ADA: setADA, DOT: setDOT, SOL: setSOL, AVAX: setAVAX, BNB: setBNB, XRP: setXRP, ETH: setETH, BTC: setBTC }[selectedCrypto];
       setBalance((prev) => prev + cryptoAmount); // Add the purchased crypto to the balance
       setShowPopup(false); // Close the popup
     }
@@ -400,10 +509,18 @@ function App() {
           <div className="balances">
             <p>USD Balance: ${USD.toFixed(2)}</p>
             <p>Max USD Balance: ${maxUSD.toFixed(2)}</p> {/* Affiche le score maximum */}
-            <p>BTC Balance: {BTC.toFixed(6)} BTC (per second: {cps.BTC.toFixed(6)})</p>
+            <p>SHIB Balance: {SHIB.toFixed(6)} SHIB (per second: {cps.SHIB.toFixed(6)})</p>
+            <p>DOGE Balance: {DOGE.toFixed(6)} DOGE (per second: {cps.DOGE.toFixed(6)})</p>
+            <p>LTC Balance: {LTC.toFixed(6)} LTC (per second: {cps.LTC.toFixed(6)})</p>
+            <p>ADA Balance: {ADA.toFixed(6)} ADA (per second: {cps.ADA.toFixed(6)})</p>
+            <p>DOT Balance: {DOT.toFixed(6)} DOT (per second: {cps.DOT.toFixed(6)})</p>
+            <p>SOL Balance: {SOL.toFixed(6)} SOL (per second: {cps.SOL.toFixed(6)})</p>
+            <p>AVAX Balance: {AVAX.toFixed(6)} AVAX (per second: {cps.AVAX.toFixed(6)})</p>
+            <p>BNB Balance: {BNB.toFixed(6)} BNB(per second: {cps.BNB.toFixed(6)})</p>
+            <p>XRP Balance: {XRP.toFixed(6)} XRP (per second: {cps.XRP.toFixed(6)})</p>
             <p>ETH Balance: {ETH.toFixed(6)} ETH (per second: {cps.ETH.toFixed(6)})</p>
-            <p>BNB Balance: {BNB.toFixed(6)} BNB (per second: {cps.BNB.toFixed(6)})</p>
-            <p>TCR Balance: {TCR.toFixed(6)} TCR (per second: {cps.TCR.toFixed(6)})</p>
+            <p>BTC Balance: {BTC.toFixed(6)} BTC (per second: {cps.BTC.toFixed(6)})</p>
+
           </div>
           <div className="Crypto-container">
             {availableCryptos.includes('Bitcoin') && (

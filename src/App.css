@@ -24,10 +24,6 @@
   line-height: 1; 
 }
 
-.App-logo {
-
-}
-
 .Bitcoin-logo {
   height: 40vmin; /* Set the height of the Bitcoin logo */
   cursor: pointer; /* Change cursor to pointer on hover */
@@ -38,13 +34,8 @@
   transform: scale(0.95); /* Scale down the logo when active */
 }
 
-
 body {
-
-  /* font-family: 'Courier'; */
-  /* overflow: hidden;   Prevent scrolling on the base window */
-  background-color: #000000; /*Brighter background for day mode */
-  /* color: #000000; Dark text for better contrast in day mode */
+  background-color: #000000; /* Brighter background for day mode */
 }
 
 
@@ -151,10 +142,10 @@ input[type="text"] {
   color:	#2E8B57;
 }
 
-.App-sidebar{
+.App-sidebar {
   position: absolute;
-  top:10px;
-  right:600px;
+  top: 10px;
+  right: 600px;
 }
 
 .App-main {
@@ -171,24 +162,8 @@ input[type="text"] {
   /* position: relative; Set relative positioning for child elements */
 }
 
-/* .App-link { */
-  /* color: #61dafb; Set link color */
-/* } */
-
 .shop-item {
-  
-  /* background-color: #f0f0f0; Light gray background for shop items */
-  /* padding: 5px; Reduce padding to fit content */
-  /* margin: 10px 0; Margin between items */
-  /* border-radius: 5px; Rounded corners */
-  /* text-align: center; Center align text */
-  /* width: 80%; Adjust the width to make the boxes smaller */
-  /* height: auto; Allow height to adjust based on content */
-  /* font-size: 0.8em; Reduce font size to fit content */
-  /* display: flex; Use flexbox for layout */
-  /* flex-direction: column; Arrange children in a column */
-  /* justify-content: center; Center align items vertically */
-  color: #069506;  /* Ensure text is dark in day mode */
+  color: #069506; /* Ensure text is dark in day mode */
 }
 
 .shop-item button {
@@ -198,54 +173,9 @@ input[type="text"] {
   cursor: pointer; /* Change cursor to pointer on hover */
 }
 
-/* @keyframes App-logo-spin { */
-  /* from { */
-    /* transform: rotate(0deg); Start rotation at 0 degrees */
-  /* } */
-  /* to { */
-    /* transform: rotate(360deg); End rotation at 360 degrees */
-  /* } */
-/* } */
-
-/* .Options-button { */
-  /* position: absolute; */
-  /* top: 10px; */
-  /* left: 10px; */
-  /* padding: 10px 20px; */
-  /* background-color: #4a4f57; */
-  /* color: white; */
-  /* border: none; */
-  /* border-radius: 5px; */
-  /* cursor: pointer; */
-/* } */
-
-
-
-
-/* .Options-modal { */
-  /* position: fixed; */
-  /* top: 0; */
-  /* left: 0; */
-  /* width: 100%; */
-  /* height: 100%; */
-  /* background-color: rgba(0, 0, 0, 0.5); */
-  /* display: flex; */
-  /* justify-content: center; */
-  /* align-items: center; */
-/* } */
-
-/* .Options-content { */
-  /* background-color: #282c34; */
-  /* padding: 20px; */
-  /* border-radius: 10px; */
-  /* color: white; */
-  /* text-align: center; */
-  /* width: 300px; */
-/* } */
-
-.Bitcoin-container {
-  /* font-family: 'Courier'; */
-  /* position: relative; Position container for relative positioning of animation */
+.Sell-BTC-Button {
+  font-family: 'Pixelify Sans';
+  cursor: pointer;
 }
 
 /* .Click-animation { */
@@ -283,8 +213,7 @@ input[type="text"] {
   line-height: 0.5; 
 }
 
-
- .Crypto-logo{
+.Crypto-logo {
   width: 50px;
   height: 50px;
   object-fit: contain; /* Ensures the entire image fits inside the box */
