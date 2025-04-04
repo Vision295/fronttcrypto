@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-
+// Import cryptocurrency logos
 import bitcoin from './bitcoinBTC.png';
 import ethereum from './ethereumETH.png';
 import binancecoin from './binancecoinBNB.png';
@@ -7,33 +7,20 @@ import avalanche from './avalancheAVAX.png';
 import cardano from './cardanoADA.png';
 import dogecoin from './dogecoinDOGE.png';
 import litecoin from './litecoinLTC.png';
-
 import polkadot from './polkadotDOT.png';
 import shibainu from './shibainuSHIB.png';
 import solana from './solanaSOL.png';
-import terraclassic from './terraclassicLUNC.png';
-import tetherusdt from './tetherusdtUSDT.png';
 import xrp from './xrpXRP.png';
-
-import './App.css';
 import { Line } from 'react-chartjs-2';
-import {
-  Chart as ChartJS,
-  LineElement,
-  PointElement,
-  LinearScale,
-  CategoryScale,
-  Tooltip,
-  Legend,
-} from 'chart.js';
+import 'chart.js/auto'; // Import Chart.js
+import './App.css';
 
-// Register Chart.js components
-ChartJS.register(LineElement, PointElement, LinearScale, CategoryScale, Tooltip, Legend);
-
+// API configuration
 const ip = "localhost";
 const port = 5000;
-const API_BASE_URL = `http://${ip}:${port}`; // Revert back to localhost
+const API_BASE_URL = `http://${ip}:${port}`;
 
+// Define crypto images mapping
 const cryptoImages = {
   SHIB: shibainu,
   DOGE: dogecoin,
@@ -48,12 +35,47 @@ const cryptoImages = {
   BTC: bitcoin,
 };
 
+// Define crypto full names
+const cryptoFullNames = {
+  SHIB: "Shiba Inu",
+  DOGE: "Dogecoin",
+  LTC: "Litecoin",
+  ADA: "Cardano",
+  DOT: "Polkadot",
+  SOL: "Solana",
+  AVAX: "Avalanche",
+  BNB: "Binance Coin",
+  XRP: "XRP",
+  ETH: "Ethereum",
+  BTC: "Bitcoin",
+};
+
+// Define crypto unlock order
+const cryptoUnlockOrder = ["SHIB", "DOGE", "LTC", "ADA", "DOT", "SOL", "AVAX", "BNB", "XRP", "ETH", "BTC"];
+
 function App() {
+  // User state
   const [USD, setUSD] = useState(1000000);
-  const [maxUSD, setMaxUSD] = useState(10000);
+  const [maxUSD, setMaxUSD] = useState(1000000);
   const [username, setUsername] = useState("");
   const [isUsernameSet, setIsUsernameSet] = useState(false);
-
+  
+  // Crypto balances state
+  const [cryptoBalances, setCryptoBalances] = useState({
+    SHIB: 0,
+    DOGE: 0,
+    LTC: 0,
+    ADA: 0,
+    DOT: 0,
+    SOL: 0,
+    AVAX: 0,
+    BNB: 0,
+    XRP: 0,
+    ETH: 0,
+    BTC: 0,
+  });
+  
+  // Crypto generation per second state
   const [cps, setCps] = useState({
     SHIB: 0,
     DOGE: 0,
@@ -68,221 +90,8 @@ function App() {
     BTC: 0,
   });
 
-  const [availableCryptos, setAvailableCryptos] = useState(['SHIB']); // Start with SHIB
-  // Animation states
-  const [clickAnimation, setClickAnimation] = useState(false);
-  const [animationPosition, setAnimationPosition] = useState({ top: 0, left: 0 });
-  const [buttonAnimation, setButtonAnimation] = useState({}); // State to track button animations
-
-  // Define missing state variables
-  const [BTC, setBTC] = useState(0);
-  const [ETH, setETH] = useState(0);
-  const [BNB, setBNB] = useState(0);
-  const [TCR, setTCR] = useState(0);
-
-  const [shopItems, setShopItems] = useState({
-    SHIB: [],
-    DOGE: [],
-    LTC: [],
-    ADA: [],
-    DOT: [],
-    SOL: [],
-    AVAX: [],
-    BNB: [],
-    XRP: [],
-    ETH: [],
-    BTC: [],
-  });
-
-  const [priceHistory, setPriceHistory] = useState({
-    SHIB: [],
-    DOGE: [],
-    LTC: [],
-    ADA: [],
-    DOT: [],
-    SOL: [],
-    AVAX: [],
-    BNB: [],
-    XRP: [],
-    ETH: [],
-    BTC: [],
-  });
-
-  // Define mining items
-  const [items, setItems] = useState([
-    { name: 'ASIC Miner', cost: 10, count: 0, bps: 0.001 },
-    { name: 'GPU Miner', cost: 100, count: 0, bps: 0.004 },
-    { name: 'Mining Slave', cost: 1000, count: 0, bps: 0.01 },
-    { name: 'Mining Farm', cost: 10000, count: 0, bps: 0.03 },
-  ]);
-
-  const renderMiningItems = () => {
-    if (!Array.isArray(items)) {
-      console.error('Error: items is not an array', items);
-      return null; // Prevent rendering if items is not an array
-    }
-
-    return items.map((item, index) => (
-      <div key={index} className="mining-item">
-        <p>{item.name}</p>
-        <p>Cost: ${item.cost.toFixed(2)}</p>
-        <p>Count: {item.count}</p>
-        <p>BPS: {item.bps}</p>
-        <button onClick={() => handleBuyItem(index)}>Buy</button>
-      </div>
-    ));
-  };
-
-  // Define missing state variables
-  const [showPopup, setShowPopup] = useState(false); // State to control popup visibility
-  const [selectedCrypto, setSelectedCrypto] = useState(null); // State to track selected crypto
-  const [cryptoAmount, setCryptoAmount] = useState(0); // State to track entered amount
-  const [userData, setUserData] = useState([]); // State to store fetched user data
-  const [currencyData, setCurrencyData] = useState([]); // State to store fetched currency data
-
-  // Define renderGraph function
-  const renderGraph = (crypto) => {
-    const data = {
-      labels: priceHistory[crypto]?.map((_, index) => `Day ${index + 1}`), // Use day labels
-      datasets: [
-        {
-          label: `${crypto} Price`,
-          data: priceHistory[crypto], // Use price history for the crypto
-          borderColor: 'rgba(75, 192, 192, 1)', // Line color
-          backgroundColor: 'rgba(75, 192, 192, 0.2)', // Fill color
-          borderWidth: 2,
-          pointRadius: 3,
-          tension: 0.4, // Smooth curve
-        },
-      ],
-    };
-
-    const options = {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: {
-          display: true,
-          position: 'top',
-        },
-        tooltip: {
-          enabled: true,
-        },
-      },
-      scales: {
-        x: {
-          type: 'category', // Explicitly set the scale type
-          title: {
-            display: true,
-            text: 'Days',
-          },
-          grid: {
-            display: false, // Remove grid lines on the x-axis
-          },
-        },
-        y: {
-          title: {
-            display: true,
-            text: 'Price (USD)',
-          },
-          grid: {
-            display: true, // Show grid lines on the y-axis
-          },
-        },
-      },
-    };
-
-    return (
-      <div key={crypto} className="chart-container">
-        <Line data={data} options={options} />
-        <div className="chart-buttons">
-          <button
-            className={buttonAnimation[`sell-${crypto}`] ? 'button-animation' : ''}
-            onClick={() => handleSellCrypto(crypto)}
-          >
-            Sell All {crypto}
-          </button>
-          <button onClick={() => handleBuyCryptoPopup(crypto)}>Buy {crypto}</button>
-        </div>
-      </div>
-    );
-  };
-
-  // Update balances based on mining items
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCps((prevCps) => {
-        const newCps = { ...prevCps };
-        items.forEach((item) => {
-          Object.keys(newCps).forEach((crypto) => {
-            newCps[crypto] += item.count * item.bps;
-          });
-        });
-        return newCps;
-      });
-
-      Object.keys(cps).forEach((crypto) => {
-        if (cps[crypto] > 0) {
-          setShopItems((prev) => ({
-            ...prev,
-            [crypto]: prev[crypto] + cps[crypto],
-          }));
-        }
-      });
-    }, 1000);
-    return () => clearInterval(interval);
-  }, [items, cps]);
-
-  // Ensure shopItems[crypto] is always an array
-  const handleBuyItem = (crypto, index) => {
-    const items = shopItems[crypto] || []; // Default to an empty array if undefined
-    const item = items[index];
-
-    if (item && USD >= item.cost) {
-      setUSD((prev) => prev - item.cost);
-      const newItems = [...items];
-      newItems[index] = {
-        ...item,
-        count: item.count + 1,
-        cost: item.cost * 2,
-      };
-      setShopItems((prev) => ({
-        ...prev,
-        [crypto]: newItems,
-      }));
-    }
-  };
-
-  // Render shop items safely
-  const renderShopItems = (crypto) => {
-    const items = shopItems[crypto] || []; // Default to an empty array if undefined
-    return items.map((item, index) => (
-      <div key={index} className="shop-item">
-        <p>{item.name}</p>
-        <p>Cost: ${item.cost.toFixed(2)}</p>
-        <p>Count: {item.count}</p>
-        <p>BPS: {item.bps}</p>
-        <button
-          className={buttonAnimation[`buy-${crypto}-${index}`] ? 'button-animation' : ''}
-          onClick={() => handleBuyItem(crypto, index)}
-        >
-          Buy
-        </button>
-      </div>
-    ));
-  };
-
-  // Increment crypto balances based on production per second
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setBTC(prev => prev + cps.BTC);
-      setETH(prev => prev + cps.ETH);
-      setBNB(prev => prev + cps.BNB);
-      setTCR(prev => prev + cps.TCR);
-    }, 1000);
-    return () => clearInterval(interval);
-  }, [cps]); // Ensure this effect runs whenever `cps` changes
-
+  // Shop and marketplace states
+  const [availableCryptos, setAvailableCryptos] = useState(['SHIB']);  // Start with SHIB
   const [cryptoPrices, setCryptoPrices] = useState({
     SHIB: 0.00001,
     DOGE: 0.06,
@@ -296,85 +105,114 @@ function App() {
     ETH: 2000,
     BTC: 30000,
   });
+  
+  // Shop items configuration
+  const [shopItems, setShopItems] = useState(() => {
+    const items = {};
+    Object.keys(cryptoFullNames).forEach(crypto => {
+      // Create miners with progressively higher costs and returns based on crypto value
+      const baseCost = cryptoPrices[crypto] * 10;
+      items[crypto] = [
+        { name: 'ASIC Miner', cost: baseCost, count: 0, bps: 0.001 * cryptoPrices[crypto] },
+        { name: 'GPU Miner', cost: baseCost * 10, count: 0, bps: 0.004 * cryptoPrices[crypto] },
+        { name: 'Mining Slave', cost: baseCost * 100, count: 0, bps: 0.01 * cryptoPrices[crypto] },
+        { name: 'Mining Farm', cost: baseCost * 1000, count: 0, bps: 0.03 * cryptoPrices[crypto] },
+      ];
+    });
+    return items;
+  });
 
-  const cryptoMap = {
-    shibainuSHIB: "SHIB",
-    dogecoinDOGE: "DOGE",
-    litecoinLTC: "LTC",
-    cardanoADA: "ADA",
-    polkadotDOT: "DOT",
-    solanaSOL: "SOL",
-    avalancheAVAX: "AVAX",
-    binancecoinBNB: "BNB",
-    xrpXRP: "XRP",
-    ethereumETH: "ETH",
-    bitcoinBTC: "BTC",
+  // Animation states
+  const [buttonAnimation, setButtonAnimation] = useState({});
+  
+  // Price history for charts
+  const [priceHistory, setPriceHistory] = useState(() => {
+    const history = {};
+    Object.keys(cryptoPrices).forEach(crypto => {
+      history[crypto] = Array(20).fill(cryptoPrices[crypto]);
+    });
+    return history;
+  });
+
+  // Popup states
+  const [showPopup, setShowPopup] = useState(false);
+  const [selectedCrypto, setSelectedCrypto] = useState(null);
+  const [cryptoAmount, setCryptoAmount] = useState(0);
+  const [buyOrSell, setBuyOrSell] = useState('buy');
+  
+  // Leaderboard data
+  const [userData, setUserData] = useState([]);
+  const [userRank, setUserRank] = useState(null);
+
+  // Get the next unlockable cryptocurrency
+  const getNextUnlockableCrypto = () => {
+    const nextIndex = cryptoUnlockOrder.findIndex(crypto => !availableCryptos.includes(crypto));
+    return nextIndex !== -1 ? cryptoUnlockOrder[nextIndex] : null;
   };
 
-  const handleBuyCryptoPopup = (crypto) => {
-    setSelectedCrypto(crypto);
-    setCryptoAmount(0); // Reset the input field
-    setShowPopup(true); // Show the popup
-  };
+  // Increment crypto balances based on production per second
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCryptoBalances(prev => {
+        const newBalances = { ...prev };
+        Object.keys(cps).forEach(crypto => {
+          newBalances[crypto] = prev[crypto] + cps[crypto];
+        });
+        return newBalances;
+      });
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [cps]);
 
-  const handleCryptoAmountChange = (value) => {
-    const cryptoPrice = cryptoPrices[selectedCrypto];
-    const maxAffordable = Math.floor(USD / cryptoPrice); // Calculate the maximum affordable amount
-    setCryptoAmount(Math.min(value, maxAffordable)); // Set the amount, ensuring it doesn't exceed the maximum
-  };
-
-  const handleConfirmBuyCrypto = () => {
-    if (cryptoAmount > 0) {
-      const cryptoPrice = cryptoPrices[selectedCrypto];
-      const totalCost = cryptoAmount * cryptoPrice;
-
-      setUSD((prev) => prev - totalCost); // Deduct the cost from USD balance
-      const setBalance = { BTC: setBTC, ETH: setETH, BNB: setBNB, TCR: setTCR }[selectedCrypto];
-      setBalance((prev) => prev + cryptoAmount); // Add the purchased crypto to the balance
-      setShowPopup(false); // Close the popup
-    }
-  };
-
-  const handleCancelBuyCrypto = () => {
-    setShowPopup(false); // Close the popup without making a purchase
-  };
-
-  const handleUsernameSubmit = () => {
-    if (username.trim()) {
-      setIsUsernameSet(true);
-    }
-  };
-
-  const handleCryptoClick = (crypto) => {
-    setShopItems((prev) => ({
-      ...prev,
-      [crypto]: prev[crypto] + 1,
-    }));
-  };
-
-  const handleSellCrypto = (crypto) => {
-    const balance = shopItems[crypto];
-    if (balance > 0) {
-      const usdGained = balance * cryptoPrices[crypto];
-      setShopItems((prev) => ({
-        ...prev,
-        [crypto]: 0,
-      }));
-      setUSD((prev) => {
-        const newUSD = prev + usdGained;
-        setMaxUSD((prevMax) => Math.max(prevMax, newUSD));
+  // Update USD based on crypto production value
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setUSD(prevUSD => {
+        let earnedUSD = 0;
+        Object.keys(cps).forEach(crypto => {
+          earnedUSD += cps[crypto] * cryptoPrices[crypto];
+        });
+        const newUSD = prevUSD + earnedUSD;
+        // Update maxUSD if current balance is higher
+        setMaxUSD(prevMax => Math.max(prevMax, newUSD));
         return newUSD;
       });
-    }
-  };
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [cps, cryptoPrices]);
 
-  const handleBuyCrypto = (crypto) => {
-    if (USD >= 1000 && !availableCryptos.includes(crypto)) {
-      setUSD((prev) => prev - 1000);
-      setAvailableCryptos((prev) => [...prev, crypto]);
-    }
-  };
+  // Simulate price fluctuations for cryptos
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCryptoPrices(prevPrices => {
+        const newPrices = { ...prevPrices };
+        Object.keys(newPrices).forEach(crypto => {
+          // Create realistic fluctuations based on coin value
+          const volatilityFactor = crypto === 'BTC' ? 0.02 : 
+                                  crypto === 'ETH' ? 0.025 : 
+                                  crypto === 'SHIB' ? 0.04 : 0.03;
+          
+          const change = 0.98 + Math.random() * volatilityFactor * 2;
+          newPrices[crypto] = parseFloat((prevPrices[crypto] * change).toFixed(6));
+        });
+        return newPrices;
+      });
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
 
+  // Update price history for charts
+  useEffect(() => {
+    setPriceHistory(prev => {
+      const newHistory = { ...prev };
+      Object.keys(cryptoPrices).forEach(crypto => {
+        newHistory[crypto] = [...prev[crypto].slice(-19), cryptoPrices[crypto]];
+      });
+      return newHistory;
+    });
+  }, [cryptoPrices]);
+
+  // Fetch user data for leaderboard
   useEffect(() => {
     const fetchUserData = async () => {
       try {
@@ -383,229 +221,435 @@ function App() {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
-        // Trier les données par score décroissant avant de les afficher
+        // Sort data by score in descending order
         const sortedData = data.sort((a, b) => b.score - a.score);
-        setUserData((prevData) => {
-          // Comparer les anciennes et nouvelles données pour éviter un rendu inutile
-          if (JSON.stringify(prevData) !== JSON.stringify(sortedData)) {
-            return sortedData;
-          }
-          return prevData;
-        });
+        
+        // Find current user's rank
+        const userIndex = sortedData.findIndex(user => user.name === username);
+        setUserRank(userIndex !== -1 ? userIndex + 1 : null);
+        
+        setUserData(sortedData);
       } catch (error) {
         console.error('Error fetching user data:', error);
       }
     };
 
-    // Fetch data every 500ms
-    const interval = setInterval(fetchUserData, 500);
+    if (isUsernameSet) {
+      // Fetch data every 2 seconds
+      const interval = setInterval(fetchUserData, 2000);
+      return () => clearInterval(interval);
+    }
+  }, [isUsernameSet, username]);
 
-    return () => clearInterval(interval); // Cleanup interval on component unmount
-  }, []);
-
+  // Update server with user's score
   useEffect(() => {
-    const fetchCurrencyData = async () => {
-      try {
-        const response = await fetch(`${API_BASE_URL}/api/currencies`);
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
+    const updateUserScore = async () => {
+      if (isUsernameSet && username) {
+        try {
+          await fetch(`${API_BASE_URL}/api/users`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ name: username, score: maxUSD }),
+          });
+        } catch (error) {
+          console.error("Error updating score:", error);
         }
-        const data = await response.json();
-        setCurrencyData(data);
-      } catch (error) {
-        console.error('Error fetching currency data:', error);
       }
     };
 
-    // Fetch data every 500ms
-    const interval = setInterval(fetchCurrencyData, 500);
-
-    return () => clearInterval(interval); // Cleanup interval on component unmount
-  }, []);
-
-  // Send updated data to the server
-  useEffect(() => {
-    const sendDataToServer = async () => {
-      try {
-        const response = await fetch(`${API_BASE_URL}/api/update`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            username,
-            USD,
-            maxUSD,
-            cps,
-            shopItems,
-            items,
-          }),
-        });
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-      } catch (error) {
-        console.error('Error sending data to server:', error);
-      }
-    };
-
-    const interval = setInterval(sendDataToServer, 5000); // Send data every 5 seconds
+    // Update score every 5 seconds
+    const interval = setInterval(updateUserScore, 5000);
     return () => clearInterval(interval);
-  }, [username, USD, maxUSD, cps, shopItems, items]);
+  }, [isUsernameSet, username, maxUSD]);
 
+  // Handle username submission
+  const handleUsernameSubmit = () => {
+    if (username.trim()) {
+      setIsUsernameSet(true);
+
+      // Update leaderboard immediately
+      fetch(`${API_BASE_URL}/api/users`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: username, score: maxUSD }),
+      })
+        .then(() => {
+          // Refresh leaderboard data
+          fetch(`${API_BASE_URL}/api/users`)
+            .then(response => response.json())
+            .then(data => setUserData(data))
+            .catch(error => console.error("Error fetching leaderboard data:", error));
+        })
+        .catch(error => console.error("Error updating score:", error));
+    }
+  };
+
+  // Handle clicking on a crypto to manually mine
+  const handleCryptoClick = (crypto) => {
+    setCryptoBalances(prev => ({
+      ...prev,
+      [crypto]: prev[crypto] + 1
+    }));
+  };
+
+  // Handle unlocking a new cryptocurrency
+  const handleUnlockCrypto = (crypto) => {
+    const unlockCost = cryptoPrices[crypto] * 1000; // Cost to unlock
+    if (USD >= unlockCost) {
+      setUSD(prev => prev - unlockCost);
+      setAvailableCryptos(prev => [...prev, crypto]);
+    }
+  };
+
+  // Handle buying an item from the shop
+  const handleBuyItem = (crypto, index) => {
+    const items = shopItems[crypto];
+    const item = items[index];
+
+    if (USD >= item.cost) {
+      setUSD(prev => prev - item.cost);
+      
+      // Update shop items
+      setShopItems(prev => {
+        const newShopItems = { ...prev };
+        const newItems = [...prev[crypto]];
+        newItems[index] = {
+          ...item,
+          count: item.count + 1,
+          cost: Math.round(item.cost * 1.15), // 15% cost increase
+        };
+        newShopItems[crypto] = newItems;
+        return newShopItems;
+      });
+
+      // Update CPS
+      setCps(prev => ({
+        ...prev,
+        [crypto]: prev[crypto] + item.bps,
+      }));
+
+      // Trigger animation for the buy button
+      setButtonAnimation(prev => ({ ...prev, [`buy-${crypto}-${index}`]: true }));
+      setTimeout(() => setButtonAnimation(prev => ({ ...prev, [`buy-${crypto}-${index}`]: false })), 300);
+    }
+  };
+
+  // Show popup for buying crypto
+  const handleBuyCryptoPopup = (crypto) => {
+    setSelectedCrypto(crypto);
+    setCryptoAmount(0); // Reset the input field
+    setBuyOrSell('buy');
+    setShowPopup(true);
+  };
+
+  // Show popup for selling crypto
+  const handleSellCryptoPopup = (crypto) => {
+    setSelectedCrypto(crypto);
+    setCryptoAmount(cryptoBalances[crypto]); // Default to selling all
+    setBuyOrSell('sell');
+    setShowPopup(true);
+  };
+
+  // Handle crypto amount change in popup
+  const handleCryptoAmountChange = (value) => {
+    if (buyOrSell === 'buy') {
+      const cryptoPrice = cryptoPrices[selectedCrypto];
+      const maxAffordable = Math.floor(USD / cryptoPrice);
+      setCryptoAmount(Math.min(Math.max(0, value), maxAffordable));
+    } else {
+      setCryptoAmount(Math.min(Math.max(0, value), cryptoBalances[selectedCrypto]));
+    }
+  };
+
+  // Confirm crypto transaction
+  const handleConfirmTransaction = () => {
+    if (cryptoAmount <= 0) {
+      setShowPopup(false);
+      return;
+    }
+
+    const cryptoPrice = cryptoPrices[selectedCrypto];
+    
+    if (buyOrSell === 'buy') {
+      const totalCost = cryptoAmount * cryptoPrice;
+      setUSD(prev => prev - totalCost);
+      setCryptoBalances(prev => ({
+        ...prev,
+        [selectedCrypto]: prev[selectedCrypto] + cryptoAmount
+      }));
+    } else {
+      const totalGain = cryptoAmount * cryptoPrice;
+      setUSD(prev => {
+        const newUSD = prev + totalGain;
+        setMaxUSD(prevMax => Math.max(prevMax, newUSD));
+        return newUSD;
+      });
+      setCryptoBalances(prev => ({
+        ...prev,
+        [selectedCrypto]: prev[selectedCrypto] - cryptoAmount
+      }));
+    }
+
+    setShowPopup(false);
+  };
+
+  // Render crypto price chart
+  const renderChart = (crypto) => {
+    const data = {
+      labels: priceHistory[crypto]?.map((_, index) => index + 1),
+      datasets: [
+        {
+          label: `${crypto} Price`,
+          data: priceHistory[crypto],
+          segment: {
+            borderColor: (ctx) => {
+              const { p0, p1 } = ctx;
+              return p1.raw > p0.raw ? '#069506' : '#c22929';
+            },
+          },
+          pointBackgroundColor: '#d3d3d3',
+          borderWidth: 2,
+          backgroundColor: 'rgba(6, 149, 6, 0.1)',
+          fill: true,
+          tension: 0.1,
+        },
+      ],
+    };
+
+    const options = {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        x: {
+          grid: { display: false },
+          ticks: { color: '#069506' }
+        },
+        y: {
+          grid: { display: false },
+          ticks: { color: '#069506' }
+        },
+      },
+      plugins: {
+        legend: { labels: { color: '#069506' } }
+      }
+    };
+
+    return (
+      <div key={crypto} className="chart-container">
+        <h3>{cryptoFullNames[crypto]} (${cryptoPrices[crypto].toFixed(6)})</h3>
+        <Line data={data} options={options} />
+        <div className="chart-buttons">
+          <button
+            className={buttonAnimation[`sell-${crypto}`] ? 'button-animation' : ''}
+            onClick={() => handleSellCryptoPopup(crypto)}
+          >
+            Sell {crypto}
+          </button>
+          <button
+            className={buttonAnimation[`buy-${crypto}`] ? 'button-animation' : ''}
+            onClick={() => handleBuyCryptoPopup(crypto)}
+          >
+            Buy {crypto}
+          </button>
+        </div>
+      </div>
+    );
+  };
+
+  // Filter users for leaderboard display
+  const getLeaderboardUsers = () => {
+    if (!userData || userData.length === 0) return [];
+    
+    const result = [];
+    
+    // Add top 3
+    for (let i = 0; i < Math.min(3, userData.length); i++) {
+      result.push(userData[i]);
+    }
+    
+    // Add 3 above and 3 below current user if not in top 3
+    if (userRank && userRank > 3) {
+      result.push({ name: "...", score: 0, separator: true });
+      
+      const start = Math.max(3, userRank - 3);
+      const end = Math.min(userRank + 3, userData.length);
+      
+      for (let i = start; i < end; i++) {
+        result.push(userData[i]);
+      }
+    }
+    
+    return result;
+  };
+
+  // Render username screen
   if (!isUsernameSet) {
     return (
       <div className="App">
         <header className="App-header">
-          <h1 className = "UsernameTitle">Welcome to</h1>
-          <h1 className = "UsernameTitle2">TCrypto</h1>
-
-            <h1 className = "Ask-username">Enter your username</h1>
-            <input
-              type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              placeholder="Your username"
-              className="pixel-input"
-            />
-            <button onClick={handleUsernameSubmit}>Start</button>
-
+          <h1 className="UsernameTitle">Welcome to</h1>
+          <h1 className="UsernameTitle2">Crypto Miner</h1>
+          <h1 className="Ask-username">Enter your username</h1>
+          <input
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            placeholder="Your username"
+            className="pixel-input"
+          />
+          <button onClick={handleUsernameSubmit}>Start</button>
         </header>
       </div>
     );
   }
 
+  // Get next unlockable crypto
+  const nextCrypto = getNextUnlockableCrypto();
+
   return (
     <div className="App">
       <div className="App-main">
         <h1>Crypto Market Simulator</h1>
-        <div className="balances">
-          <p>USD Balance: ${USD.toFixed(2)}</p>
-          <p>Max USD Balance: ${maxUSD.toFixed(2)}</p>
-          {Object.keys(cps).map((crypto) => (
-            availableCryptos.includes(crypto) && (
-              <p key={crypto}>
-                {crypto} Balance: {cps[crypto].toFixed(6)} {crypto} (per second: {cps[crypto].toFixed(6)})
-              </p>
-            )
-          ))}
+        
+        {/* Balance information */}
+        <div className="balances-container">
+          <div className="balance-item">
+            <p>USD Balance: ${USD.toFixed(2)}</p>
+            <p>Max USD Balance: ${maxUSD.toFixed(2)}</p>
+          </div>
+          
+          {/* Crypto balances */}
+          <div className="crypto-balances">
+            {availableCryptos.map(crypto => (
+              <div key={crypto} className="balance-item">
+                <p>{crypto} Balance: {cryptoBalances[crypto].toFixed(6)} {crypto}</p>
+                <p>Per second: {cps[crypto].toFixed(6)} {crypto}</p>
+              </div>
+            ))}
+          </div>
         </div>
+        
+        {/* Clickable crypto logos */}
         <div className="Crypto-container">
-          {Object.keys(cryptoImages).map((crypto) => (
-            availableCryptos.includes(crypto) && (
-              <img
-                key={crypto}
-                src={cryptoImages[crypto]}
-                className="Crypto-logo"
-                alt={crypto}
-                onClick={() => handleCryptoClick(crypto)}
-              />
-            )
+          {availableCryptos.map(crypto => (
+            <img
+              key={crypto}
+              src={cryptoImages[crypto]}
+              className="Crypto-logo"
+              alt={crypto}
+              onClick={() => handleCryptoClick(crypto)}
+            />
           ))}
         </div>
       </div>
-      <header className="App-header">
-        <div className="App-sidebar">
-          <h2>Shop</h2>
-          {Object.keys(cryptoImages).map((crypto) => (
-            !availableCryptos.includes(crypto) ? (
-              <div key={crypto} className="shop-item">
-                <p>{crypto}</p>
-                <button onClick={() => handleBuyCrypto(crypto)}>Unlock {crypto} ($1000)</button>
+
+      {/* Sidebar with shop */}
+      <div className="App-sidebar">
+        <h2>Shop</h2>
+        
+        {/* Next unlockable crypto */}
+        {nextCrypto && (
+          <div className="shop-item">
+            <p>Unlock {cryptoFullNames[nextCrypto]}</p>
+            <button onClick={() => handleUnlockCrypto(nextCrypto)}>
+              ${(cryptoPrices[nextCrypto] * 1000).toFixed(2)}
+            </button>
+          </div>
+        )}
+        
+        {/* Display miners for available cryptos */}
+        {availableCryptos.map(crypto => (
+          <div key={crypto}>
+            <h3>{cryptoFullNames[crypto]} Miners</h3>
+            {shopItems[crypto].map((item, index) => (
+              <div key={index} className="shop-item">
+                <p>{item.name}</p>
+                <p>Cost: ${item.cost.toFixed(2)}</p>
+                <p>Count: {item.count}</p>
+                <p>BPS: {item.bps.toFixed(6)}</p>
+                <button
+                  className={buttonAnimation[`buy-${crypto}-${index}`] ? 'button-animation' : ''}
+                  onClick={() => handleBuyItem(crypto, index)}
+                >
+                  Buy
+                </button>
               </div>
-            ) : (
-              <div key={crypto}>
-                <h3>{crypto} Shop</h3>
-                {renderShopItems(crypto)}
-              </div>
-            )
-          ))}
-        </div>
+            ))}
+          </div>
+        ))}
+      </div>
 
-        <div class="vertical-line">
-        <p>+</p>
-        <p>+</p>
-        <p>+</p>
-        <p>+</p>
-        <p>+</p>  
-        <p>+</p>
-        <p>+</p>
-        <p>+</p>
-        <p>+</p>
-        <p>+</p>
-        <p>+</p>
-        <p>+</p>
-        <p>+</p>
-        <p>+</p>
-        <p>+</p>
-        <p>+</p>
-        <p>+</p>  
-        <p>+</p>
-        <p>+</p>
-        <p>+</p>
-        <p>+</p>
-        <p>+</p>
-        <p>+</p>
-        <p>+</p>
+      {/* Vertical line divider */}
+      <div className="vertical-line">
+        {Array(24).fill('+').map((plus, index) => (
+          <p key={index}>{plus}</p>
+        ))}
+      </div>
 
-        </div>    
+      {/* Crypto market charts */}
+      <div className="App-currencies">
+        <h2>Crypto-Market</h2>
+        {availableCryptos.map(crypto => renderChart(crypto))}
+      </div>
 
-
-      
-
-
-        <div className="App-currencies">
-          <h2>Crypto-Market</h2>
-          {['TCR', 'BNB', 'ETH', 'BTC'].map((crypto) => renderGraph(crypto))}
-        </div>
-
-        <div className="App-leaderboard">
-          <h2 className = "LdTitle">Leaderboard</h2>
-          {userData.length > 0 ? (
-            <table>
-              <thead>
-                <tr>
-                  <th className="LdName">Name</th>
-                  <th className="LdScore">Score</th>
-                </tr>
-              </thead>
-              <tbody>
-                {userData.map((user, index) => (
-                  <tr key={index}>
-                    <td>{user.name}</td>
-                    <td>{user.score}</td>
+      {/* Leaderboard */}
+      <div className="App-leaderboard">
+        <h2 className="LdTitle">Leaderboard</h2>
+        {getLeaderboardUsers().length > 0 ? (
+          <table>
+            <thead>
+              <tr>
+                <th className="LdRank">Rank</th>
+                <th className="LdName">Name</th>
+                <th className="LdScore">Score</th>
+              </tr>
+            </thead>
+            <tbody>
+              {getLeaderboardUsers().map((user, index) => (
+                user.separator ? (
+                  <tr key="separator">
+                    <td colSpan="3">...</td>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          ) : (
-            <p>No data available.</p>
-          )}
-        </div>
-      </header>
-
-      <div className="mining-items">
-        <h2>Mining Items</h2>
-        {renderMiningItems()}
+                ) : (
+                  <tr key={index} className={user.name === username ? 'current-user' : ''}>
+                    <td>{userData.indexOf(user) + 1}</td>
+                    <td>{user.name}</td>
+                    <td>${user.score.toFixed(2)}</td>
+                  </tr>
+                )
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <p>Loading leaderboard data...</p>
+        )}
       </div>
 
+      {/* Buy/Sell Popup */}
       {showPopup && (
         <div className="popup">
           <div className="popup-content">
-            <h3>Buy {selectedCrypto}</h3>
-            <p>Price per unit: ${cryptoPrices[selectedCrypto]}</p>
+            <h3>{buyOrSell === 'buy' ? 'Buy' : 'Sell'} {selectedCrypto}</h3>
+            <p>Price per unit: ${cryptoPrices[selectedCrypto].toFixed(6)}</p>
             <input
               type="number"
               value={cryptoAmount}
               onChange={(e) => handleCryptoAmountChange(Number(e.target.value))}
-              placeholder="Enter amount"
+              placeholder={`Enter amount to ${buyOrSell}`}
             />
-            <p>
-              ${USD.toFixed(2)} - ${cryptoAmount * cryptoPrices[selectedCrypto]} = $
-              {(USD - cryptoAmount * cryptoPrices[selectedCrypto]).toFixed(2)}
-            </p>
+            {buyOrSell === 'buy' ? (
+              <p>
+                ${USD.toFixed(2)} - ${(cryptoAmount * cryptoPrices[selectedCrypto]).toFixed(2)} = $
+                {(USD - cryptoAmount * cryptoPrices[selectedCrypto]).toFixed(2)}
+              </p>
+            ) : (
+              <p>
+                ${USD.toFixed(2)} + ${(cryptoAmount * cryptoPrices[selectedCrypto]).toFixed(2)} = $
+                {(USD + cryptoAmount * cryptoPrices[selectedCrypto]).toFixed(2)}
+              </p>
+            )}
             <div className="popup-buttons">
-              <button onClick={handleConfirmBuyCrypto}>Confirm</button>
+              <button onClick={handleConfirmTransaction}>Confirm</button>
               <button onClick={() => setShowPopup(false)}>Cancel</button>
             </div>
           </div>
