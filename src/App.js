@@ -488,7 +488,7 @@ function App() {
                   <tr key={index} className={user.name === username ? 'current-user' : ''}>
                     <td>{userData.indexOf(user) + 1}</td>
                     <td>{user.name}</td>
-                    <td>${user.score.toFixed(2)}</td>
+                    <td>{user.score.toFixed(2)}</td> {/* Limite à 2 chiffres après la virgule */}
                   </tr>
                 )
               ))}
