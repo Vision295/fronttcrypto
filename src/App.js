@@ -534,7 +534,7 @@ function App() {
                 {userData.map((user, index) => (
                   <tr key={index}>
                     <td>{user.name}</td>
-                    <td>{user.score}</td>
+                    <td>{user.score.toFixed(2)}</td> {/* Limite à 2 chiffres après la virgule */}
                   </tr>
                 ))}
               </tbody>
