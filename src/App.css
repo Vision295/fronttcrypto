@@ -126,9 +126,28 @@ input::placeholder {
 }
 
 .balance-item {
+  display: flex;
+  justify-content: space-between;  /* Distribute items between left and right */
+  flex-direction: row; /* This makes the logo come after the text */
+  gap: 250px; /* Space between text and logo */
   border: 1px solid #069506;
   padding: 10px;
   background-color: #000000;
+}
+
+.balance-item1 {
+  display: flex;
+  flex-direction: column; /* This makes the logo come after the text */
+  gap: 5px; /* Space between text and logo */
+  border: 1px solid #069506;
+  padding: 10px;
+  background-color: #000000;
+}
+
+.balance-text {
+  display: flex;
+  flex-direction: column; /* Stack the balance and per second vertically */
+  gap: 5px; /* Space between balance and per-second text */
 }
 
 .crypto-balances {
@@ -137,13 +156,6 @@ input::placeholder {
   gap: 5px;
 }
 
-/* Clickable crypto logos */
-.Crypto-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 15px;
-  margin-top: 20px;
-}
 
 .Crypto-logo {
   width: 50px;
@@ -154,6 +166,7 @@ input::placeholder {
   border: 1px solid #069506;
   padding: 5px;
   background-color: #000000;
+ 
 }
 
 .Crypto-logo:active {

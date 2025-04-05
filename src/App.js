@@ -517,7 +517,7 @@ function App() {
           
           {/* Balance information */}
           <div className="balances-container">
-            <div className="balance-item">
+            <div className="balance-item1">
               <p>USD Balance: ${USD.toFixed(2)}</p>
               <p>Max USD Balance: ${maxUSD.toFixed(2)}</p>
             </div>
@@ -526,25 +526,25 @@ function App() {
             <div className="crypto-balances">
               {availableCryptos.map(crypto => (
                 <div key={crypto} className="balance-item">
-                  <p>{crypto} Balance: {cryptoBalances[crypto].toFixed(6)} {crypto}</p>
-                  <p>Per second: {cps[crypto].toFixed(6)} {crypto}</p>
+                  <div className="balance-text">
+                    <p>{crypto} Balance: {cryptoBalances[crypto].toFixed(6)}</p>
+                    <p>{crypto} Per second: {cps[crypto].toFixed(6)}</p>
+                  </div>
+                  <div className="Crypto-container">
+                    <img
+                      key={crypto}  
+                      src={cryptoImages[crypto]}
+                      className="Crypto-logo"
+                      alt={crypto}
+                      onClick={() => handleCryptoClick(crypto)}
+                    />
+                  </div>
                 </div>
               ))}
             </div>
           </div>
           
-          {/* Clickable crypto logos */}
-          <div className="Crypto-container">
-            {availableCryptos.map(crypto => (
-              <img
-                key={crypto}
-                src={cryptoImages[crypto]}
-                className="Crypto-logo"
-                alt={crypto}
-                onClick={() => handleCryptoClick(crypto)}
-              />
-            ))}
-          </div>
+
         </div>
       )}
 
