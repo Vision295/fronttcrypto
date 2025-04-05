@@ -358,15 +358,35 @@ input::placeholder {
   color: #000000;
 }
 
+/* Vertical Edge Button - Leaderboard */
+.vertical-button {
+  position: fixed;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+  background-color: #000000;
+  color: #069506;
+  border: 2px solid #069506;
+  padding: 15px 8px;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 10px;
+  cursor: pointer;
+  z-index: 999;
+  transition: background-color 0.2s ease;
+}
+
 /* Leaderboard styles */
 .App-leaderboard {
   position: absolute;
-  top: 300px;
-  left: 10px;
+  top: 95px;
+  left: 40px;
   color: #069506;
   font-size: 10px;
   line-height: 1;
-  width: 300px;
+  height: 370px;
+  width: 580px;
   padding: 10px;
   border: 1px solid #069506;
   background-color: #000000;

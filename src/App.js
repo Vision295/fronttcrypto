@@ -144,6 +144,9 @@ function App() {
   const [userData, setUserData] = useState([]);
   const [userRank, setUserRank] = useState(null);
 
+  // show leaderboard
+  const [showLeaderboard, setShowLeaderboard] = useState(false);
+
   // Get the next unlockable cryptocurrency
   const getNextUnlockableCrypto = () => {
     const nextIndex = cryptoUnlockOrder.findIndex(crypto => !availableCryptos.includes(crypto));
@@ -591,39 +594,47 @@ function App() {
         <h2>Crypto-Market</h2>
         {availableCryptos.map(crypto => renderChart(crypto))}
       </div>
+      
+      {/* Leaderboard button */}
+      <button class="vertical-button" onClick={() => setShowLeaderboard(prev => !prev)}>
+        {showLeaderboard ? 'Hide Leaderboard' : 'Show Leaderboard'}
+      </button>
+
 
       {/* Leaderboard */}
-      <div className="App-leaderboard">
-        <h2 className="LdTitle">Leaderboard</h2>
-        {getLeaderboardUsers().length > 0 ? (
-          <table>
-            <thead>
-              <tr>
-                <th className="LdRank">Rank</th>
-                <th className="LdName">Name</th>
-                <th className="LdScore">Score</th>
-              </tr>
-            </thead>
-            <tbody>
-              {getLeaderboardUsers().map((user, index) => (
-                user.separator ? (
-                  <tr key="separator">
-                    <td colSpan="3">...</td>
-                  </tr>
-                ) : (
-                  <tr key={index} className={user.name === username ? 'current-user' : ''}>
-                    <td>{userData.indexOf(user) + 1}</td>
-                    <td>{user.name}</td>
-                    <td>${user.score.toFixed(2)}</td>
-                  </tr>
-                )
-              ))}
-            </tbody>
-          </table>
-        ) : (
-          <p>Loading leaderboard data...</p>
-        )}
-      </div>
+      {showLeaderboard && (
+        <div className="App-leaderboard">
+          <h2 className="LdTitle">Leaderboard</h2>
+          {getLeaderboardUsers().length > 0 ? (
+            <table>
+              <thead>
+                <tr>
+                  <th className="LdRank">Rank</th>
+                  <th className="LdName">Name</th>
+                  <th className="LdScore">Score</th>
+                </tr>
+              </thead>
+              <tbody>
+                {getLeaderboardUsers().map((user, index) => (
+                  user.separator ? (
+                    <tr key="separator">
+                      <td colSpan="3">...</td>
+                    </tr>
+                  ) : (
+                    <tr key={index} className={user.name === username ? 'current-user' : ''}>
+                      <td>{userData.indexOf(user) + 1}</td>
+                      <td>{user.name}</td>
+                      <td>${user.score.toFixed(2)}</td>
+                    </tr>
+                  )
+                ))}
+              </tbody>
+            </table>
+          ) : (
+            <p>Loading leaderboard data...</p>
+          )}
+        </div>
+      )}
 
       {/* Buy/Sell Popup */}
       {showPopup && (
