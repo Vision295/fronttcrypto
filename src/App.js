@@ -511,40 +511,42 @@ function App() {
 
   return (
     <div className="App">
-      <div className="App-main">
-        <h1>Crypto Market Simulator</h1>
-        
-        {/* Balance information */}
-        <div className="balances-container">
-          <div className="balance-item">
-            <p>USD Balance: ${USD.toFixed(2)}</p>
-            <p>Max USD Balance: ${maxUSD.toFixed(2)}</p>
+      {!showLeaderboard && (
+        <div className="App-main">
+          <h1>Crypto Market Simulator</h1>
+          
+          {/* Balance information */}
+          <div className="balances-container">
+            <div className="balance-item">
+              <p>USD Balance: ${USD.toFixed(2)}</p>
+              <p>Max USD Balance: ${maxUSD.toFixed(2)}</p>
+            </div>
+            
+            {/* Crypto balances */}
+            <div className="crypto-balances">
+              {availableCryptos.map(crypto => (
+                <div key={crypto} className="balance-item">
+                  <p>{crypto} Balance: {cryptoBalances[crypto].toFixed(6)} {crypto}</p>
+                  <p>Per second: {cps[crypto].toFixed(6)} {crypto}</p>
+                </div>
+              ))}
+            </div>
           </div>
           
-          {/* Crypto balances */}
-          <div className="crypto-balances">
+          {/* Clickable crypto logos */}
+          <div className="Crypto-container">
             {availableCryptos.map(crypto => (
-              <div key={crypto} className="balance-item">
-                <p>{crypto} Balance: {cryptoBalances[crypto].toFixed(6)} {crypto}</p>
-                <p>Per second: {cps[crypto].toFixed(6)} {crypto}</p>
-              </div>
+              <img
+                key={crypto}
+                src={cryptoImages[crypto]}
+                className="Crypto-logo"
+                alt={crypto}
+                onClick={() => handleCryptoClick(crypto)}
+              />
             ))}
           </div>
         </div>
-        
-        {/* Clickable crypto logos */}
-        <div className="Crypto-container">
-          {availableCryptos.map(crypto => (
-            <img
-              key={crypto}
-              src={cryptoImages[crypto]}
-              className="Crypto-logo"
-              alt={crypto}
-              onClick={() => handleCryptoClick(crypto)}
-            />
-          ))}
-        </div>
-      </div>
+      )}
 
       {/* Sidebar with shop */}
       <div className="App-sidebar">
@@ -600,9 +602,14 @@ function App() {
         {showLeaderboard ? 'Hide Leaderboard' : 'Show Leaderboard'}
       </button>
 
-
+      {showLeaderboard && (
+        <div className="leaderboard-title">
+          <h1>Crypto Market Simulator</h1>
+        </div>
+      )}
       {/* Leaderboard */}
       {showLeaderboard && (
+        
         <div className="App-leaderboard">
           <h2 className="LdTitle">Leaderboard</h2>
           {getLeaderboardUsers().length > 0 ? (
