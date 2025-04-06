@@ -604,12 +604,6 @@ function App() {
         ))}
       </div>
 
-      {/* Vertical line divider */}
-      <div className="vertical-line">
-        {Array(24).fill('+').map((plus, index) => (
-          <p key={index}>{plus}</p>
-        ))}
-      </div>
 
       {/* Crypto market charts */}
       <div className="App-currencies">
