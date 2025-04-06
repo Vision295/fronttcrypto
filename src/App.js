@@ -445,6 +445,7 @@ function App() {
     };
 
     return (
+
       <div key={crypto} className="chart-container">
         <h3>{cryptoFullNames[crypto]} (${cryptoPrices[crypto].toFixed(6)})</h3>
         <Line data={data} options={options} />
@@ -463,6 +464,7 @@ function App() {
           </button>
         </div>
       </div>
+  
     );
   };
 
