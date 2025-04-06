@@ -50,6 +50,21 @@ const cryptoFullNames = {
   BTC: "Bitcoin",
 };
 
+// Définir les descriptions des cryptomonnaies
+const cryptoDescriptions = {
+  SHIB: "Meme token that gained popularity in 2021",
+  DOGE: "Original meme cryptocurrency started as a joke",
+  LTC: "Silver to Bitcoin's gold, faster transaction times",
+  ADA: "Proof-of-stake blockchain platform with academic research",
+  DOT: "Multi-chain protocol connecting different blockchains",
+  SOL: "High-performance blockchain supporting smart contracts",
+  AVAX: "Platform for custom blockchain networks and decentralized apps",
+  BNB: "Utility token for the Binance exchange ecosystem",
+  XRP: "Digital payment protocol and cryptocurrency",
+  ETH: "Decentralized computing platform with smart contract functionality",
+  BTC: "First cryptocurrency and largest by market capitalization",
+};
+
 // Define crypto unlock order
 const cryptoUnlockOrder = ["SHIB", "DOGE", "LTC", "ADA", "DOT", "SOL", "AVAX", "BNB", "XRP", "ETH", "BTC"];
 
@@ -119,7 +134,7 @@ function App() {
 
       // Base cost différente selon la rareté de la crypto
       let baseCost = cryptoPrices[crypto] * 100 * valueCoefficient;
-      if (baseCost < 0.01) baseCost = 0.01; // Minimum cost
+      if (baseCost < 0.1) baseCost = 0.1; // Minimum cost
 
       items[crypto] = [
         { 
@@ -601,6 +616,7 @@ function App() {
                       src={cryptoImages[crypto]}
                       className="Crypto-logo"
                       alt={crypto}
+                      title={`${cryptoFullNames[crypto]}: ${cryptoDescriptions[crypto]}`}
                       onClick={() => {
                         handleCryptoClick(crypto);
                         handleCryptoLogoClick(crypto); // Highlight the clicked crypto

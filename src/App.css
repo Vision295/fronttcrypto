@@ -563,3 +563,35 @@ input::placeholder {
     display: none;
   }
 }
+
+/* Tooltip styles */
+.crypto-tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.crypto-tooltip .tooltip-text {
+  visibility: hidden;
+  width: 200px;
+  background-color: #000;
+  color: #069506;
+  text-align: center;
+  border-radius: 0;
+  border: 1px solid #069506;
+  padding: 8px;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.3s;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 8px;
+  line-height: 1.4;
+}
+
+.crypto-tooltip:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}
