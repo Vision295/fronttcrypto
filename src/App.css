@@ -56,10 +56,22 @@ input::placeholder {
 
 /* App layout sections */
 .App {
+
+
+}
+
+.Title-container {
   display: flex;
-  position: relative;
-  height: 100vh;
-  overflow: auto;
+  flex-direction: column; /* This makes the logo come after the text */
+  gap: 1px; 
+  align-items: center;
+
+}
+
+.Title-button {
+  width: 120px;
+  
+  
 }
 
 /* Username screen styles */

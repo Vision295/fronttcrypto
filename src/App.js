@@ -500,14 +500,27 @@ function App() {
           <h1 className="UsernameTitle">Welcome to</h1>
           <h1 className="UsernameTitle2">Crypto Miner</h1>
           <h1 className="Ask-username">Enter your username</h1>
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            placeholder="Your username"
-            className="pixel-input"
-          />
-          <button onClick={handleUsernameSubmit}>Start</button>
+
+         
+            <form onSubmit={(e) => {
+            e.preventDefault(); // prevent page reload
+            handleUsernameSubmit();
+            }}>
+              <div className="Title-container">
+              <input
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                placeholder="Your username"
+                className="pixel-input"
+              />
+              <button className="Title-button" onClick={handleUsernameSubmit}>Start</button>
+              </div>
+          </form>
+
+          
+
+
         </header>
       </div>
     );
