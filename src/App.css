@@ -246,6 +246,7 @@ input::placeholder {
   z-index: 1;
   max-height: 90vh;
   overflow-y: auto;
+  overflow-x: hidden; /* Prevent horizontal scroll */
   border: 1px solid #069506;
 }
 
@@ -269,6 +270,7 @@ input::placeholder {
   flex-direction: column;
   justify-content: space-between;
   margin-bottom: 75px;
+
 
 }
 
@@ -467,6 +469,7 @@ input::placeholder {
 @media (max-width: 1200px) {
   .App-currencies {
     width: 400px;
+ 
   }
   
   .App-sidebar {
