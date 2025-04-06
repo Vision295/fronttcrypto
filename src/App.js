@@ -184,36 +184,43 @@ function App() {
     return () => clearInterval(interval);
   }, [cps, cryptoPrices]);
 
-  // Simulate price fluctuations for cryptos
+  // Update crypto prices for market
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCryptoPrices(prevPrices => {
-        const newPrices = { ...prevPrices };
-        Object.keys(newPrices).forEach(crypto => {
-          // Create realistic fluctuations based on coin value
-          const volatilityFactor = crypto === 'BTC' ? 0.02 : 
-                                  crypto === 'ETH' ? 0.025 : 
-                                  crypto === 'SHIB' ? 0.04 : 0.03;
-          
-          const change = 0.98 + Math.random() * volatilityFactor * 2;
-          newPrices[crypto] = parseFloat((prevPrices[crypto] * change).toFixed(6));
-        });
-        return newPrices;
-      });
-    }, 5000);
+    const fetchCryptoPrices = async () => {
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/crypto-prices`);
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        const prices = await response.json();
+        setCryptoPrices(prices);
+      } catch (error) {
+        console.error('Error fetching crypto prices:', error);
+      }
+    };
+  
+    // Fetch prices every 5 seconds
+    fetchCryptoPrices();
+    const interval = setInterval(fetchCryptoPrices, 5000);
     return () => clearInterval(interval);
   }, []);
 
   // Update price history for charts
   useEffect(() => {
-    setPriceHistory(prev => {
-      const newHistory = { ...prev };
-      Object.keys(cryptoPrices).forEach(crypto => {
-        newHistory[crypto] = [...prev[crypto].slice(-19), cryptoPrices[crypto]];
-      });
-      return newHistory;
-    });
-  }, [cryptoPrices]);
+    const fetchPriceHistory = async () => {
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/price-history`);
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        const history = await response.json();
+        setPriceHistory(history);
+      } catch (error) {
+        console.error('Error fetching price history:', error);
+      }
+    };
+  
+    // Fetch price history every 5 seconds
+    fetchPriceHistory();
+    const interval = setInterval(fetchPriceHistory, 5000);
+    return () => clearInterval(interval);
+  }, []);
 
   // Fetch user data for leaderboard
   useEffect(() => {
