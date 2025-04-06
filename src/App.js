@@ -55,8 +55,8 @@ const cryptoUnlockOrder = ["SHIB", "DOGE", "LTC", "ADA", "DOT", "SOL", "AVAX", "
 
 function App() {
   // User state
-  const [USD, setUSD] = useState(1000000);
-  const [maxUSD, setMaxUSD] = useState(1000000);
+  const [USD, setUSD] = useState(1);
+  const [maxUSD, setMaxUSD] = useState(1);
   const [username, setUsername] = useState("");
   const [isUsernameSet, setIsUsernameSet] = useState(false);
   
@@ -106,17 +106,52 @@ function App() {
     BTC: 30000,
   });
   
-  // Shop items configuration
+  // Ajout du state pour le shop sélectionné
+  const [selectedShopCrypto, setSelectedShopCrypto] = useState('SHIB'); // Crypto par défaut pour le shop
+  
+  // Shop items configuration avec meilleur équilibrage
   const [shopItems, setShopItems] = useState(() => {
     const items = {};
     Object.keys(cryptoFullNames).forEach(crypto => {
-      // Create miners with progressively higher costs and returns based on crypto value
-      const baseCost = cryptoPrices[crypto] * 10;
+      // Coefficient basé sur la valeur de la crypto
+      let valueCoefficient = Math.log10(Math.max(1, cryptoPrices[crypto] * 1000));
+      if (valueCoefficient < 0.1) valueCoefficient = 0.1; // Minimum coefficient
+
+      // Base cost différente selon la rareté de la crypto
+      let baseCost = cryptoPrices[crypto] * 100 * valueCoefficient;
+      if (baseCost < 0.01) baseCost = 0.01; // Minimum cost
+
       items[crypto] = [
-        { name: 'ASIC Miner', cost: baseCost, count: 0, bps: 0.001 * cryptoPrices[crypto] },
-        { name: 'GPU Miner', cost: baseCost * 10, count: 0, bps: 0.004 * cryptoPrices[crypto] },
-        { name: 'Mining Slave', cost: baseCost * 100, count: 0, bps: 0.01 * cryptoPrices[crypto] },
-        { name: 'Mining Farm', cost: baseCost * 1000, count: 0, bps: 0.03 * cryptoPrices[crypto] },
+        { 
+          name: 'Basic Miner', 
+          cost: baseCost, 
+          count: 0, 
+          bps: 0.002 * valueCoefficient
+        },
+        { 
+          name: 'Standard Rig', 
+          cost: baseCost * 5, 
+          count: 0, 
+          bps: 0.01 * valueCoefficient 
+        },
+        { 
+          name: 'Advanced Rig', 
+          cost: baseCost * 20, 
+          count: 0, 
+          bps: 0.05 * valueCoefficient 
+        },
+        { 
+          name: 'Mining Farm', 
+          cost: baseCost * 100, 
+          count: 0, 
+          bps: 0.25 * valueCoefficient 
+        },
+        { 
+          name: 'Quantum Miner', 
+          cost: baseCost * 500, 
+          count: 0, 
+          bps: 1.5 * valueCoefficient 
+        }
       ];
     });
     return items;
@@ -583,7 +618,7 @@ function App() {
 
       {/* Sidebar with shop */}
       <div className="App-sidebar">
-        <h2>Shop</h2>
+        <h2>Mining Shop</h2>
         
         {/* Next unlockable crypto */}
         {nextCrypto && (
@@ -595,28 +630,40 @@ function App() {
           </div>
         )}
         
-        {/* Display miners for available cryptos */}
-        {selectedCryptoForShop ? (
-          <div>
-            <h3>{cryptoFullNames[selectedCryptoForShop]} Miners</h3>
-            {shopItems[selectedCryptoForShop].map((item, index) => (
-              <div key={index} className="shop-item">
-                <p>{item.name}</p>
-                <p>Cost: ${item.cost.toFixed(2)}</p>
-                <p>Count: {item.count}</p>
-                <p>BPS: {item.bps.toFixed(6)}</p>
-                <button
-                  className={buttonAnimation[`buy-${selectedCryptoForShop}-${index}`] ? 'button-animation' : ''}
-                  onClick={() => handleBuyItem(selectedCryptoForShop, index)}
-                >
-                  Buy
-                </button>
-              </div>
+        {/* Crypto selector */}
+        <div className="crypto-selector">
+          <label htmlFor="crypto-select">Select Cryptocurrency:</label>
+          <select 
+            id="crypto-select" 
+            value={selectedShopCrypto} 
+            onChange={(e) => setSelectedShopCrypto(e.target.value)}
+          >
+            {availableCryptos.map(crypto => (
+              <option key={crypto} value={crypto}>
+                {cryptoFullNames[crypto]} ({crypto})
+              </option>
             ))}
-          </div>
-        ) : (
-          <p>Select a cryptocurrency to view its shop items.</p>
-        )}
+          </select>
+        </div>
+        
+        {/* Display miners for selected crypto only */}
+        <div className="miners-container">
+          <h3>{cryptoFullNames[selectedShopCrypto]} Miners</h3>
+          {shopItems[selectedShopCrypto].map((item, index) => (
+            <div key={index} className="shop-item">
+              <p>{item.name}</p>
+              <p>Cost: ${item.cost.toFixed(2)}</p>
+              <p>Count: {item.count}</p>
+              <p>{selectedShopCrypto} per sec: {item.bps.toFixed(6)}</p>
+              <button
+                className={buttonAnimation[`buy-${selectedShopCrypto}-${index}`] ? 'button-animation' : ''}
+                onClick={() => handleBuyItem(selectedShopCrypto, index)}
+              >
+                Buy
+              </button>
+            </div>
+          ))}
+        </div>
       </div>
 
 

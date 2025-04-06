@@ -54,7 +54,6 @@ input::placeholder {
   width: 250px;
 }
 
-
 .Title-container {
   display: flex;
   flex-direction: column; /* This makes the logo come after the text */
@@ -187,7 +186,7 @@ input::placeholder {
   transform: scale(0.95);
 }
 
-/* Shop sidebar */
+/* Shop sidebar - Fixed position */
 .App-sidebar {
   position: absolute;
   top: 10px;
@@ -196,8 +195,73 @@ input::placeholder {
   padding: 10px;
   background-color: #000000;
   border: 1px solid #069506;
-  max-height: 93vh;
+  max-height: 90vh; /* Limiter la hauteur */
+  overflow: hidden; /* Cacher le débordement */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Crypto selector styles */
+.crypto-selector {
+  margin: 15px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.crypto-selector label {
+  font-size: 12px;
+  color: #069506;
+}
+
+.crypto-selector select {
+  font-family: 'Press Start 2P', cursive;
+  background-color: #000000;
+  border: 2px solid #069506;
+  color: #069506;
+  padding: 8px;
+  cursor: pointer;
+  font-size: 10px;
+}
+
+.crypto-selector select:focus {
+  outline: none;
+  box-shadow: 0 0 5px #069506;
+}
+
+/* Miners container with scroll */
+.miners-container {
   overflow-y: auto;
+  max-height: calc(90vh - 150px); /* Adjust based on other elements */
+  padding-right: 5px;
+}
+
+/* Shop item focus effects */
+.shop-item:hover {
+  background-color: rgba(6, 149, 6, 0.1);
+}
+
+/* Improved button styles */
+.shop-item button {
+  font-family: 'Press Start 2P', cursive;
+  cursor: pointer;
+  border: 2px solid #069506;
+  background-color: #000000;
+  color: #069506;
+  padding: 8px 15px;
+  transition: all 0.2s ease;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.shop-item button:hover {
+  background-color: #069506;
+  color: #000000;
+  transform: scale(1.02);
+}
+
+.shop-item button:active {
+  transform: scale(0.98);
 }
 
 .App-sidebar h2 {
