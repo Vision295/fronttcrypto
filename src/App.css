@@ -54,11 +54,6 @@ input::placeholder {
   width: 250px;
 }
 
-/* App layout sections */
-.App {
-
-
-}
 
 .Title-container {
   display: flex;
@@ -141,17 +136,24 @@ input::placeholder {
   display: flex;
   justify-content: space-between;  /* Distribute items between left and right */
   flex-direction: row; /* This makes the logo come after the text */
-  gap: 250px; /* Space between text and logo */
+  gap: 100px; /* Space between text and logo */
   border: 1px solid #069506;
   padding: 10px;
   background-color: #000000;
 }
 
+.balance-item.highlighted {
+  border: 5px solid #069506;
+  background-color: #0695063a; /* Light golden background */
+  transition: background-color 0.3s ease, border 0.3s ease;
+}
+
 .balance-item1 {
+  color: goldenrod;
   display: flex;
   flex-direction: column; /* This makes the logo come after the text */
   gap: 5px; /* Space between text and logo */
-  border: 1px solid #069506;
+  border: 1px solid goldenrod;
   padding: 10px;
   background-color: #000000;
 }
@@ -194,7 +196,7 @@ input::placeholder {
   padding: 10px;
   background-color: #000000;
   border: 1px solid #069506;
-  max-height: 90vh;
+  max-height: 93vh;
   overflow-y: auto;
 }
 
@@ -244,7 +246,7 @@ input::placeholder {
   padding: 20px;
   background-color: #000000;
   z-index: 1;
-  max-height: 90vh;
+  max-height: 90.5vh;
   overflow-y: auto;
   overflow-x: hidden; /* Prevent horizontal scroll */
   border: 1px solid #069506;

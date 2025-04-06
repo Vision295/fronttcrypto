@@ -153,6 +153,14 @@ function App() {
     return nextIndex !== -1 ? cryptoUnlockOrder[nextIndex] : null;
   };
 
+  const [selectedCryptoForShop, setSelectedCryptoForShop] = useState(null);
+
+  const handleCryptoLogoClick = (crypto) => {
+    setSelectedCryptoForShop(crypto);
+  };
+
+
+
   // Increment crypto balances based on production per second
   useEffect(() => {
     const interval = setInterval(() => {
@@ -547,7 +555,7 @@ function App() {
             {/* Crypto balances */}
             <div className="crypto-balances">
               {availableCryptos.map(crypto => (
-                <div key={crypto} className="balance-item">
+                <div key={crypto} className={`balance-item ${selectedCryptoForShop === crypto ? 'highlighted' : ''}`}>
                   <div className="balance-text">
                     <p>{crypto} Balance: {cryptoBalances[crypto].toFixed(6)}</p>
                     <p>{crypto} Per second: {cps[crypto].toFixed(6)}</p>
@@ -558,7 +566,10 @@ function App() {
                       src={cryptoImages[crypto]}
                       className="Crypto-logo"
                       alt={crypto}
-                      onClick={() => handleCryptoClick(crypto)}
+                      onClick={() => {
+                        handleCryptoClick(crypto);
+                        handleCryptoLogoClick(crypto); // Highlight the clicked crypto
+                      }}
                     />
                   </div>
                 </div>
@@ -585,25 +596,27 @@ function App() {
         )}
         
         {/* Display miners for available cryptos */}
-        {availableCryptos.map(crypto => (
-          <div key={crypto}>
-            <h3>{cryptoFullNames[crypto]} Miners</h3>
-            {shopItems[crypto].map((item, index) => (
+        {selectedCryptoForShop ? (
+          <div>
+            <h3>{cryptoFullNames[selectedCryptoForShop]} Miners</h3>
+            {shopItems[selectedCryptoForShop].map((item, index) => (
               <div key={index} className="shop-item">
                 <p>{item.name}</p>
                 <p>Cost: ${item.cost.toFixed(2)}</p>
                 <p>Count: {item.count}</p>
                 <p>BPS: {item.bps.toFixed(6)}</p>
                 <button
-                  className={buttonAnimation[`buy-${crypto}-${index}`] ? 'button-animation' : ''}
-                  onClick={() => handleBuyItem(crypto, index)}
+                  className={buttonAnimation[`buy-${selectedCryptoForShop}-${index}`] ? 'button-animation' : ''}
+                  onClick={() => handleBuyItem(selectedCryptoForShop, index)}
                 >
                   Buy
                 </button>
               </div>
             ))}
           </div>
-        ))}
+        ) : (
+          <p>Select a cryptocurrency to view its shop items.</p>
+        )}
       </div>
 
 
