@@ -55,8 +55,8 @@ const cryptoUnlockOrder = ["SHIB", "DOGE", "LTC", "ADA", "DOT", "SOL", "AVAX", "
 
 function App() {
   // User state
-  const [USD, setUSD] = useState(1);
-  const [maxUSD, setMaxUSD] = useState(1);
+  const [USD, setUSD] = useState(10);
+  const [maxUSD, setMaxUSD] = useState(10);
   const [username, setUsername] = useState("");
   const [isUsernameSet, setIsUsernameSet] = useState(false);
   
@@ -115,7 +115,7 @@ function App() {
     Object.keys(cryptoFullNames).forEach(crypto => {
       // Coefficient basé sur la valeur de la crypto
       let valueCoefficient = Math.log10(Math.max(1, cryptoPrices[crypto] * 1000));
-      if (valueCoefficient < 0.1) valueCoefficient = 0.1; // Minimum coefficient
+      if (valueCoefficient < 10) valueCoefficient = 0.1; // Minimum coefficient
 
       // Base cost différente selon la rareté de la crypto
       let baseCost = cryptoPrices[crypto] * 100 * valueCoefficient;
