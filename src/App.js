@@ -115,7 +115,7 @@ function App() {
     Object.keys(cryptoFullNames).forEach(crypto => {
       // Coefficient basé sur la valeur de la crypto
       let valueCoefficient = Math.log10(Math.max(1, cryptoPrices[crypto] * 1000));
-      if (valueCoefficient < 1) valueCoefficient = 1; // Minimum coefficient
+      if (valueCoefficient < 0.1) valueCoefficient = 0.1; // Minimum coefficient
 
       // Base cost différente selon la rareté de la crypto
       let baseCost = cryptoPrices[crypto] * 100 * valueCoefficient;
