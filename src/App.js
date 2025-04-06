@@ -240,9 +240,9 @@ function App() {
       }
     };
   
-    // Fetch prices every 5 seconds
+    // Fetch prices every 2 seconds
     fetchCryptoPrices();
-    const interval = setInterval(fetchCryptoPrices, 5000);
+    const interval = setInterval(fetchCryptoPrices, 2000);
     return () => clearInterval(interval);
   }, []);
 
