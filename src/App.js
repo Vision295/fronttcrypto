@@ -55,8 +55,8 @@ const cryptoUnlockOrder = ["SHIB", "DOGE", "LTC", "ADA", "DOT", "SOL", "AVAX", "
 
 function App() {
   // User state
-  const [USD, setUSD] = useState(10);
-  const [maxUSD, setMaxUSD] = useState(10);
+  const [USD, setUSD] = useState(10000000);
+  const [maxUSD, setMaxUSD] = useState(100000000000);
   const [username, setUsername] = useState("");
   const [isUsernameSet, setIsUsernameSet] = useState(false);
   
