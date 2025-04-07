@@ -203,59 +203,62 @@ function App() {
     return history;
   });
 
-
-  // Je m'arrete là pour les commentaires pour le moment je vais dodo
-
-
-
-  // Popup states
-  const [showPopup, setShowPopup] = useState(false);
-  const [selectedCrypto, setSelectedCrypto] = useState(null);
-  const [cryptoAmount, setCryptoAmount] = useState(0);
-  const [buyOrSell, setBuyOrSell] = useState('buy');
+  // Achat/Vente de crypto dans la popup
+  const [showPopup, setShowPopup] = useState(false); // Bool qui détermine si la popup de vente est visible
+  const [selectedCrypto, setSelectedCrypto] = useState(null); // Crypto sélectionnée pour buy/sell dans la popup
+  const [cryptoAmount, setCryptoAmount] = useState(0); // Quantité de crypto entrée pour buy/sell dans la popup
+  const [buyOrSell, setBuyOrSell] = useState('buy'); // L'action de la popup est buy or sell
   
-  // Leaderboard data
-  const [userData, setUserData] = useState([]);
-  const [userRank, setUserRank] = useState(null);
-
-  // Montrer le leaderboard
-  const [showLeaderboard, setShowLeaderboard] = useState(false);
+  // Leaderboard
+  const [userData, setUserData] = useState([]); // Liste des utilisateurs du leaderboard (rangé en desc order plus tard)
+  const [userRank, setUserRank] = useState(null); // Rang actuel de l'utilisateur
+  const [showLeaderboard, setShowLeaderboard] = useState(false); // Bool qui détermine si le leaderboard est visible
 
   // Débloque la crypto suivante
-  // UseState de cryptoUnlockOrder
   // Utilise availableCryptos (liste des cypto-monnaies actuellement disponibles, il y a seulement SHIB au départ)
+  // Utilise cryptoUnlockOrder (crypto-monnaies dans l'ordre de déblocage)
+  // Renvoie la prochaine crypto-monnaie à débloquer ou null si toutes sont déjà débloquées
+  const getNextUnlockableCrypto = () => {
+    const nextIndex = cryptoUnlockOrder.findIndex(crypto => !availableCryptos.includes(crypto));
+    return nextIndex !== -1 ? cryptoUnlockOrder[nextIndex] : null;
+  };
 
-/**
- * Détermine la prochaine cryptomonnaie à débloquer dans le jeu.
- *
- * @returns {string|null} - La prochaine cryptomonnaie à débloquer (abréviation, ex: "DOGE"),
- *                          ou `null` si toutes les cryptomonnaies sont déjà débloquées.
- *
- * Fonctionnement :
- * - Parcourt le tableau `cryptoUnlockOrder` pour trouver la première cryptomonnaie
- *   qui n'est pas encore présente dans `availableCryptos`.
- * - Si une cryptomonnaie non débloquée est trouvée, elle est retournée.
- * - Si toutes les cryptomonnaies sont débloquées, la fonction retourne `null`.
- *
- * Exemple :
- * - `cryptoUnlockOrder = ["SHIB", "DOGE", "LTC", "ADA"]`
- * - `availableCryptos = ["SHIB", "DOGE"]`
- * - Résultat : "LTC"
- */
-const getNextUnlockableCrypto = () => {
-  const nextIndex = cryptoUnlockOrder.findIndex(crypto => !availableCryptos.includes(crypto));
-  return nextIndex !== -1 ? cryptoUnlockOrder[nextIndex] : null;
-};
-
+  // Highlight la crypto-monnaie sélectionnée dans le shop
   const [selectedCryptoForShop, setSelectedCryptoForShop] = useState(null);
 
+
+  // Fin des useState, début des useEffect
+
+
+  // Fonction pour update la crypto-monnaie sélectionnée dans le shop
+  // Utilisée pour highlight la crypto-monnaie cliquée
   const handleCryptoLogoClick = (crypto) => {
     setSelectedCryptoForShop(crypto);
   };
 
 
 
-  // Increment crypto balances based on production per second
+
+  /* Fonctionnement de useEffect :
+    Hook qui permet d'exécuter du code en réponse à des changements
+
+    Structure de base : 
+        useEffect(() => {
+      // Code à exécuter (effet)
+      return () => {
+        // Code de nettoyage (optionnel)
+      };
+    }, [dépendances]);
+
+    S'il n'y a pas de dépendances, l'effet s'exécute à chaque rendu
+    S'il y a des dépendances, l'effet s'exécute uniquement lorsque ces dépendances changent
+    Le netttoyage sert à éviter les surplus et fuites de mémoire
+  */
+
+
+  // Incremente le solde chaque crypto-monnaie en fonction de leur cps
+  // Crée un intervale pour éxecuter une fonction tout les 1000 ms
+  // On clean l'intervalle
   useEffect(() => {
     const interval = setInterval(() => {
       setCryptoBalances(prev => {
@@ -268,23 +271,6 @@ const getNextUnlockableCrypto = () => {
     }, 1000);
     return () => clearInterval(interval);
   }, [cps]);
-
-  // Update USD based on crypto production value
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setUSD(prevUSD => {
-        let earnedUSD = 0;
-        Object.keys(cps).forEach(crypto => {
-          earnedUSD += cps[crypto] * cryptoPrices[crypto];
-        });
-        const newUSD = prevUSD + earnedUSD;
-        // Update maxUSD if current balance is higher
-        setMaxUSD(prevMax => Math.max(prevMax, newUSD));
-        return newUSD;
-      });
-    }, 1000);
-    return () => clearInterval(interval);
-  }, [cps, cryptoPrices]);
 
   // Update crypto prices for market
   useEffect(() => {
