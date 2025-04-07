@@ -78,9 +78,6 @@ const cryptoDescriptions = {
 // Définit l'ordre dans lequel les cryptomonnaies peuvent être débloquées.
 const cryptoUnlockOrder = ["SHIB", "DOGE", "ADA", "XRP", "DOT", "AVAX", "SOL", "LTC", "BNB", "ETH", "BTC"];
 
-
-
-
 function App() {
   // État utilisateur
   // `USD` représente le solde en dollars de l'utilisateur.
