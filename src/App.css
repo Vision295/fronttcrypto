@@ -129,7 +129,10 @@ input::placeholder {
   flex-direction: column;
   gap: 10px;
   margin-bottom: 20px;
+  overflow : scroll;
+  max-height: 85vh;
 }
+
 
 .balance-item {
   display: flex;
