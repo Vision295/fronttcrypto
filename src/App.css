@@ -132,6 +132,7 @@ input::placeholder {
 }
 
 .balance-item {
+  position: relative; /* Required for tooltip positioning */
   display: flex;
   justify-content: space-between;  /* Distribute items between left and right */
   flex-direction: row; /* This makes the logo come after the text */
@@ -139,6 +140,32 @@ input::placeholder {
   border: 1px solid #069506;
   padding: 10px;
   background-color: #000000;
+}
+
+.balance-item:hover::after {
+  content: attr(title); /* Use the title attribute for the tooltip text */
+  position: absolute;
+  top: -40px; /* Position above the balance item */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #000000;
+  color: #069506;
+  border: 1px solid #069506;
+  padding: 5px 10px;
+  font-size: 10px;
+  white-space: nowrap;
+  z-index: 10;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.balance-item:hover::after {
+  opacity: 1;
+}
+
+.balance-item::after {
+  opacity: 0;
+  pointer-events: none;
 }
 
 .balance-item.highlighted {

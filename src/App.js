@@ -1,16 +1,20 @@
+// Import necessary libraries and components
 import React, { useState, useEffect } from 'react';
+
 // Import cryptocurrency logos
-import bitcoin from './bitcoinBTC.png';
-import ethereum from './ethereumETH.png';
-import binancecoin from './binancecoinBNB.png';
-import avalanche from './avalancheAVAX.png';
-import cardano from './cardanoADA.png';
-import dogecoin from './dogecoinDOGE.png';
-import litecoin from './litecoinLTC.png';
-import polkadot from './polkadotDOT.png';
 import shibainu from './shibainuSHIB.png';
-import solana from './solanaSOL.png';
+import dogecoin from './dogecoinDOGE.png';
+import cardano from './cardanoADA.png';
 import xrp from './xrpXRP.png';
+import polkadot from './polkadotDOT.png';
+import avalanche from './avalancheAVAX.png';
+import solana from './solanaSOL.png';
+import litecoin from './litecoinLTC.png';
+import binancecoin from './binancecoinBNB.png';
+import ethereum from './ethereumETH.png';
+import bitcoin from './bitcoinBTC.png';
+
+// Import Chart.js and Line component
 import { Line } from 'react-chartjs-2';
 import 'chart.js/auto'; // Import Chart.js
 import './App.css';
@@ -24,13 +28,13 @@ const API_BASE_URL = `http://${ip}:${port}`;
 const cryptoImages = {
   SHIB: shibainu,
   DOGE: dogecoin,
-  LTC: litecoin,
   ADA: cardano,
-  DOT: polkadot,
-  SOL: solana,
-  AVAX: avalanche,
-  BNB: binancecoin,
   XRP: xrp,
+  DOT: polkadot,
+  AVAX: avalanche,
+  SOL: solana,
+  LTC: litecoin,
+  BNB: binancecoin,
   ETH: ethereum,
   BTC: bitcoin,
 };
@@ -39,39 +43,40 @@ const cryptoImages = {
 const cryptoFullNames = {
   SHIB: "Shiba Inu",
   DOGE: "Dogecoin",
-  LTC: "Litecoin",
   ADA: "Cardano",
-  DOT: "Polkadot",
-  SOL: "Solana",
-  AVAX: "Avalanche",
-  BNB: "Binance Coin",
   XRP: "XRP",
+  DOT: "Polkadot",
+  AVAX: "Avalanche",
+  SOL: "Solana",
+  LTC: "Litecoin",
+  BNB: "Binance Coin",
   ETH: "Ethereum",
   BTC: "Bitcoin",
 };
 
 // Définir les descriptions des cryptomonnaies
 const cryptoDescriptions = {
-  SHIB: "Meme token that gained popularity in 2021",
-  DOGE: "Original meme cryptocurrency started as a joke",
-  LTC: "Silver to Bitcoin's gold, faster transaction times",
-  ADA: "Proof-of-stake blockchain platform with academic research",
-  DOT: "Multi-chain protocol connecting different blockchains",
-  SOL: "High-performance blockchain supporting smart contracts",
-  AVAX: "Platform for custom blockchain networks and decentralized apps",
-  BNB: "Utility token for the Binance exchange ecosystem",
-  XRP: "Digital payment protocol and cryptocurrency",
-  ETH: "Decentralized computing platform with smart contract functionality",
-  BTC: "First cryptocurrency and largest by market capitalization",
+  SHIB: "Jeton mème qui a gagné en popularité en 2021.",
+  DOGE: "Cryptomonnaie mème originale créée comme une blague.",
+  ADA: "Plateforme blockchain proof-of-stake basée sur la recherche académique.",
+  XRP: "Protocole de paiement numérique et cryptomonnaie.",
+  DOT: "Protocole multi-chaînes connectant différentes blockchains.",
+  AVAX: "Plateforme pour les réseaux blockchain personnalisés et les applications décentralisées.",
+  SOL: "Blockchain haute performance prenant en charge les contrats intelligents.",
+  LTC: "Alternative rapide à Bitcoin, souvent appelée l'argent numérique.",
+  BNB: "Jeton utilitaire pour l'écosystème de la plateforme Binance.",
+  ETH: "Plateforme de calcul décentralisée avec des contrats intelligents.",
+  BTC: "Première cryptomonnaie et la plus grande par capitalisation boursière.",
 };
 
 // Define crypto unlock order
-const cryptoUnlockOrder = ["SHIB", "DOGE", "LTC", "ADA", "DOT", "SOL", "AVAX", "BNB", "XRP", "ETH", "BTC"];
+const cryptoUnlockOrder = ["SHIB", "DOGE", "ADA", "XRP", "DOT", "AVAX", "SOL", "LTC", "BNB", "ETH", "BTC"];
 
 function App() {
   // User state
-  const [USD, setUSD] = useState(10);
-  const [maxUSD, setMaxUSD] = useState(10);
+  const init_balance = 1; // Initial USD balance
+  const [USD, setUSD] = useState(init_balance);
+  const [maxUSD, setMaxUSD] = useState(init_balance);
   const [username, setUsername] = useState("");
   const [isUsernameSet, setIsUsernameSet] = useState(false);
   
@@ -79,13 +84,13 @@ function App() {
   const [cryptoBalances, setCryptoBalances] = useState({
     SHIB: 0,
     DOGE: 0,
-    LTC: 0,
     ADA: 0,
-    DOT: 0,
-    SOL: 0,
-    AVAX: 0,
-    BNB: 0,
     XRP: 0,
+    DOT: 0,
+    AVAX: 0,
+    SOL: 0,
+    LTC: 0,
+    BNB: 0,
     ETH: 0,
     BTC: 0,
   });
@@ -94,13 +99,13 @@ function App() {
   const [cps, setCps] = useState({
     SHIB: 0,
     DOGE: 0,
-    LTC: 0,
     ADA: 0,
-    DOT: 0,
-    SOL: 0,
-    AVAX: 0,
-    BNB: 0,
     XRP: 0,
+    DOT: 0,
+    AVAX: 0,
+    SOL: 0,
+    LTC: 0,
+    BNB: 0,
     ETH: 0,
     BTC: 0,
   });
@@ -108,33 +113,33 @@ function App() {
   // Shop and marketplace states
   const [availableCryptos, setAvailableCryptos] = useState(['SHIB']);  // Start with SHIB
   const [cryptoPrices, setCryptoPrices] = useState({
-    SHIB: 0.00001,
+    SHIB: 0.01,
     DOGE: 0.06,
-    LTC: 70,
-    ADA: 0.4,
+    ADA: 0.2,
+    XRP: 0.9,
     DOT: 5,
-    SOL: 20,
     AVAX: 15,
-    BNB: 300,
-    XRP: 0.5,
-    ETH: 2000,
+    SOL: 60,
+    LTC: 120,
+    BNB: 800,
+    ETH: 4000,
     BTC: 30000,
   });
   
   // Ajout du state pour le shop sélectionné
   const [selectedShopCrypto, setSelectedShopCrypto] = useState('SHIB'); // Crypto par défaut pour le shop
   
-  // Shop items configuration avec meilleur équilibrage
+  // Shop items configuration
   const [shopItems, setShopItems] = useState(() => {
     const items = {};
     Object.keys(cryptoFullNames).forEach(crypto => {
       // Coefficient basé sur la valeur de la crypto
-      let valueCoefficient = Math.log10(Math.max(1, cryptoPrices[crypto] * 1000));
-      if (valueCoefficient < 10) valueCoefficient = 0.1; // Minimum coefficient
+      let valueCoefficient = (7 - Math.log10(cryptoPrices[crypto])) * 100;
+      if (valueCoefficient < 1) valueCoefficient = 1; // Minimum coefficient
 
       // Base cost différente selon la rareté de la crypto
-      let baseCost = cryptoPrices[crypto] * 100 * valueCoefficient;
-      if (baseCost < 0.1) baseCost = 0.1; // Minimum cost
+      let baseCost = cryptoPrices[crypto] * 100;
+      if (baseCost < 0.02) baseCost = 0.02; // Minimum cost
 
       items[crypto] = [
         { 
@@ -605,7 +610,11 @@ function App() {
             {/* Crypto balances */}
             <div className="crypto-balances">
               {availableCryptos.map(crypto => (
-                <div key={crypto} className={`balance-item ${selectedCryptoForShop === crypto ? 'highlighted' : ''}`}>
+                <div 
+                  key={crypto} 
+                  className={`balance-item ${selectedCryptoForShop === crypto ? 'highlighted' : ''}`}
+                  title={cryptoDescriptions[crypto]} // Add tooltip description
+                >
                   <div className="balance-text">
                     <p>{crypto} Balance: {cryptoBalances[crypto].toFixed(6)}</p>
                     <p>{crypto} Per second: {cps[crypto].toFixed(6)}</p>
