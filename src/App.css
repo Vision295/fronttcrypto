@@ -310,8 +310,8 @@ input::placeholder {
   width: 500px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 20px;
+  align-items: stretch;
+  gap: 10px;
   padding: 20px;
   background-color: #000000;
   z-index: 1;
@@ -331,16 +331,14 @@ input::placeholder {
 .App-currencies-title {
   overflow-y:auto;
   overflow-x:hidden;
-  width: 450px;
-  align-items: center;
-  gap: 20px;
-  padding: 20px;
+  width: 500px;
+
 }
 
 
 
 .chart-container {
-  width: 100%;
+  width: 90%;
   height: 200px;
   background-color: #000000;
   border: 1px solid #069506;
