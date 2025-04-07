@@ -1,5 +1,7 @@
+// React
 import React, { useState, useEffect } from 'react';
-// Import cryptocurrency logos
+
+// Images
 import bitcoin from './bitcoinBTC.png';
 import ethereum from './ethereumETH.png';
 import binancecoin from './binancecoinBNB.png';
@@ -11,8 +13,12 @@ import polkadot from './polkadotDOT.png';
 import shibainu from './shibainuSHIB.png';
 import solana from './solanaSOL.png';
 import xrp from './xrpXRP.png';
+
+//Pour les graphes
 import { Line } from 'react-chartjs-2';
-import 'chart.js/auto'; // Import Chart.js
+import 'chart.js/auto';
+
+// CSS
 import './App.css';
 
 // API configuration
@@ -20,7 +26,7 @@ const ip = "localhost";
 const port = 5000;
 const API_BASE_URL = `http://${ip}:${port}`;
 
-// Define crypto images mapping
+// Lien entre l'abrévation et l'image
 const cryptoImages = {
   SHIB: shibainu,
   DOGE: dogecoin,
@@ -35,7 +41,8 @@ const cryptoImages = {
   BTC: bitcoin,
 };
 
-// Define crypto full names
+// Lien entre nom complet et abréviation
+// (pour le shop et le leaderboard)
 const cryptoFullNames = {
   SHIB: "Shiba Inu",
   DOGE: "Dogecoin",
@@ -50,17 +57,36 @@ const cryptoFullNames = {
   BTC: "Bitcoin",
 };
 
-// Define crypto unlock order
+// Crypto-monnaies dans l'ordre de déblocage
+// (SHIB est déjà débloqué au départ)
 const cryptoUnlockOrder = ["SHIB", "DOGE", "LTC", "ADA", "DOT", "SOL", "AVAX", "BNB", "XRP", "ETH", "BTC"];
 
+
+
+
 function App() {
-  // User state
-  const [USD, setUSD] = useState(10000000);
-  const [maxUSD, setMaxUSD] = useState(100000000000);
-  const [username, setUsername] = useState("");
-  const [isUsernameSet, setIsUsernameSet] = useState(false);
+
+  /* Fonctionnement de useState :
+
+  const [state, setState] = useState(initialValue);
+    - state : la valeur actuelle de l'état
+    - setState : une fonction pour mettre à jour l'état
+    - initialValue : la valeur initiale de l'état
+
+  Hook une variable (de n'importe quel type) et une fonction pour la modifier
+
+  Pour modifier l'état, on utilise la fonction setState avec la nouvelle valeur : setState(newValue);
+  Ou avec une fonction qui renvoie la nouvelle valeur : setState(prevState => prevState + 1);
+
+  Lorsque setState est appeléReact met à jour l'état et re-render le composant avec la nouvelle valeur
+  */
+
+  const [USD, setUSD] = useState(10000000); // Solde initial de $
+  const [maxUSD, setMaxUSD] = useState(USD); // Solde max de $
+  const [username, setUsername] = useState(""); // Pseudo siasi par l'utilisateur
+  const [isUsernameSet, setIsUsernameSet] = useState(false); // Etat pour savoir si le pseudo est défini
   
-  // Crypto balances state
+  // Solde de chaque crypto-monnaie
   const [cryptoBalances, setCryptoBalances] = useState({
     SHIB: 0,
     DOGE: 0,
@@ -75,7 +101,8 @@ function App() {
     BTC: 0,
   });
   
-  // Crypto generation per second state
+  // Production par seconde (CPS) de chaque crypto-monnaie
+  // CPS = Crypto Per Second
   const [cps, setCps] = useState({
     SHIB: 0,
     DOGE: 0,
@@ -90,8 +117,12 @@ function App() {
     BTC: 0,
   });
 
-  // Shop and marketplace states
-  const [availableCryptos, setAvailableCryptos] = useState(['SHIB']);  // Start with SHIB
+  // Liste des cypto-monnaies actuellement disponibles
+  // SHIB est déjà debloqué au départ
+  const [availableCryptos, setAvailableCryptos] = useState(['SHIB']);  
+
+  // Prix des crypto-monnaies 
+  // Évolueront en fonction du backend
   const [cryptoPrices, setCryptoPrices] = useState({
     SHIB: 0.00001,
     DOGE: 0.06,
@@ -106,10 +137,11 @@ function App() {
     BTC: 30000,
   });
   
-  // Ajout du state pour le shop sélectionné
-  const [selectedShopCrypto, setSelectedShopCrypto] = useState('SHIB'); // Crypto par défaut pour le shop
-  
-  // Shop items configuration avec meilleur équilibrage
+  // Shop selectionné (SHIB par défault)
+  const [selectedShopCrypto, setSelectedShopCrypto] = useState('SHIB');
+
+
+  // Items du shop
   const [shopItems, setShopItems] = useState(() => {
     const items = {};
     Object.keys(cryptoFullNames).forEach(crypto => {
@@ -157,10 +189,12 @@ function App() {
     return items;
   });
 
-  // Animation states
+  // Animation pour le bouton "buy" du shop (par celui des charts)
   const [buttonAnimation, setButtonAnimation] = useState({});
   
-  // Price history for charts
+  // Historique des prix pour les charts
+  // Récupère du backend
+  // Initialisé avec les 20 points en tant que prix actuel
   const [priceHistory, setPriceHistory] = useState(() => {
     const history = {};
     Object.keys(cryptoPrices).forEach(crypto => {
@@ -168,6 +202,11 @@ function App() {
     });
     return history;
   });
+
+
+  // Je m'arrete là pour les commentaires pour le moment je vais dodo
+
+
 
   // Popup states
   const [showPopup, setShowPopup] = useState(false);
@@ -179,14 +218,34 @@ function App() {
   const [userData, setUserData] = useState([]);
   const [userRank, setUserRank] = useState(null);
 
-  // show leaderboard
+  // Montrer le leaderboard
   const [showLeaderboard, setShowLeaderboard] = useState(false);
 
-  // Get the next unlockable cryptocurrency
-  const getNextUnlockableCrypto = () => {
-    const nextIndex = cryptoUnlockOrder.findIndex(crypto => !availableCryptos.includes(crypto));
-    return nextIndex !== -1 ? cryptoUnlockOrder[nextIndex] : null;
-  };
+  // Débloque la crypto suivante
+  // UseState de cryptoUnlockOrder
+  // Utilise availableCryptos (liste des cypto-monnaies actuellement disponibles, il y a seulement SHIB au départ)
+
+/**
+ * Détermine la prochaine cryptomonnaie à débloquer dans le jeu.
+ *
+ * @returns {string|null} - La prochaine cryptomonnaie à débloquer (abréviation, ex: "DOGE"),
+ *                          ou `null` si toutes les cryptomonnaies sont déjà débloquées.
+ *
+ * Fonctionnement :
+ * - Parcourt le tableau `cryptoUnlockOrder` pour trouver la première cryptomonnaie
+ *   qui n'est pas encore présente dans `availableCryptos`.
+ * - Si une cryptomonnaie non débloquée est trouvée, elle est retournée.
+ * - Si toutes les cryptomonnaies sont débloquées, la fonction retourne `null`.
+ *
+ * Exemple :
+ * - `cryptoUnlockOrder = ["SHIB", "DOGE", "LTC", "ADA"]`
+ * - `availableCryptos = ["SHIB", "DOGE"]`
+ * - Résultat : "LTC"
+ */
+const getNextUnlockableCrypto = () => {
+  const nextIndex = cryptoUnlockOrder.findIndex(crypto => !availableCryptos.includes(crypto));
+  return nextIndex !== -1 ? cryptoUnlockOrder[nextIndex] : null;
+};
 
   const [selectedCryptoForShop, setSelectedCryptoForShop] = useState(null);
 
