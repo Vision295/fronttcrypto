@@ -513,18 +513,22 @@ function App() {
         },
       ],
     };
-
+    
     const options = {
       responsive: true,
       maintainAspectRatio: false,
+      aspectRatio: 2,
       scales: {
         x: {
           grid: { display: false },
-          ticks: { color: '#069506' }
+          ticks: { color: '#069506'
+
+          },
         },
         y: {
           grid: { display: false },
-          ticks: { color: '#069506' }
+          ticks: { color: '#069506' 
+          },
         },
       },
       plugins: {
@@ -715,7 +719,9 @@ function App() {
       {/* Crypto market charts */}
       <div className="App-currencies">
         <h2>Crypto-Market</h2>
-        {availableCryptos.map(crypto => renderChart(crypto))}
+        <div className="App-currencies-title">
+          {availableCryptos.map(crypto => renderChart(crypto))}
+        </div>
       </div>
       
       {/* Leaderboard button */}
@@ -797,5 +803,6 @@ function App() {
     </div>
   );
 }
+
 
 export default App;
