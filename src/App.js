@@ -61,8 +61,8 @@ const cryptoFullNames = {
 // Descriptions des cryptomonnaies
 // Fournit une brève explication de chaque cryptomonnaie.
 const cryptoDescriptions = {
-  SHIB: "Jeton mème qui a gagné en popularité en 2021.",
-  DOGE: "Cryptomonnaie mème originale créée comme une blague.",
+  SHIB: "Jeton même qui a gagné en popularité en 2021.",
+  DOGE: "Cryptomonnaie même originale créée comme une blague.",
   ADA: "Plateforme blockchain proof-of-stake basée sur la recherche académique.",
   XRP: "Protocole de paiement numérique et cryptomonnaie.",
   DOT: "Protocole multi-chaînes connectant différentes blockchains.",
@@ -78,10 +78,25 @@ const cryptoDescriptions = {
 // Définit l'ordre dans lequel les cryptomonnaies peuvent être débloquées.
 const cryptoUnlockOrder = ["SHIB", "DOGE", "ADA", "XRP", "DOT", "AVAX", "SOL", "LTC", "BNB", "ETH", "BTC"];
 
+// Coef crypto
+const cryptoPrices = {
+  SHIB: 0.00001,
+  DOGE: 0.06,
+  ADA: 0.4,
+  XRP: 0.5,
+  DOT: 5,
+  AVAX: 15,
+  SOL: 20,
+  LTC: 70,
+  BNB: 300,
+  ETH: 2000,
+  BTC: 30000,
+};
+
 function App() {
   // État utilisateur
   // `USD` représente le solde en dollars de l'utilisateur.
-  const init_balance = 1; // Solde initial en USD
+  const init_balance = 10000; // Solde initial en USD
   const [USD, setUSD] = useState(init_balance);
   const [maxUSD, setMaxUSD] = useState(init_balance); // Solde maximum atteint
   const [username, setUsername] = useState(""); // Nom d'utilisateur
@@ -123,22 +138,6 @@ function App() {
   // SHIB est déjà debloqué au départ
   const [availableCryptos, setAvailableCryptos] = useState(['SHIB']);  
 
-  // Prix des crypto-monnaies 
-  // Évolueront en fonction du backend
-  const [cryptoPrices, setCryptoPrices] = useState({
-    SHIB: 0.01,
-    DOGE: 0.06,
-    ADA: 0.2,
-    XRP: 0.9,
-    DOT: 5,
-    AVAX: 15,
-    SOL: 60,
-    LTC: 120,
-    BNB: 800,
-    ETH: 4000,
-    BTC: 30000,
-  });
-  
   // État pour la cryptomonnaie sélectionnée dans la boutique
   const [selectedShopCrypto, setSelectedShopCrypto] = useState('SHIB'); // Par défaut SHIB
   
@@ -201,6 +200,7 @@ function App() {
     Object.keys(cryptoPrices).forEach(crypto => {
       history[crypto] = Array(20).fill(cryptoPrices[crypto]);
     });
+    console.log('Initial priceHistory:', history);
     return history;
   });
 
@@ -239,7 +239,6 @@ function App() {
 
 
 
-
   /* Fonctionnement de useEffect :
     Hook qui permet d'exécuter du code en réponse à des changements
 
@@ -273,24 +272,7 @@ function App() {
     return () => clearInterval(interval);
   }, [cps]);
 
-  // Update crypto prices for market
-  useEffect(() => {
-    const fetchCryptoPrices = async () => {
-      try {
-        const response = await fetch(`${API_BASE_URL}/api/crypto-prices`);
-        if (!response.ok) throw new Error(`Erreur HTTP ! statut : ${response.status}`);
-        const prices = await response.json();
-        setCryptoPrices(prices);
-      } catch (error) {
-        console.error('Erreur lors de la récupération des prix des cryptomonnaies :', error);
-      }
-    };
 
-    // Mise à jour des prix toutes les 5 secondes
-    fetchCryptoPrices();
-    const interval = setInterval(fetchCryptoPrices, 2000);
-    return () => clearInterval(interval);
-  }, []);
 
   // Effet pour récupérer l'historique des prix des cryptomonnaies depuis l'API
   useEffect(() => {
@@ -299,9 +281,11 @@ function App() {
         const response = await fetch(`${API_BASE_URL}/api/price-history`);
         if (!response.ok) throw new Error(`Erreur HTTP ! statut : ${response.status}`);
         const history = await response.json();
-        setPriceHistory(history);
+        console.log('Updated priceHistory from backend:', history); // Log updated priceHistory
+        setPriceHistory(history); // Mettre à jour l'état avec l'historique reçu
       } catch (error) {
         console.error('Erreur lors de la récupération de l\'historique des prix :', error);
+        console.log(priceHistory)
       }
     };
 
@@ -427,6 +411,7 @@ function App() {
     setShowPopup(true);
   };
 
+  
   // Affichage du popup pour vendre une cryptomonnaie
   const handleSellCryptoPopup = (crypto) => {
     setSelectedCrypto(crypto);
@@ -435,16 +420,18 @@ function App() {
     setShowPopup(true);
   };
 
-  // Gestion du changement de quantité dans le popup
+
+  // Update the price calculation to use priceHistory
   const handleCryptoAmountChange = (value) => {
+    const currentPrice = priceHistory[cryptoFullNames[selectedCrypto]][19];
     if (buyOrSell === 'buy') {
-      const cryptoPrice = cryptoPrices[selectedCrypto];
-      const maxAffordable = Math.floor(USD / cryptoPrice);
+      const maxAffordable = Math.floor(USD / currentPrice);
       setCryptoAmount(Math.min(Math.max(0, value), maxAffordable));
     } else {
       setCryptoAmount(Math.min(Math.max(0, value), cryptoBalances[selectedCrypto]));
     }
   };
+
 
   // Confirmation de la transaction
   const handleConfirmTransaction = () => {
@@ -453,16 +440,16 @@ function App() {
       return;
     }
 
-    const cryptoPrice = cryptoPrices[selectedCrypto];
+    const currentPrice = priceHistory[cryptoFullNames[selectedCrypto]][19];
     if (buyOrSell === 'buy') {
-      const totalCost = cryptoAmount * cryptoPrice;
+      const totalCost = cryptoAmount * currentPrice;
       setUSD(prev => prev - totalCost);
       setCryptoBalances(prev => ({
         ...prev,
         [selectedCrypto]: prev[selectedCrypto] + cryptoAmount
       }));
     } else {
-      const totalGain = cryptoAmount * cryptoPrice;
+      const totalGain = cryptoAmount * currentPrice;
       setUSD(prev => {
         const newUSD = prev + totalGain;
         setMaxUSD(prevMax => Math.max(prevMax, newUSD));
@@ -476,54 +463,57 @@ function App() {
     setShowPopup(false);
   };
 
+
   // Rendu du graphique des prix des cryptomonnaies
   const renderChart = (crypto) => {
+    const currentPrice = priceHistory[cryptoFullNames[crypto]][19].toFixed(2);
+    // Préparer les données pour le graphique
     const data = {
-      labels: priceHistory[crypto]?.map((_, index) => index + 1),
+      labels: Array.from({ length: priceHistory[cryptoFullNames[crypto]].length }, (_, i) => `T-${priceHistory[cryptoFullNames[crypto]].length - i}`),
       datasets: [
         {
           label: `${crypto} Price`,
-          data: priceHistory[crypto],
+          data: priceHistory[cryptoFullNames[crypto]],
           segment: {
             borderColor: (ctx) => {
               const { p0, p1 } = ctx;
-              return p1.raw > p0.raw ? '#069506' : '#c22929';
+              return p1.raw > p0.raw ? '#069506' : '#c22929'; // Vert si augmentation, rouge si diminution
             },
           },
-          pointBackgroundColor: '#d3d3d3',
-          borderWidth: 2,
-          backgroundColor: 'rgba(6, 149, 6, 0.1)',
-          fill: true,
-          tension: 0.1,
+        pointBackgroundColor: '#d3d3d3',
+        borderWidth: 2,
+        backgroundColor: 'rgba(6, 149, 6, 0.1)',
+        fill: true,
+        tension: 0.1,
         },
       ],
     };
-    
+  
+    // Options de configuration du graphique
     const options = {
       responsive: true,
       maintainAspectRatio: false,
-      aspectRatio: 2,
       scales: {
         x: {
           grid: { display: false },
-          ticks: { color: '#069506'
-
-          },
+          ticks: { color: '#069506' },
         },
         y: {
           grid: { display: false },
-          ticks: { color: '#069506' 
-          },
+          ticks: { color: '#069506' },
         },
       },
       plugins: {
-        legend: { labels: { color: '#069506' } }
-      }
+        legend: { labels: { color: '#069506' } },
+      },
     };
-
+  
+    // Rendu du graphique
     return (
       <div key={crypto} className="chart-container">
-        <h3>{cryptoFullNames[crypto]} (${cryptoPrices[crypto].toFixed(6)})</h3>
+        <h3>
+          {cryptoFullNames[crypto]} : {currentPrice}
+        </h3>
         <Line data={data} options={options} />
         <div className="chart-buttons">
           <button
@@ -725,7 +715,7 @@ function App() {
         <div className="popup">
           <div className="popup-content">
             <h3>{buyOrSell === 'buy' ? 'Buy' : 'Sell'} {selectedCrypto}</h3>
-            <p>Price per unit: ${cryptoPrices[selectedCrypto].toFixed(6)}</p>
+            <p>Price per unit: ${priceHistory[cryptoFullNames[selectedCrypto]][19].toFixed(6)}</p>
             <input
               type="number"
               value={cryptoAmount}
@@ -734,13 +724,13 @@ function App() {
             />
             {buyOrSell === 'buy' ? (
               <p>
-                ${USD.toFixed(2)} - ${(cryptoAmount * cryptoPrices[selectedCrypto]).toFixed(2)} = $
-                {(USD - cryptoAmount * cryptoPrices[selectedCrypto]).toFixed(2)}
+                ${USD.toFixed(2)} - ${(cryptoAmount * priceHistory[cryptoFullNames[selectedCrypto]][19]).toFixed(2)} = $
+                {(USD - cryptoAmount * priceHistory[cryptoFullNames[selectedCrypto]][19]).toFixed(2)}
               </p>
             ) : (
               <p>
-                ${USD.toFixed(2)} + ${(cryptoAmount * cryptoPrices[selectedCrypto]).toFixed(2)} = $
-                {(USD + cryptoAmount * cryptoPrices[selectedCrypto]).toFixed(2)}
+                ${USD.toFixed(2)} + ${(cryptoAmount * priceHistory[cryptoFullNames[selectedCrypto]][19]).toFixed(2)} = $
+                {(USD + cryptoAmount * priceHistory[cryptoFullNames[selectedCrypto]][19]).toFixed(2)}
               </p>
             )}
             <div className="popup-buttons">
