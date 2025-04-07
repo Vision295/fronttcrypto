@@ -22,7 +22,7 @@ import 'chart.js/auto';
 import './App.css';
 
 // API configuration
-const ip = "localhost";
+const ip = "10.56.5.162";
 const port = 5000;
 const API_BASE_URL = `http://${ip}:${port}`;
 
