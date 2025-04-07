@@ -15,6 +15,7 @@ body {
   margin: 0;
   padding: 0;
   color: #069506; /* Green terminal text color */
+  overflow: hidden;
 }
 
 button {
@@ -129,7 +130,11 @@ input::placeholder {
   flex-direction: column;
   gap: 10px;
   margin-bottom: 20px;
+  overflow : scroll;
+  overflow-x : hidden;
+  max-height: 85vh;
 }
+
 
 .balance-item {
   position: relative; /* Required for tooltip positioning */
@@ -217,12 +222,12 @@ input::placeholder {
 .App-sidebar {
   position: absolute;
   top: 10px;
-  right: 600px;
+  right: 585px;
   width: 250px;
   padding: 10px;
   background-color: #000000;
   border: 1px solid #069506;
-  max-height: 90vh; /* Limiter la hauteur */
+  max-height: 93vh; /* Limiter la hauteur */
   overflow: hidden; /* Cacher le débordement */
   display: flex;
   flex-direction: column;
@@ -332,14 +337,14 @@ input::placeholder {
   width: 500px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 20px;
+  align-items: stretch;
+  gap: 10px;
   padding: 20px;
   background-color: #000000;
   z-index: 1;
   max-height: 90.5vh;
-  overflow-y: auto;
-  overflow-x: hidden; /* Prevent horizontal scroll */
+  overflow-y: hidden;
+  overflow-x: hidden;
   border: 1px solid #069506;
 }
 
@@ -350,15 +355,22 @@ input::placeholder {
   color: #069506;
 }
 
+.App-currencies-title {
+  overflow-y:auto;
+  overflow-x:hidden;
+  width: 500px;
+
+}
+
 
 
 .chart-container {
-  width: 100%;
+  width: 90%;
   height: 200px;
   background-color: #000000;
   border: 1px solid #069506;
   border-radius: 0;
-  padding: 10px;
+  padding: 40px 20px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -377,7 +389,7 @@ input::placeholder {
 .chart-buttons {
   display: flex;
   justify-content: space-between;
-  margin-top: 10px;
+  margin-top: 20px;
 }
 
 .chart-buttons button {

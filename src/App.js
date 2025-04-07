@@ -204,32 +204,62 @@ function App() {
     return history;
   });
 
-  // États pour les popups
-  const [showPopup, setShowPopup] = useState(false); // Affichage du popup
-  const [selectedCrypto, setSelectedCrypto] = useState(null); // Cryptomonnaie sélectionnée
-  const [cryptoAmount, setCryptoAmount] = useState(0); // Quantité à acheter/vendre
-  const [buyOrSell, setBuyOrSell] = useState('buy'); // Type de transaction
+  // Achat/Vente de crypto dans la popup
+  const [showPopup, setShowPopup] = useState(false); // Bool qui détermine si la popup de vente est visible
+  const [selectedCrypto, setSelectedCrypto] = useState(null); // Crypto sélectionnée pour buy/sell dans la popup
+  const [cryptoAmount, setCryptoAmount] = useState(0); // Quantité de crypto entrée pour buy/sell dans la popup
+  const [buyOrSell, setBuyOrSell] = useState('buy'); // L'action de la popup est buy or sell
   
-  // Données pour le classement
-  const [userData, setUserData] = useState([]); // Liste des utilisateurs
-  const [userRank, setUserRank] = useState(null); // Rang de l'utilisateur
+  // Leaderboard
+  const [userData, setUserData] = useState([]); // Liste des utilisateurs du leaderboard (rangé en desc order plus tard)
+  const [userRank, setUserRank] = useState(null); // Rang actuel de l'utilisateur
+  const [showLeaderboard, setShowLeaderboard] = useState(false); // Bool qui détermine si le leaderboard est visible
 
-  // Affichage du classement
-  const [showLeaderboard, setShowLeaderboard] = useState(false);
-
-  // Fonction pour obtenir la prochaine cryptomonnaie déblocable
+  // Débloque la crypto suivante
+  // Utilise availableCryptos (liste des cypto-monnaies actuellement disponibles, il y a seulement SHIB au départ)
+  // Utilise cryptoUnlockOrder (crypto-monnaies dans l'ordre de déblocage)
+  // Renvoie la prochaine crypto-monnaie à débloquer ou null si toutes sont déjà débloquées
   const getNextUnlockableCrypto = () => {
     const nextIndex = cryptoUnlockOrder.findIndex(crypto => !availableCryptos.includes(crypto));
     return nextIndex !== -1 ? cryptoUnlockOrder[nextIndex] : null;
   };
 
+  // Highlight la crypto-monnaie sélectionnée dans le shop
   const [selectedCryptoForShop, setSelectedCryptoForShop] = useState(null);
 
+
+  // Fin des useState, début des useEffect
+
+
+  // Fonction pour update la crypto-monnaie sélectionnée dans le shop
+  // Utilisée pour highlight la crypto-monnaie cliquée
   const handleCryptoLogoClick = (crypto) => {
     setSelectedCryptoForShop(crypto);
   };
 
-  // Effet pour incrémenter les soldes des cryptomonnaies en fonction de la production par seconde
+
+
+
+  /* Fonctionnement de useEffect :
+    Hook qui permet d'exécuter du code en réponse à des changements
+
+    Structure de base : 
+        useEffect(() => {
+      // Code à exécuter (effet)
+      return () => {
+        // Code de nettoyage (optionnel)
+      };
+    }, [dépendances]);
+
+    S'il n'y a pas de dépendances, l'effet s'exécute à chaque rendu
+    S'il y a des dépendances, l'effet s'exécute uniquement lorsque ces dépendances changent
+    Le netttoyage sert à éviter les surplus et fuites de mémoire
+  */
+
+
+  // Incremente le solde chaque crypto-monnaie en fonction de leur cps
+  // Crée un intervale pour éxecuter une fonction tout les 1000 ms
+  // On clean l'intervalle
   useEffect(() => {
     const interval = setInterval(() => {
       setCryptoBalances(prev => {
@@ -243,23 +273,7 @@ function App() {
     return () => clearInterval(interval);
   }, [cps]);
 
-  // Effet pour mettre à jour le solde USD en fonction de la valeur de production des cryptomonnaies
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setUSD(prevUSD => {
-        let earnedUSD = 0;
-        Object.keys(cps).forEach(crypto => {
-          earnedUSD += cps[crypto] * cryptoPrices[crypto];
-        });
-        const newUSD = prevUSD + earnedUSD;
-        setMaxUSD(prevMax => Math.max(prevMax, newUSD)); // Mise à jour du solde maximum
-        return newUSD;
-      });
-    }, 1000);
-    return () => clearInterval(interval);
-  }, [cps, cryptoPrices]);
-
-  // Effet pour récupérer les prix des cryptomonnaies depuis l'API
+  // Update crypto prices for market
   useEffect(() => {
     const fetchCryptoPrices = async () => {
       try {
@@ -484,18 +498,22 @@ function App() {
         },
       ],
     };
-
+    
     const options = {
       responsive: true,
       maintainAspectRatio: false,
+      aspectRatio: 2,
       scales: {
         x: {
           grid: { display: false },
-          ticks: { color: '#069506' }
+          ticks: { color: '#069506'
+
+          },
         },
         y: {
           grid: { display: false },
-          ticks: { color: '#069506' }
+          ticks: { color: '#069506' 
+          },
         },
       },
       plugins: {
@@ -658,7 +676,9 @@ function App() {
       </div>
       <div className="App-currencies">
         <h2>Crypto-Market</h2>
-        {availableCryptos.map(crypto => renderChart(crypto))}
+        <div className="App-currencies-title">
+          {availableCryptos.map(crypto => renderChart(crypto))}
+        </div>
       </div>
       <button class="vertical-button" onClick={() => setShowLeaderboard(prev => !prev)}>
         {showLeaderboard ? 'Hide Leaderboard' : 'Show Leaderboard'}
@@ -733,5 +753,6 @@ function App() {
     </div>
   );
 }
+
 
 export default App;
