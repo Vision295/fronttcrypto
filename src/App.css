@@ -131,6 +131,7 @@ input::placeholder {
   gap: 10px;
   margin-bottom: 20px;
   overflow : scroll;
+  overflow-x : hidden;
   max-height: 85vh;
 }
 
