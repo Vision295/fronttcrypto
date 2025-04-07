@@ -343,7 +343,7 @@ input::placeholder {
   background-color: #000000;
   border: 1px solid #069506;
   border-radius: 0;
-  padding: 10px;
+  padding: 40px 20px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -362,7 +362,7 @@ input::placeholder {
 .chart-buttons {
   display: flex;
   justify-content: space-between;
-  margin-top: 10px;
+  margin-top: 20px;
 }
 
 .chart-buttons button {
