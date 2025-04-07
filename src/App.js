@@ -1,7 +1,8 @@
-// Import necessary libraries and components
+// Importation des bibliothèques et composants nécessaires
 import React, { useState, useEffect } from 'react';
 
-// Import cryptocurrency logos
+// Importation des logos des cryptomonnaies
+// Ces images sont utilisées pour représenter visuellement chaque cryptomonnaie.
 import shibainu from './shibainuSHIB.png';
 import dogecoin from './dogecoinDOGE.png';
 import cardano from './cardanoADA.png';
@@ -14,17 +15,19 @@ import binancecoin from './binancecoinBNB.png';
 import ethereum from './ethereumETH.png';
 import bitcoin from './bitcoinBTC.png';
 
-// Import Chart.js and Line component
+// Importation de Chart.js et du composant Line pour afficher les graphiques
 import { Line } from 'react-chartjs-2';
-import 'chart.js/auto'; // Import Chart.js
+import 'chart.js/auto'; // Importation de la configuration automatique de Chart.js
 import './App.css';
 
-// API configuration
+// Configuration de l'API
+// Définition de l'adresse IP et du port pour communiquer avec le backend.
 const ip = "localhost";
 const port = 5000;
 const API_BASE_URL = `http://${ip}:${port}`;
 
-// Define crypto images mapping
+// Mapping des images des cryptomonnaies
+// Permet d'associer chaque symbole de cryptomonnaie à son image correspondante.
 const cryptoImages = {
   SHIB: shibainu,
   DOGE: dogecoin,
@@ -39,7 +42,8 @@ const cryptoImages = {
   BTC: bitcoin,
 };
 
-// Define crypto full names
+// Noms complets des cryptomonnaies
+// Fournit une description textuelle pour chaque symbole de cryptomonnaie.
 const cryptoFullNames = {
   SHIB: "Shiba Inu",
   DOGE: "Dogecoin",
@@ -54,7 +58,8 @@ const cryptoFullNames = {
   BTC: "Bitcoin",
 };
 
-// Définir les descriptions des cryptomonnaies
+// Descriptions des cryptomonnaies
+// Fournit une brève explication de chaque cryptomonnaie.
 const cryptoDescriptions = {
   SHIB: "Jeton mème qui a gagné en popularité en 2021.",
   DOGE: "Cryptomonnaie mème originale créée comme une blague.",
@@ -69,18 +74,21 @@ const cryptoDescriptions = {
   BTC: "Première cryptomonnaie et la plus grande par capitalisation boursière.",
 };
 
-// Define crypto unlock order
+// Ordre de déblocage des cryptomonnaies
+// Définit l'ordre dans lequel les cryptomonnaies peuvent être débloquées.
 const cryptoUnlockOrder = ["SHIB", "DOGE", "ADA", "XRP", "DOT", "AVAX", "SOL", "LTC", "BNB", "ETH", "BTC"];
 
 function App() {
-  // User state
-  const init_balance = 1; // Initial USD balance
+  // État utilisateur
+  // `USD` représente le solde en dollars de l'utilisateur.
+  const init_balance = 1; // Solde initial en USD
   const [USD, setUSD] = useState(init_balance);
-  const [maxUSD, setMaxUSD] = useState(init_balance);
-  const [username, setUsername] = useState("");
-  const [isUsernameSet, setIsUsernameSet] = useState(false);
+  const [maxUSD, setMaxUSD] = useState(init_balance); // Solde maximum atteint
+  const [username, setUsername] = useState(""); // Nom d'utilisateur
+  const [isUsernameSet, setIsUsernameSet] = useState(false); // Indique si le nom d'utilisateur est défini
   
-  // Crypto balances state
+  // État des soldes des cryptomonnaies
+  // Stocke la quantité de chaque cryptomonnaie possédée par l'utilisateur.
   const [cryptoBalances, setCryptoBalances] = useState({
     SHIB: 0,
     DOGE: 0,
@@ -95,7 +103,8 @@ function App() {
     BTC: 0,
   });
   
-  // Crypto generation per second state
+  // État de la production par seconde (CPS) des cryptomonnaies
+  // Définit combien de chaque cryptomonnaie est généré par seconde.
   const [cps, setCps] = useState({
     SHIB: 0,
     DOGE: 0,
@@ -110,8 +119,9 @@ function App() {
     BTC: 0,
   });
 
-  // Shop and marketplace states
-  const [availableCryptos, setAvailableCryptos] = useState(['SHIB']);  // Start with SHIB
+  // États pour la boutique et le marché
+  // `availableCryptos` contient les cryptomonnaies actuellement débloquées.
+  const [availableCryptos, setAvailableCryptos] = useState(['SHIB']);  // Commence avec SHIB
   const [cryptoPrices, setCryptoPrices] = useState({
     SHIB: 0.01,
     DOGE: 0.06,
@@ -126,27 +136,28 @@ function App() {
     BTC: 30000,
   });
   
-  // Ajout du state pour le shop sélectionné
-  const [selectedShopCrypto, setSelectedShopCrypto] = useState('SHIB'); // Crypto par défaut pour le shop
+  // État pour la cryptomonnaie sélectionnée dans la boutique
+  const [selectedShopCrypto, setSelectedShopCrypto] = useState('SHIB'); // Par défaut SHIB
   
-  // Shop items configuration
+  // Configuration des articles de la boutique
+  // Chaque cryptomonnaie a une liste d'articles avec des coûts et des bénéfices spécifiques.
   const [shopItems, setShopItems] = useState(() => {
     const items = {};
     Object.keys(cryptoFullNames).forEach(crypto => {
-      // Coefficient basé sur la valeur de la crypto
+      // Calcul du coefficient basé sur la valeur de la cryptomonnaie
       let valueCoefficient = (7 - Math.log10(cryptoPrices[crypto])) * 100;
-      if (valueCoefficient < 1) valueCoefficient = 1; // Minimum coefficient
+      if (valueCoefficient < 1) valueCoefficient = 1; // Coefficient minimum
 
-      // Base cost différente selon la rareté de la crypto
+      // Définition du coût de base selon la rareté de la cryptomonnaie
       let baseCost = cryptoPrices[crypto] * 100;
-      if (baseCost < 0.02) baseCost = 0.02; // Minimum cost
+      if (baseCost < 0.02) baseCost = 0.02; // Coût minimum
 
       items[crypto] = [
         { 
           name: 'Basic Miner', 
           cost: baseCost, 
           count: 0, 
-          bps: 0.002 * valueCoefficient
+          bps: 0.002 * valueCoefficient // Production par seconde
         },
         { 
           name: 'Standard Rig', 
@@ -177,10 +188,11 @@ function App() {
     return items;
   });
 
-  // Animation states
+  // État pour l'animation des boutons
   const [buttonAnimation, setButtonAnimation] = useState({});
   
-  // Price history for charts
+  // Historique des prix pour les graphiques
+  // Stocke les prix passés de chaque cryptomonnaie pour afficher les graphiques.
   const [priceHistory, setPriceHistory] = useState(() => {
     const history = {};
     Object.keys(cryptoPrices).forEach(crypto => {
@@ -189,20 +201,20 @@ function App() {
     return history;
   });
 
-  // Popup states
-  const [showPopup, setShowPopup] = useState(false);
-  const [selectedCrypto, setSelectedCrypto] = useState(null);
-  const [cryptoAmount, setCryptoAmount] = useState(0);
-  const [buyOrSell, setBuyOrSell] = useState('buy');
+  // États pour les popups
+  const [showPopup, setShowPopup] = useState(false); // Affichage du popup
+  const [selectedCrypto, setSelectedCrypto] = useState(null); // Cryptomonnaie sélectionnée
+  const [cryptoAmount, setCryptoAmount] = useState(0); // Quantité à acheter/vendre
+  const [buyOrSell, setBuyOrSell] = useState('buy'); // Type de transaction
   
-  // Leaderboard data
-  const [userData, setUserData] = useState([]);
-  const [userRank, setUserRank] = useState(null);
+  // Données pour le classement
+  const [userData, setUserData] = useState([]); // Liste des utilisateurs
+  const [userRank, setUserRank] = useState(null); // Rang de l'utilisateur
 
-  // show leaderboard
+  // Affichage du classement
   const [showLeaderboard, setShowLeaderboard] = useState(false);
 
-  // Get the next unlockable cryptocurrency
+  // Fonction pour obtenir la prochaine cryptomonnaie déblocable
   const getNextUnlockableCrypto = () => {
     const nextIndex = cryptoUnlockOrder.findIndex(crypto => !availableCryptos.includes(crypto));
     return nextIndex !== -1 ? cryptoUnlockOrder[nextIndex] : null;
@@ -214,9 +226,7 @@ function App() {
     setSelectedCryptoForShop(crypto);
   };
 
-
-
-  // Increment crypto balances based on production per second
+  // Effet pour incrémenter les soldes des cryptomonnaies en fonction de la production par seconde
   useEffect(() => {
     const interval = setInterval(() => {
       setCryptoBalances(prev => {
@@ -226,11 +236,11 @@ function App() {
         });
         return newBalances;
       });
-    }, 1000);
+    }, 1000); // Mise à jour toutes les secondes
     return () => clearInterval(interval);
   }, [cps]);
 
-  // Update USD based on crypto production value
+  // Effet pour mettre à jour le solde USD en fonction de la valeur de production des cryptomonnaies
   useEffect(() => {
     const interval = setInterval(() => {
       setUSD(prevUSD => {
@@ -239,82 +249,76 @@ function App() {
           earnedUSD += cps[crypto] * cryptoPrices[crypto];
         });
         const newUSD = prevUSD + earnedUSD;
-        // Update maxUSD if current balance is higher
-        setMaxUSD(prevMax => Math.max(prevMax, newUSD));
+        setMaxUSD(prevMax => Math.max(prevMax, newUSD)); // Mise à jour du solde maximum
         return newUSD;
       });
     }, 1000);
     return () => clearInterval(interval);
   }, [cps, cryptoPrices]);
 
-  // Update crypto prices for market
+  // Effet pour récupérer les prix des cryptomonnaies depuis l'API
   useEffect(() => {
     const fetchCryptoPrices = async () => {
       try {
         const response = await fetch(`${API_BASE_URL}/api/crypto-prices`);
-        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        if (!response.ok) throw new Error(`Erreur HTTP ! statut : ${response.status}`);
         const prices = await response.json();
         setCryptoPrices(prices);
       } catch (error) {
-        console.error('Error fetching crypto prices:', error);
+        console.error('Erreur lors de la récupération des prix des cryptomonnaies :', error);
       }
     };
-  
-    // Fetch prices every 5 seconds
+
+    // Mise à jour des prix toutes les 5 secondes
     fetchCryptoPrices();
     const interval = setInterval(fetchCryptoPrices, 5000);
     return () => clearInterval(interval);
   }, []);
 
-  // Update price history for charts
+  // Effet pour récupérer l'historique des prix des cryptomonnaies depuis l'API
   useEffect(() => {
     const fetchPriceHistory = async () => {
       try {
         const response = await fetch(`${API_BASE_URL}/api/price-history`);
-        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        if (!response.ok) throw new Error(`Erreur HTTP ! statut : ${response.status}`);
         const history = await response.json();
         setPriceHistory(history);
       } catch (error) {
-        console.error('Error fetching price history:', error);
+        console.error('Erreur lors de la récupération de l\'historique des prix :', error);
       }
     };
-  
-    // Fetch price history every 5 seconds
+
+    // Mise à jour de l'historique toutes les 5 secondes
     fetchPriceHistory();
     const interval = setInterval(fetchPriceHistory, 5000);
     return () => clearInterval(interval);
   }, []);
 
-  // Fetch user data for leaderboard
+  // Effet pour récupérer les données des utilisateurs pour le classement
   useEffect(() => {
     const fetchUserData = async () => {
       try {
         const response = await fetch(`${API_BASE_URL}/api/users`);
         if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
+          throw new Error(`Erreur HTTP ! statut : ${response.status}`);
         }
         const data = await response.json();
-        // Sort data by score in descending order
         const sortedData = data.sort((a, b) => b.score - a.score);
-        
-        // Find current user's rank
         const userIndex = sortedData.findIndex(user => user.name === username);
         setUserRank(userIndex !== -1 ? userIndex + 1 : null);
-        
         setUserData(sortedData);
       } catch (error) {
-        console.error('Error fetching user data:', error);
+        console.error('Erreur lors de la récupération des données des utilisateurs :', error);
       }
     };
 
     if (isUsernameSet) {
-      // Fetch data every 2 seconds
       const interval = setInterval(fetchUserData, 2000);
       return () => clearInterval(interval);
     }
   }, [isUsernameSet, username]);
 
-  // Update server with user's score
+  // Effet pour mettre à jour le score de l'utilisateur sur le serveur
   useEffect(() => {
     const updateUserScore = async () => {
       if (isUsernameSet && username) {
@@ -325,39 +329,36 @@ function App() {
             body: JSON.stringify({ name: username, score: maxUSD }),
           });
         } catch (error) {
-          console.error("Error updating score:", error);
+          console.error("Erreur lors de la mise à jour du score :", error);
         }
       }
     };
 
-    // Update score every 5 seconds
     const interval = setInterval(updateUserScore, 5000);
     return () => clearInterval(interval);
   }, [isUsernameSet, username, maxUSD]);
 
-  // Handle username submission
+  // Gestion de la soumission du nom d'utilisateur
   const handleUsernameSubmit = () => {
     if (username.trim()) {
       setIsUsernameSet(true);
 
-      // Update leaderboard immediately
       fetch(`${API_BASE_URL}/api/users`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name: username, score: maxUSD }),
       })
         .then(() => {
-          // Refresh leaderboard data
           fetch(`${API_BASE_URL}/api/users`)
             .then(response => response.json())
             .then(data => setUserData(data))
-            .catch(error => console.error("Error fetching leaderboard data:", error));
+            .catch(error => console.error("Erreur lors de la récupération des données du classement :", error));
         })
-        .catch(error => console.error("Error updating score:", error));
+        .catch(error => console.error("Erreur lors de la mise à jour du score :", error));
     }
   };
 
-  // Handle clicking on a crypto to manually mine
+  // Gestion du clic sur une cryptomonnaie pour miner manuellement
   const handleCryptoClick = (crypto) => {
     setCryptoBalances(prev => ({
       ...prev,
@@ -365,65 +366,59 @@ function App() {
     }));
   };
 
-  // Handle unlocking a new cryptocurrency
+  // Gestion du déblocage d'une nouvelle cryptomonnaie
   const handleUnlockCrypto = (crypto) => {
-    const unlockCost = cryptoPrices[crypto] * 1000; // Cost to unlock
+    const unlockCost = cryptoPrices[crypto] * 1000;
     if (USD >= unlockCost) {
       setUSD(prev => prev - unlockCost);
       setAvailableCryptos(prev => [...prev, crypto]);
     }
   };
 
-  // Handle buying an item from the shop
+  // Gestion de l'achat d'un article dans la boutique
   const handleBuyItem = (crypto, index) => {
     const items = shopItems[crypto];
     const item = items[index];
 
     if (USD >= item.cost) {
       setUSD(prev => prev - item.cost);
-      
-      // Update shop items
       setShopItems(prev => {
         const newShopItems = { ...prev };
         const newItems = [...prev[crypto]];
         newItems[index] = {
           ...item,
           count: item.count + 1,
-          cost: Math.round(item.cost * 1.15), // 15% cost increase
+          cost: Math.round(item.cost * 1.15),
         };
         newShopItems[crypto] = newItems;
         return newShopItems;
       });
-
-      // Update CPS
       setCps(prev => ({
         ...prev,
         [crypto]: prev[crypto] + item.bps,
       }));
-
-      // Trigger animation for the buy button
       setButtonAnimation(prev => ({ ...prev, [`buy-${crypto}-${index}`]: true }));
       setTimeout(() => setButtonAnimation(prev => ({ ...prev, [`buy-${crypto}-${index}`]: false })), 300);
     }
   };
 
-  // Show popup for buying crypto
+  // Affichage du popup pour acheter une cryptomonnaie
   const handleBuyCryptoPopup = (crypto) => {
     setSelectedCrypto(crypto);
-    setCryptoAmount(0); // Reset the input field
+    setCryptoAmount(0);
     setBuyOrSell('buy');
     setShowPopup(true);
   };
 
-  // Show popup for selling crypto
+  // Affichage du popup pour vendre une cryptomonnaie
   const handleSellCryptoPopup = (crypto) => {
     setSelectedCrypto(crypto);
-    setCryptoAmount(cryptoBalances[crypto]); // Default to selling all
+    setCryptoAmount(cryptoBalances[crypto]);
     setBuyOrSell('sell');
     setShowPopup(true);
   };
 
-  // Handle crypto amount change in popup
+  // Gestion du changement de quantité dans le popup
   const handleCryptoAmountChange = (value) => {
     if (buyOrSell === 'buy') {
       const cryptoPrice = cryptoPrices[selectedCrypto];
@@ -434,7 +429,7 @@ function App() {
     }
   };
 
-  // Confirm crypto transaction
+  // Confirmation de la transaction
   const handleConfirmTransaction = () => {
     if (cryptoAmount <= 0) {
       setShowPopup(false);
@@ -442,7 +437,6 @@ function App() {
     }
 
     const cryptoPrice = cryptoPrices[selectedCrypto];
-    
     if (buyOrSell === 'buy') {
       const totalCost = cryptoAmount * cryptoPrice;
       setUSD(prev => prev - totalCost);
@@ -462,11 +456,10 @@ function App() {
         [selectedCrypto]: prev[selectedCrypto] - cryptoAmount
       }));
     }
-
     setShowPopup(false);
   };
 
-  // Render crypto price chart
+  // Rendu du graphique des prix des cryptomonnaies
   const renderChart = (crypto) => {
     const data = {
       labels: priceHistory[crypto]?.map((_, index) => index + 1),
@@ -508,7 +501,6 @@ function App() {
     };
 
     return (
-
       <div key={crypto} className="chart-container">
         <h3>{cryptoFullNames[crypto]} (${cryptoPrices[crypto].toFixed(6)})</h3>
         <Line data={data} options={options} />
@@ -527,37 +519,28 @@ function App() {
           </button>
         </div>
       </div>
-  
     );
   };
 
-  // Filter users for leaderboard display
+  // Filtrage des utilisateurs pour l'affichage du classement
   const getLeaderboardUsers = () => {
     if (!userData || userData.length === 0) return [];
-    
     const result = [];
-    
-    // Add top 3
     for (let i = 0; i < Math.min(3, userData.length); i++) {
       result.push(userData[i]);
     }
-    
-    // Add 3 above and 3 below current user if not in top 3
     if (userRank && userRank > 3) {
       result.push({ name: "...", score: 0, separator: true });
-      
       const start = Math.max(3, userRank - 3);
       const end = Math.min(userRank + 3, userData.length);
-      
       for (let i = start; i < end; i++) {
         result.push(userData[i]);
       }
     }
-    
     return result;
   };
 
-  // Render username screen
+  // Rendu de l'écran de saisie du nom d'utilisateur
   if (!isUsernameSet) {
     return (
       <div className="App">
@@ -565,13 +548,11 @@ function App() {
           <h1 className="UsernameTitle">Welcome to</h1>
           <h1 className="UsernameTitle2">Crypto Miner</h1>
           <h1 className="Ask-username">Enter your username</h1>
-
-         
-            <form onSubmit={(e) => {
-            e.preventDefault(); // prevent page reload
+          <form onSubmit={(e) => {
+            e.preventDefault();
             handleUsernameSubmit();
-            }}>
-              <div className="Title-container">
+          }}>
+            <div className="Title-container">
               <input
                 type="text"
                 value={username}
@@ -580,18 +561,14 @@ function App() {
                 className="pixel-input"
               />
               <button className="Title-button" onClick={handleUsernameSubmit}>Start</button>
-              </div>
+            </div>
           </form>
-
-          
-
-
         </header>
       </div>
     );
   }
 
-  // Get next unlockable crypto
+  // Récupération de la prochaine cryptomonnaie déblocable
   const nextCrypto = getNextUnlockableCrypto();
 
   return (
@@ -599,21 +576,17 @@ function App() {
       {!showLeaderboard && (
         <div className="App-main">
           <h1>Crypto Market Simulator</h1>
-          
-          {/* Balance information */}
           <div className="balances-container">
             <div className="balance-item1">
               <p>USD Balance: ${USD.toFixed(2)}</p>
               <p>Max USD Balance: ${maxUSD.toFixed(2)}</p>
             </div>
-            
-            {/* Crypto balances */}
             <div className="crypto-balances">
               {availableCryptos.map(crypto => (
                 <div 
                   key={crypto} 
                   className={`balance-item ${selectedCryptoForShop === crypto ? 'highlighted' : ''}`}
-                  title={cryptoDescriptions[crypto]} // Add tooltip description
+                  title={cryptoDescriptions[crypto]}
                 >
                   <div className="balance-text">
                     <p>{crypto} Balance: {cryptoBalances[crypto].toFixed(6)}</p>
@@ -628,7 +601,7 @@ function App() {
                       title={`${cryptoFullNames[crypto]}: ${cryptoDescriptions[crypto]}`}
                       onClick={() => {
                         handleCryptoClick(crypto);
-                        handleCryptoLogoClick(crypto); // Highlight the clicked crypto
+                        handleCryptoLogoClick(crypto);
                       }}
                     />
                   </div>
@@ -636,16 +609,10 @@ function App() {
               ))}
             </div>
           </div>
-          
-
         </div>
       )}
-
-      {/* Sidebar with shop */}
       <div className="App-sidebar">
         <h2>Mining Shop</h2>
-        
-        {/* Next unlockable crypto */}
         {nextCrypto && (
           <div className="shop-item">
             <p>Unlock {cryptoFullNames[nextCrypto]}</p>
@@ -654,8 +621,6 @@ function App() {
             </button>
           </div>
         )}
-        
-        {/* Crypto selector */}
         <div className="crypto-selector">
           <label htmlFor="crypto-select">Select Cryptocurrency:</label>
           <select 
@@ -670,8 +635,6 @@ function App() {
             ))}
           </select>
         </div>
-        
-        {/* Display miners for selected crypto only */}
         <div className="miners-container">
           <h3>{cryptoFullNames[selectedShopCrypto]} Miners</h3>
           {shopItems[selectedShopCrypto].map((item, index) => (
@@ -690,27 +653,19 @@ function App() {
           ))}
         </div>
       </div>
-
-
-      {/* Crypto market charts */}
       <div className="App-currencies">
         <h2>Crypto-Market</h2>
         {availableCryptos.map(crypto => renderChart(crypto))}
       </div>
-      
-      {/* Leaderboard button */}
       <button class="vertical-button" onClick={() => setShowLeaderboard(prev => !prev)}>
         {showLeaderboard ? 'Hide Leaderboard' : 'Show Leaderboard'}
       </button>
-
       {showLeaderboard && (
         <div className="leaderboard-title">
           <h1>Crypto Market Simulator</h1>
         </div>
       )}
-      {/* Leaderboard */}
       {showLeaderboard && (
-        
         <div className="App-leaderboard">
           <h2 className="LdTitle">Leaderboard</h2>
           {getLeaderboardUsers().length > 0 ? (
@@ -743,8 +698,6 @@ function App() {
           )}
         </div>
       )}
-
-      {/* Buy/Sell Popup */}
       {showPopup && (
         <div className="popup">
           <div className="popup-content">
