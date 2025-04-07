@@ -527,18 +527,22 @@ const getNextUnlockableCrypto = () => {
         },
       ],
     };
-
+    
     const options = {
       responsive: true,
       maintainAspectRatio: false,
+      aspectRatio: 2,
       scales: {
         x: {
           grid: { display: false },
-          ticks: { color: '#069506' }
+          ticks: { color: '#069506'
+
+          },
         },
         y: {
           grid: { display: false },
-          ticks: { color: '#069506' }
+          ticks: { color: '#069506' 
+          },
         },
       },
       plugins: {
@@ -729,7 +733,9 @@ const getNextUnlockableCrypto = () => {
       {/* Crypto market charts */}
       <div className="App-currencies">
         <h2>Crypto-Market</h2>
-        {availableCryptos.map(crypto => renderChart(crypto))}
+        <div className="App-currencies-title">
+          {availableCryptos.map(crypto => renderChart(crypto))}
+        </div>
       </div>
       
       {/* Leaderboard button */}
@@ -811,5 +817,6 @@ const getNextUnlockableCrypto = () => {
     </div>
   );
 }
+
 
 export default App;
