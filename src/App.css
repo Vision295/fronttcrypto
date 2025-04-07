@@ -317,7 +317,7 @@ input::placeholder {
   z-index: 1;
   max-height: 90.5vh;
   overflow-y: hidden;
-  overflow-x: hidden; /* Prevent horizontal scroll */
+  overflow-x: hidden;
   border: 1px solid #069506;
 }
 
@@ -330,9 +330,9 @@ input::placeholder {
 
 .App-currencies-title {
   overflow-y:auto;
+  overflow-x:hidden;
   width: 450px;
   align-items: center;
-  overflow-x:hidden;
   gap: 20px;
   padding: 20px;
 }
