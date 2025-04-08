@@ -275,6 +275,8 @@ function App() {
 
 
   // Effet pour récupérer l'historique des prix des cryptomonnaies depuis l'API
+  const [shouldAnimate, setShouldAnimate] = useState(false); // État pour contrôler l'animation
+
   useEffect(() => {
     const fetchPriceHistory = async () => {
       try {
@@ -283,6 +285,7 @@ function App() {
         const history = await response.json();
         console.log('Updated priceHistory from backend:', history); // Log updated priceHistory
         setPriceHistory(history); // Mettre à jour l'état avec l'historique reçu
+        setShouldAnimate(true); // Déclencher l'animation après la mise à jour
       } catch (error) {
         console.error('Erreur lors de la récupération de l\'historique des prix :', error);
         console.log(priceHistory);
@@ -291,7 +294,7 @@ function App() {
 
     // Mise à jour de l'historique toutes les 5 secondes
     fetchPriceHistory();
-    const interval = setInterval(fetchPriceHistory, 4900);
+    const interval = setInterval(fetchPriceHistory, 5000);
     return () => clearInterval(interval);
   }, []);
 
@@ -493,14 +496,37 @@ function App() {
     const options = {
       responsive: true,
       maintainAspectRatio: false,
+      animation: shouldAnimate
+        ? {
+            duration: 1000, // Durée de l'animation en ms
+            easing: 'linear', // Transition linéaire pour un mouvement fluide
+            onComplete: () => setShouldAnimate(false), // Désactiver l'animation après son exécution
+          }
+        : false, // Pas d'animation si shouldAnimate est false
       scales: {
         x: {
           grid: { display: false },
           ticks: { color: '#069506' },
+          title: {
+            display: true,
+            text: 'Time',
+            color: '#069506',
+            font: {
+              size: 12,
+            },
+          },
         },
         y: {
           grid: { display: false },
           ticks: { color: '#069506' },
+          title: {
+            display: true,
+            text: 'Price (USD)',
+            color: '#069506',
+            font: {
+              size: 12,
+            },
+          },
         },
       },
       plugins: {
