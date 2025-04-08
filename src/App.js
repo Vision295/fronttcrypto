@@ -350,7 +350,7 @@ function App() {
     };
 
     fetchCurrentEvent();
-    const interval = setInterval(fetchCurrentEvent, 15000); // Refresh event every 15 seconds
+    const interval = setInterval(fetchCurrentEvent, 30000); // 30 s
     return () => clearInterval(interval);
   }, []);
 
