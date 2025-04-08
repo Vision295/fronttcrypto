@@ -96,7 +96,7 @@ const cryptoPrices = {
 function App() {
   // État utilisateur
   // `USD` représente le solde en dollars de l'utilisateur.
-  const init_balance = 10000; // Solde initial en USD
+  const init_balance = 10000000000000; // Solde initial en USD
   const [USD, setUSD] = useState(init_balance);
   const [maxUSD, setMaxUSD] = useState(init_balance); // Solde maximum atteint
   const [username, setUsername] = useState(""); // Nom d'utilisateur
