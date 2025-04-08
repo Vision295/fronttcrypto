@@ -551,6 +551,30 @@ function App() {
     return result;
   };
 
+  // Fonction pour générer un message en fonction du classement
+  const getDynamicMessage = () => {
+    if (userRank === 1) {
+      return (
+        <p>
+          🎉 Congratulations! You are the top player! 🎉<br />
+          You've reached the pinnacle of the Crypto Market Simulator. Keep mining and trading to maintain your position!
+        </p>
+      );
+    } else if (userRank === 2 || userRank === 3) {
+      const nextPlayer = userData[userRank - 2]; // Joueur juste au-dessus
+      const gap = nextPlayer.score - maxUSD;
+      return (
+        <p>
+          You're ranked #{userRank}!<br />
+          Earn ${gap.toFixed(2)} more to surpass {nextPlayer.name}!
+        </p>
+      );
+    } else if (userRank >= 4 && userRank <= 7) {
+      return <p>You're ranked #{userRank}. Keep pushing to climb the leaderboard!</p>;
+    }
+    return null;
+  };
+
   // Rendu de l'écran de saisie du nom d'utilisateur
   if (!isUsernameSet) {
     return (
@@ -682,30 +706,37 @@ function App() {
         <div className="App-leaderboard">
           <h2 className="LdTitle">Leaderboard</h2>
           {getLeaderboardUsers().length > 0 ? (
-            <table>
-              <thead>
-                <tr>
-                  <th className="LdRank">Rank</th>
-                  <th className="LdName">Name</th>
-                  <th className="LdScore">Score</th>
-                </tr>
-              </thead>
-              <tbody>
-                {getLeaderboardUsers().map((user, index) => (
-                  user.separator ? (
-                    <tr key="separator">
-                      <td colSpan="3">...</td>
-                    </tr>
-                  ) : (
-                    <tr key={index} className={user.name === username ? 'current-user' : ''}>
-                      <td>{userData.indexOf(user) + 1}</td>
-                      <td>{user.name}</td>
-                      <td>${(user.score || 0).toFixed(2)}</td>
-                    </tr>
-                  )
-                ))}
-              </tbody>
-            </table>
+            <>
+              <table>
+                <thead>
+                  <tr>
+                    <th className="LdRank">Rank</th>
+                    <th className="LdName">Name</th>
+                    <th className="LdScore">Score</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {getLeaderboardUsers().map((user, index) => (
+                    user.separator ? (
+                      <tr key="separator">
+                        <td colSpan="3">...</td>
+                      </tr>
+                    ) : (
+                      <tr key={index} className={user.name === username ? 'current-user' : ''}>
+                        <td>{userData.indexOf(user) + 1}</td>
+                        <td>{user.name}</td>
+                        <td>${(user.score || 0).toFixed(2)}</td>
+                      </tr>
+                    )
+                  ))}
+                </tbody>
+              </table>
+              {userRank && userRank <= 7 && (
+                <div className="dynamic-message">
+                  {getDynamicMessage()}
+                </div>
+              )}
+            </>
           ) : (
             <p>Loading leaderboard data...</p>
           )}

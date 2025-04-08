@@ -158,10 +158,13 @@ input::placeholder {
   border: 1px solid #069506;
   padding: 5px 10px;
   font-size: 10px;
-  white-space: nowrap;
+  white-space: normal; /* Allow text to wrap to the next line */
+  max-width: 200px; /* Limit the width of the tooltip */
+  word-wrap: break-word; /* Break long words if necessary */
   z-index: 10;
   opacity: 1;
   transition: opacity 0.3s ease;
+  text-align: center; /* Center-align the text */
 }
 
 .balance-item:hover::after {
@@ -443,7 +446,8 @@ input::placeholder {
   border: 2px solid #069506;
   border-radius: 0;
   text-align: center;
-  width: 300px;
+  width: 400px;
+  line-height: 1.6;
 }
 
 .popup-content h3 {
@@ -570,6 +574,14 @@ input::placeholder {
   background-color: rgba(0, 255, 153, 0.297);
 }
 
+.dynamic-message {
+  font-size: 14px;
+  color: #2E8B57;
+  text-align: center;
+  margin-top: 20px;
+  line-height: 1.5;
+}
+
 /* Responsive adjustments */
 @media (max-width: 1200px) {
   .App-currencies {
@@ -627,7 +639,7 @@ input::placeholder {
   transition: opacity 0.3s;
   font-family: 'Press Start 2P', cursive;
   font-size: 8px;
-  line-height: 1.4;
+  line-height: 4;
 }
 
 .crypto-tooltip:hover .tooltip-text {
