@@ -491,14 +491,14 @@ function App() {
 
   // Rendu du graphique des prix des cryptomonnaies
   const renderChart = (crypto) => {
-    const currentPrice = priceHistory[cryptoFullNames[crypto]][19].toFixed(2);
+    const currentPrice = priceHistory[crypto][19].toFixed(2);
     // Préparer les données pour le graphique
     const data = {
-      labels: Array.from({ length: priceHistory[cryptoFullNames[crypto]].length }, (_, i) => `T-${priceHistory[cryptoFullNames[crypto]].length - i}`),
+      labels: Array.from({ length: priceHistory[crypto].length }, (_, i) => `T-${priceHistory[crypto].length - i}`),
       datasets: [
         {
           label: `${crypto} Price`,
-          data: priceHistory[cryptoFullNames[crypto]],
+          data: priceHistory[crypto],
           segment: {
             borderColor: (ctx) => {
               const { p0, p1 } = ctx;
