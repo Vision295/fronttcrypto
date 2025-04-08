@@ -574,6 +574,14 @@ input::placeholder {
   background-color: rgba(0, 255, 153, 0.297);
 }
 
+.dynamic-message {
+  font-size: 14px;
+  color: #2E8B57;
+  text-align: center;
+  margin-top: 20px;
+  line-height: 1.5;
+}
+
 /* Responsive adjustments */
 @media (max-width: 1200px) {
   .App-currencies {
@@ -631,7 +639,7 @@ input::placeholder {
   transition: opacity 0.3s;
   font-family: 'Press Start 2P', cursive;
   font-size: 8px;
-  line-height: 1.4;
+  line-height: 4;
 }
 
 .crypto-tooltip:hover .tooltip-text {
