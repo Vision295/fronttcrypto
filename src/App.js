@@ -285,13 +285,13 @@ function App() {
         setPriceHistory(history); // Mettre à jour l'état avec l'historique reçu
       } catch (error) {
         console.error('Erreur lors de la récupération de l\'historique des prix :', error);
-        console.log(priceHistory)
+        console.log(priceHistory);
       }
     };
 
     // Mise à jour de l'historique toutes les 5 secondes
     fetchPriceHistory();
-    const interval = setInterval(fetchPriceHistory, 5000);
+    const interval = setInterval(fetchPriceHistory, 4900);
     return () => clearInterval(interval);
   }, []);
 
@@ -466,14 +466,14 @@ function App() {
 
   // Rendu du graphique des prix des cryptomonnaies
   const renderChart = (crypto) => {
-    const currentPrice = priceHistory[cryptoFullNames[crypto]][19].toFixed(2);
+    const currentPrice = priceHistory[crypto][19].toFixed(2);
     // Préparer les données pour le graphique
     const data = {
-      labels: Array.from({ length: priceHistory[cryptoFullNames[crypto]].length }, (_, i) => `T-${priceHistory[cryptoFullNames[crypto]].length - i}`),
+      labels: Array.from({ length: priceHistory[crypto].length }, (_, i) => `T-${priceHistory[crypto].length - i}`),
       datasets: [
         {
           label: `${crypto} Price`,
-          data: priceHistory[cryptoFullNames[crypto]],
+          data: priceHistory[crypto],
           segment: {
             borderColor: (ctx) => {
               const { p0, p1 } = ctx;
@@ -512,7 +512,7 @@ function App() {
     return (
       <div key={crypto} className="chart-container">
         <h3>
-          {cryptoFullNames[crypto]} : {currentPrice}
+          {crypto} : {currentPrice}
         </h3>
         <Line data={data} options={options} />
         <div className="chart-buttons">
@@ -609,7 +609,7 @@ function App() {
                       src={cryptoImages[crypto]}
                       className="Crypto-logo"
                       alt={crypto}
-                      title={`${cryptoFullNames[crypto]}: ${cryptoDescriptions[crypto]}`}
+                      title={`${crypto}: ${cryptoDescriptions[crypto]}`}
                       onClick={() => {
                         handleCryptoClick(crypto);
                         handleCryptoLogoClick(crypto);
@@ -641,7 +641,7 @@ function App() {
           >
             {availableCryptos.map(crypto => (
               <option key={crypto} value={crypto}>
-                {cryptoFullNames[crypto]} ({crypto})
+                {crypto} ({crypto})
               </option>
             ))}
           </select>
