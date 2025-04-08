@@ -424,7 +424,7 @@ function App() {
 
   // Update the price calculation to use priceHistory
   const handleCryptoAmountChange = (value) => {
-    const currentPrice = priceHistory[cryptoFullNames[selectedCrypto]][19];
+    const currentPrice = priceHistory[selectedCrypto][19];
     if (buyOrSell === 'buy') {
       const maxAffordable = Math.floor(USD / currentPrice);
       setCryptoAmount(Math.min(Math.max(0, value), maxAffordable));
@@ -441,7 +441,7 @@ function App() {
       return;
     }
 
-    const currentPrice = priceHistory[cryptoFullNames[selectedCrypto]][19];
+    const currentPrice = priceHistory[selectedCrypto][19];
     if (buyOrSell === 'buy') {
       const totalCost = cryptoAmount * currentPrice;
       setUSD(prev => prev - totalCost);
@@ -763,7 +763,7 @@ function App() {
         <div className="popup">
           <div className="popup-content">
             <h3>{buyOrSell === 'buy' ? 'Buy' : 'Sell'} {selectedCrypto}</h3>
-            <p>Price per unit: ${priceHistory[cryptoFullNames[selectedCrypto]][19].toFixed(6)}</p>
+            <p>Price per unit: ${priceHistory[selectedCrypto][19].toFixed(6)}</p>
             <input
               type="number"
               value={cryptoAmount}
@@ -772,13 +772,13 @@ function App() {
             />
             {buyOrSell === 'buy' ? (
               <p>
-                ${USD.toFixed(2)} - ${(cryptoAmount * priceHistory[cryptoFullNames[selectedCrypto]][19]).toFixed(2)} = $
-                {(USD - cryptoAmount * priceHistory[cryptoFullNames[selectedCrypto]][19]).toFixed(2)}
+                ${USD.toFixed(2)} - ${(cryptoAmount * priceHistory[selectedCrypto][19]).toFixed(2)} = $
+                {(USD - cryptoAmount * priceHistory[selectedCrypto][19]).toFixed(2)}
               </p>
             ) : (
               <p>
-                ${USD.toFixed(2)} + ${(cryptoAmount * priceHistory[cryptoFullNames[selectedCrypto]][19]).toFixed(2)} = $
-                {(USD + cryptoAmount * priceHistory[cryptoFullNames[selectedCrypto]][19]).toFixed(2)}
+                ${USD.toFixed(2)} + ${(cryptoAmount * priceHistory[selectedCrypto][19]).toFixed(2)} = $
+                {(USD + cryptoAmount * priceHistory[selectedCrypto][19]).toFixed(2)}
               </p>
             )}
             <div className="popup-buttons">
