@@ -1,5 +1,5 @@
 // Importation des bibliothèques et composants nécessaires
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 // Importation des logos des cryptomonnaies
 // Ces images sont utilisées pour représenter visuellement chaque cryptomonnaie.
@@ -227,17 +227,17 @@ function App() {
   // Highlight la crypto-monnaie sélectionnée dans le shop
   const [selectedCryptoForShop, setSelectedCryptoForShop] = useState(null);
 
+  // État pour l'événement actuel
+  const [currentEvent, setCurrentEvent] = useState(null);
+  const eventBannerRef = useRef(null);
 
   // Fin des useState, début des useEffect
-
 
   // Fonction pour update la crypto-monnaie sélectionnée dans le shop
   // Utilisée pour highlight la crypto-monnaie cliquée
   const handleCryptoLogoClick = (crypto) => {
     setSelectedCryptoForShop(crypto);
   };
-
-
 
   /* Fonctionnement de useEffect :
     Hook qui permet d'exécuter du code en réponse à des changements
@@ -255,7 +255,6 @@ function App() {
     Le netttoyage sert à éviter les surplus et fuites de mémoire
   */
 
-
   // Incremente le solde chaque crypto-monnaie en fonction de leur cps
   // Crée un intervale pour éxecuter une fonction tout les 1000 ms
   // On clean l'intervalle
@@ -271,8 +270,6 @@ function App() {
     }, 1000); // Mise à jour toutes les secondes
     return () => clearInterval(interval);
   }, [cps]);
-
-
 
   // Effet pour récupérer l'historique des prix des cryptomonnaies depuis l'API
   useEffect(() => {
@@ -338,6 +335,34 @@ function App() {
     const interval = setInterval(updateUserScore, 5000);
     return () => clearInterval(interval);
   }, [isUsernameSet, username, maxUSD]);
+
+  // Effet pour récupérer l'événement actuel depuis le backend
+  useEffect(() => {
+    const fetchCurrentEvent = async () => {
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/current-event`);
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        const event = await response.json();
+        setCurrentEvent(event);
+      } catch (error) {
+        console.error('Error fetching current event:', error);
+      }
+    };
+
+    fetchCurrentEvent();
+    const interval = setInterval(fetchCurrentEvent, 15000); // Refresh event every 15 seconds
+    return () => clearInterval(interval);
+  }, []);
+
+  // Animation pour la bannière de l'événement
+  useEffect(() => {
+    if (currentEvent && eventBannerRef.current) {
+      const banner = eventBannerRef.current;
+      banner.style.animation = 'none'; // Reset animation
+      void banner.offsetWidth; // Trigger reflow
+      banner.style.animation = ''; // Restart animation
+    }
+  }, [currentEvent]);
 
   // Gestion de la soumission du nom d'utilisateur
   const handleUsernameSubmit = () => {
@@ -608,13 +633,18 @@ function App() {
 
   return (
     <div className="App">
+      {currentEvent && (
+        <div ref={eventBannerRef} className="event-banner">
+          <strong>{currentEvent.name}:</strong> {currentEvent.description}
+        </div>
+      )}
       {!showLeaderboard && (
         <div className="App-main">
           <h1>Crypto Market Simulator</h1>
           <div className="balances-container">
             <div className="balance-item1">
               <p>USD Balance: ${USD.toFixed(2)}</p>
-              <p>Max USD Balance: ${maxUSD.toFixed(2)}</p>
+              {/* <p>Max USD Balance: ${maxUSD.toFixed(2)}</p> */}
             </div>
             <div className="crypto-balances">
               {availableCryptos.map(crypto => (
