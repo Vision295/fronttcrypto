@@ -23,7 +23,7 @@ import './App.css';
 
 // Configuration de l'API
 // Définition de l'adresse IP et du port pour communiquer avec le backend.
-const ip = "10.56.5.162";
+const ip = "localhost";
 const port = 5000;
 const API_BASE_URL = `http://${ip}:${port}`;
 
@@ -243,11 +243,12 @@ function App() {
   // Liste des étapes du tutoriel
   const tutorialSteps = [
     { selector: ".App-main h1", text: "Bienvenue dans Crypto Market Simulator !", bubblePosition: "below" },
-    { selector: ".balance-item1", text: "Voici votre solde en USD. Tout votre argent est stocké ici.", bubblePosition: "below" },
-    { selector: ".balance-item", text: "Ceci est la crypto Shiba Inu. Cliquez sur le logo pour miner manuellement !", bubblePosition: "below" },
+    { selector: ".balance-item1", text: "Voici votre solde en dollars (USD). Tout votre argent est stocké ici.", bubblePosition: "below" },
+    { selector: ".balance-item", text: "Ceci est la crypto Shiba Inu. Vous pouvez voir votre solde et votre production par seconde. Cliquez sur le logo pour miner manuellement !", bubblePosition: "below" },
+    { selector: ".vertical-button", text: "Ceci est le bouton Leaderboard. Cliquez dessus pour l'afficher ou le cacher. Le score correspond à la quantité maximale d'argent atteinte.", bubblePosition: "right" },
     { selector: ".App-sidebar", text: "Voici la boutique où vous pouvez acheter des mineurs et débloquer de nouvelles cryptos.", bubblePosition: "right" },
-    { selector: ".chart-container", text: "Voici le graphique des prix. Utilisez les boutons Acheter/Vendre pour trader.", bubblePosition: "below" },
-    ];
+    { selector: ".chart-container", text: "Voici le graphique des prix. Utilisez les boutons Buy/Sell pour trader.", bubblePosition: "below" }
+  ];
 
   // Met à jour les styles pour encadrer l'élément actuel et positionner la bulle
   const updateHighlightAndBubble = () => {
