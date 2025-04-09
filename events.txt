@@ -1,0 +1,266 @@
+[
+  {
+    "_id": {"$oid": "67f40026fb6f0ebd24a3916b"},
+    "acronym": "BTC",
+    "name": "Les Mineurs de Bitcoin Découvrent une Source d'Énergie Illimitée",
+    "description": "Les mineurs de Bitcoin ont accidentellement découvert une source d'énergie infinie, provoquant une augmentation de l'activité minière.",
+    "new_volatility": 0.2,
+    "duration": 10000
+  },
+  {
+    "_id": {"$oid": "67f40026fb6f0ebd24a3916c"},
+    "acronym": "ETH",
+    "name": "Les Contrats Intelligents d'Ethereum Deviennent Conscients",
+    "description": "Les contrats intelligents d'Ethereum sont devenus conscients, entraînant un comportement imprévisible du marché.",
+    "new_volatility": 0.15,
+    "duration": 15000
+  },
+  {
+    "_id": {"$oid": "67f40026fb6f0ebd24a3916d"},
+    "acronym": "DOGE",
+    "name": "Le Dogecoin Devient la Monnaie Officielle de Mars",
+    "description": "Elon Musk annonce que le Dogecoin sera la monnaie officielle des colonies martiennes, provoquant un pic d'intérêt.",
+    "new_volatility": 0.1,
+    "duration": 5000
+  },
+  {
+    "_id": {"$oid": "67f40026fb6f0ebd24a3916e"},
+    "acronym": "ADA",
+    "name": "Cardano Implémente des Transactions de Voyage dans le Temps",
+    "description": "Le nouveau protocole de Cardano permet d'envoyer des transactions dans le passé, créant une confusion sur le marché.",
+    "new_volatility": 0.08,
+    "duration": 20000
+  },
+  {
+    "_id": {"$oid": "67f40026fb6f0ebd24a3916f"},
+    "acronym": "SHIB",
+    "name": "Le Shiba Inu Coin Utilisé pour Ressusciter un Pharaon Ancien",
+    "description": "Des archéologues utilisent le Shiba Inu Coin dans un rituel qui ressuscite un pharaon ancien, provoquant une frénésie médiatique.",
+    "new_volatility": 0.09,
+    "duration": 8000
+  },
+  {
+    "_id": {"$oid": "67f40026fb6f0ebd24a39170"},
+    "acronym": "XRP",
+    "name": "XRP Adopté par les Banques Mondiales",
+    "description": "Les principales banques mondiales annoncent l'adoption de XRP pour les paiements transfrontaliers, provoquant une hausse de la demande.",
+    "new_volatility": 0.07,
+    "duration": 12000
+  },
+  {
+    "_id": {"$oid": "67f40026fb6f0ebd24a39171"},
+    "acronym": "DOT",
+    "name": "Polkadot Connecte Toutes les Blockchains",
+    "description": "Polkadot réussit à connecter toutes les principales blockchains, inaugurant une nouvelle ère d'interopérabilité.",
+    "new_volatility": 0.06,
+    "duration": 18000
+  },
+  {
+    "_id": {"$oid": "67f40026fb6f0ebd24a39172"},
+    "acronym": "AVAX",
+    "name": "Avalanche Intègre l'Informatique Quantique",
+    "description": "Avalanche annonce l'intégration de l'informatique quantique, révolutionnant la technologie blockchain.",
+    "new_volatility": 0.05,
+    "duration": 14000
+  },
+  {
+    "_id": {"$oid": "67f40026fb6f0ebd24a39173"},
+    "acronym": "SOL",
+    "name": "Solana S'associe avec la NASA",
+    "description": "Solana s'associe avec la NASA pour utiliser la technologie blockchain dans les missions spatiales, provoquant un regain d'intérêt.",
+    "new_volatility": 0.04,
+    "duration": 16000
+  },
+  {
+    "_id": {"$oid": "67f40026fb6f0ebd24a39174"},
+    "acronym": "LTC",
+    "name": "Le Litecoin Adopté par les Grands Détaillants",
+    "description": "Les grands détaillants annoncent l'acceptation du Litecoin comme moyen de paiement, provoquant une hausse de la demande.",
+    "new_volatility": 0.03,
+    "duration": 10000
+  },
+  {
+    "_id": {"$oid": "67f40026fb6f0ebd24a39175"},
+    "acronym": "BNB",
+    "name": "Binance Coin Finance une Initiative Caritative Mondiale",
+    "description": "Binance Coin est utilisé pour financer une initiative caritative mondiale, provoquant une hausse du sentiment positif.",
+    "new_volatility": 0.02,
+    "duration": 15000
+  },
+  {
+    "_id": {"$oid": "67f40026fb6f0ebd24a39176"},
+    "acronym": "BTC",
+    "name": "Stabilité Inhabituelle du Marché Bitcoin",
+    "description": "Le marché du Bitcoin connaît une période de stabilité inhabituelle, sans mouvements de prix significatifs.",
+    "new_volatility": 0.021,
+    "duration": 20000
+  },
+  {
+    "_id": {"$oid": "67f40026fb6f0ebd24a39177"},
+    "acronym": "ETH",
+    "name": "Pause Café des Développeurs Ethereum",
+    "description": "Les développeurs d'Ethereum prennent une pause café collective, entraînant une brève interruption de l'activité du marché.",
+    "new_volatility": 0.023,
+    "duration": 10000
+  },
+  {
+    "_id": {"$oid": "67f40026fb6f0ebd24a39178"},
+    "acronym": "DOGE",
+    "name": "Fête de la Pizza Mondiale de la Communauté Dogecoin",
+    "description": "La communauté Dogecoin organise une fête de la pizza mondiale, célébrant la joie des cryptomonnaies sans impact sur le marché.",
+    "new_volatility": 0.04,
+    "duration": 5000
+  },
+  {
+    "_id": {"$oid": "67f40026fb6f0ebd24a39179"},
+    "acronym": "ADA",
+    "name": "Sieste du Réseau Cardano",
+    "description": "Le réseau Cardano fait une petite sieste, sans transactions traitées pendant cette période.",
+    "new_volatility": 0.038,
+    "duration": 12000
+  },
+  {
+    "_id": {"$oid": "67f40026fb6f0ebd24a3917a"},
+    "acronym": "SHIB",
+    "name": "Hibernation du Shiba Inu Coin",
+    "description": "Le Shiba Inu Coin entre en hibernation, avec peu d'activité sur le marché.",
+    "new_volatility": 0.05,
+    "duration": 8000
+  },
+  {
+    "_id": {"$oid": "67f40026fb6f0ebd24a3917b"},
+    "acronym": "XRP",
+    "name": "Tournoi d'Échecs Mondial de la Communauté XRP",
+    "description": "La communauté XRP s'engage dans un tournoi d'échecs mondial, sans impact sur la volatilité du marché.",
+    "new_volatility": 0.035,
+    "duration": 14000
+  },
+  {
+    "_id": {"$oid": "67f40026fb6f0ebd24a3917c"},
+    "acronym": "DOT",
+    "name": "Partie de Pêche du Réseau Polkadot",
+    "description": "Le réseau Polkadot part en partie de pêche, sans transactions traitées pendant cette période.",
+    "new_volatility": 0.033,
+    "duration": 16000
+  },
+  {
+    "_id": {"$oid": "67f40026fb6f0ebd24a3917d"},
+    "acronym": "AVAX",
+    "name": "Pique-nique Mondial de la Communauté Avalanche",
+    "description": "La communauté Avalanche organise un pique-nique mondial, célébrant la joie des cryptomonnaies sans impact sur le marché.",
+    "new_volatility": 0.032,
+    "duration": 10000
+  },
+  {
+    "_id": {"$oid": "67f40026fb6f0ebd24a3917e"},
+    "acronym": "SOL",
+    "name": "Promenade du Réseau Solana",
+    "description": "Le réseau Solana fait une promenade tranquille, avec peu d'activité sur le marché.",
+    "new_volatility": 0.034,
+    "duration": 12000
+  },
+  {
+    "_id": {"$oid": "67f40026fb6f0ebd24a3917f"},
+    "acronym": "LTC",
+    "name": "Tournoi de Jeux Vidéo de la Communauté Litecoin",
+    "description": "La communauté Litecoin s'engage dans un tournoi de jeux vidéo mondial, sans impact sur la volatilité du marché.",
+    "new_volatility": 0.031,
+    "duration": 14000
+  },
+  {
+    "_id": {"$oid": "67f40026fb6f0ebd24a39180"},
+    "acronym": "BNB",
+    "name": "Soirée Dansante Mondiale de la Communauté Binance Coin",
+    "description": "La communauté Binance Coin organise une soirée dansante mondiale, célébrant la joie des cryptomonnaies sans impact sur le marché.",
+    "new_volatility": 0.026,
+    "duration": 16000
+  },
+  {
+    "_id": {"$oid": "67f40026fb6f0ebd24a39181"},
+    "acronym": "BTC",
+    "name": "Journée de la Terre pour Bitcoin",
+    "description": "Le marché du Bitcoin célèbre la Journée de la Terre avec des initiatives écologiques, encourageant les joueurs à investir de manière responsable.",
+    "new_volatility": 0.021,
+    "duration": 10000
+  },
+  {
+    "_id": {"$oid": "67f40026fb6f0ebd24a39182"},
+    "acronym": "ETH",
+    "name": "Conférence sur la Sécurité Ethereum",
+    "description": "Ethereum organise une conférence sur la sécurité, rappelant aux joueurs l'importance de protéger leurs actifs.",
+    "new_volatility": 0.023,
+    "duration": 12000
+  },
+  {
+    "_id": {"$oid": "67f40026fb6f0ebd24a39183"},
+    "acronym": "DOGE",
+    "name": "Marathon de Charité Dogecoin",
+    "description": "La communauté Dogecoin organise un marathon de charité, encourageant les joueurs à donner pour de bonnes causes.",
+    "new_volatility": 0.04,
+    "duration": 14000
+  },
+  {
+    "_id": {"$oid": "67f40026fb6f0ebd24a39184"},
+    "acronym": "ADA",
+    "name": "Atelier de Développement Cardano",
+    "description": "Cardano organise un atelier de développement, offrant aux joueurs des conseils pour améliorer leurs stratégies de trading.",
+    "new_volatility": 0.038,
+    "duration": 16000
+  },
+  {
+    "_id": {"$oid": "67f40026fb6f0ebd24a39185"},
+    "acronym": "SHIB",
+    "name": "Concours de Mèmes Shiba Inu",
+    "description": "La communauté Shiba Inu organise un concours de mèmes, encourageant les joueurs à partager leurs créations les plus drôles.",
+    "new_volatility": 0.05,
+    "duration": 10000
+  },
+  {
+    "_id": {"$oid": "67f40026fb6f0ebd24a39186"},
+    "acronym": "XRP",
+    "name": "Séminaire sur les Paiements Transfrontaliers XRP",
+    "description": "XRP organise un séminaire sur les paiements transfrontaliers, offrant aux joueurs des conseils pour optimiser leurs transactions.",
+    "new_volatility": 0.035,
+    "duration": 12000
+  },
+  {
+    "_id": {"$oid": "67f40026fb6f0ebd24a39187"},
+    "acronym": "DOT",
+    "name": "Hackathon Polkadot",
+    "description": "Polkadot organise un hackathon, encourageant les joueurs à développer de nouvelles applications blockchain.",
+    "new_volatility": 0.033,
+    "duration": 14000
+  },
+  {
+    "_id": {"$oid": "67f40026fb6f0ebd24a39188"},
+    "acronym": "AVAX",
+    "name": "Webinaire sur l'Innovation Avalanche",
+    "description": "Avalanche organise un webinaire sur l'innovation, offrant aux joueurs des insights sur les dernières tendances technologiques.",
+    "new_volatility": 0.032,
+    "duration": 16000
+  },
+  {
+    "_id": {"$oid": "67f40026fb6f0ebd24a39189"},
+    "acronym": "SOL",
+    "name": "Compétition de Développement Solana",
+    "description": "Solana organise une compétition de développement, encourageant les joueurs à créer des applications innovantes.",
+    "new_volatility": 0.034,
+    "duration": 10000
+  },
+  {
+    "_id": {"$oid": "67f40026fb6f0ebd24a3918a"},
+    "acronym": "LTC",
+    "name": "Atelier de Sécurité Litecoin",
+    "description": "Litecoin organise un atelier de sécurité, offrant aux joueurs des conseils pour protéger leurs investissements.",
+    "new_volatility": 0.031,
+    "duration": 12000
+  },
+  {
+    "_id": {"$oid": "67f40026fb6f0ebd24a3918b"},
+    "acronym": "BNB",
+    "name": "Conférence sur l'Écosystème Binance",
+    "description": "Binance organise une conférence sur son écosystème, offrant aux joueurs des insights sur les opportunités d'investissement.",
+    "new_volatility": 0.026,
+    "duration": 14000
+  }
+]
