@@ -463,7 +463,7 @@ function App() {
 
   // Gestion du déblocage d'une nouvelle cryptomonnaie
   const handleUnlockCrypto = (crypto) => {
-    const unlockCost = cryptoPrices[crypto] * 1000;
+    const unlockCost = priceHistory[crypto][19] * 1000;
     if (USD >= unlockCost) {
       setUSD(prev => prev - unlockCost);
       setAvailableCryptos(prev => [...prev, crypto]);
@@ -728,7 +728,7 @@ function App() {
             <button onClick={handleNextStep}>Suivant</button>
             {/* Affiche le bouton "Passer" uniquement lors de la première bulle */}
             {tutorialStep === 0 && (
-              <button onClick={handleSkipTutorial} className="skip-button">Passer</button>
+              <button onClick={handleSkipTutorial} className="skip-button">Skipper le tutoriel</button>
             )}
           </div>
         </div>
