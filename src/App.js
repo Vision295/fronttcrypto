@@ -151,40 +151,40 @@ function App() {
     Object.keys(cryptoFullNames).forEach(crypto => {
       // Calcul du coefficient basé sur la valeur de la cryptomonnaie
       let valueCoefficient = (7 - Math.log10(cryptoPrices[crypto])) * 100;
-      if (valueCoefficient < 1) valueCoefficient = 1; // Coefficient minimum
+      if (valueCoefficient < 1) valueCoefficient = 1;
 
       // Définition du coût de base selon la rareté de la cryptomonnaie
       let baseCost = cryptoPrices[crypto] * 100;
-      if (baseCost < 0.02) baseCost = 0.02; // Coût minimum
+      if (baseCost < 0.02) baseCost = 0.02;
 
       items[crypto] = [
         { 
           name: 'Basic Miner', 
-          cost: baseCost, 
+          cost: baseCost * Math.pow(5, 1),
           count: 0, 
-          bps: 0.002 * valueCoefficient // Production par seconde
+          bps: 0.002 * valueCoefficient
         },
         { 
           name: 'Standard Rig', 
-          cost: baseCost * 5, 
+          cost: baseCost * Math.pow(5, 2),
           count: 0, 
           bps: 0.01 * valueCoefficient 
         },
         { 
           name: 'Advanced Rig', 
-          cost: baseCost * 20, 
+          cost: baseCost * Math.pow(5, 3),
           count: 0, 
           bps: 0.05 * valueCoefficient 
         },
         { 
           name: 'Mining Farm', 
-          cost: baseCost * 100, 
+          cost: baseCost * Math.pow(5, 4),
           count: 0, 
           bps: 0.25 * valueCoefficient 
         },
         { 
           name: 'Quantum Miner', 
-          cost: baseCost * 500, 
+          cost: baseCost * Math.pow(5, 5),
           count: 0, 
           bps: 1.5 * valueCoefficient 
         }
@@ -231,7 +231,7 @@ function App() {
   const [selectedCryptoForShop, setSelectedCryptoForShop] = useState(null);
 
   // État pour l'événement actuel
-  const [currentEvent, setCurrentEvent] = useState(null);
+  const [currentEvent, setCurrentEvent] = useRef(null);
   const eventBannerRef = useRef(null);
 
   // État pour gérer le tutoriel
@@ -483,7 +483,7 @@ function App() {
         newItems[index] = {
           ...item,
           count: item.count + 1,
-          cost: Math.round(item.cost * 1.15),
+          cost: Math.max(Math.round(item.cost * 1.15), baseCost * Math.pow(5, index)),
         };
         newShopItems[crypto] = newItems;
         return newShopItems;
@@ -560,7 +560,7 @@ function App() {
 
   // Rendu du graphique des prix des cryptomonnaies
   const renderChart = (crypto) => {
-    const currentPrice = priceHistory[crypto][19].toFixed(2);
+    const currentPrice = priceHistory[crypto][19].toFixed(6);
     // Préparer les données pour le graphique
     const data = {
       labels: Array.from({ length: priceHistory[crypto].length }, (_, i) => `T-${priceHistory[crypto].length - i}`),
@@ -676,7 +676,7 @@ function App() {
       return (
         <p>
           You're ranked #{userRank}!<br />
-          Earn ${gap.toFixed(2)} more to surpass {nextPlayer.name}!
+          Earn ${gap.toFixed(6)} more to surpass {nextPlayer.name}!
         </p>
       );
     } else if (userRank >= 4 && userRank <= 7) {
@@ -743,8 +743,7 @@ function App() {
           <h1>Crypto Market Simulator</h1>
           <div className="balances-container">
             <div className="balance-item1">
-              <p>USD Balance: ${USD.toFixed(2)}</p>
-              {/* <p>Max USD Balance: ${maxUSD.toFixed(2)}</p> */}
+              <p>USD Balance: ${USD.toFixed(6)}</p>
             </div>
             <div className="crypto-balances">
               {availableCryptos.map(crypto => (
@@ -782,7 +781,7 @@ function App() {
           <div className="shop-item">
             <p>Unlock {cryptoFullNames[nextCrypto]}</p>
             <button onClick={() => handleUnlockCrypto(nextCrypto)}>
-              ${(cryptoPrices[nextCrypto] * 1000).toFixed(2)}
+              ${(cryptoPrices[nextCrypto] * 1000).toFixed(6)}
             </button>
           </div>
         )}
@@ -805,7 +804,7 @@ function App() {
           {shopItems[selectedShopCrypto].map((item, index) => (
             <div key={index} className="shop-item">
               <p>{item.name}</p>
-              <p>Cost: ${item.cost.toFixed(2)}</p>
+              <p>Cost: ${item.cost.toFixed(6)}</p>
               <p>Count: {item.count}</p>
               <p>{selectedShopCrypto} per sec: {item.bps.toFixed(6)}</p>
               <button
@@ -855,7 +854,7 @@ function App() {
                       <tr key={index} className={user.name === username ? 'current-user' : ''}>
                         <td>{userData.indexOf(user) + 1}</td>
                         <td>{user.name}</td>
-                        <td>${(user.score || 0).toFixed(2)}</td>
+                        <td>${(user.score || 0).toFixed(6)}</td>
                       </tr>
                     )
                   ))}
@@ -885,13 +884,13 @@ function App() {
             />
             {buyOrSell === 'buy' ? (
               <p>
-                ${USD.toFixed(2)} - ${(cryptoAmount * priceHistory[selectedCrypto][19]).toFixed(2)} = $
-                {(USD - cryptoAmount * priceHistory[selectedCrypto][19]).toFixed(2)}
+                ${USD.toFixed(6)} - ${(cryptoAmount * priceHistory[selectedCrypto][19]).toFixed(6)} = $
+                {(USD - cryptoAmount * priceHistory[selectedCrypto][19]).toFixed(6)}
               </p>
             ) : (
               <p>
-                ${USD.toFixed(2)} + ${(cryptoAmount * priceHistory[selectedCrypto][19]).toFixed(2)} = $
-                {(USD + cryptoAmount * priceHistory[selectedCrypto][19]).toFixed(2)}
+                ${USD.toFixed(6)} + ${(cryptoAmount * priceHistory[selectedCrypto][19]).toFixed(6)} = $
+                {(USD + cryptoAmount * priceHistory[selectedCrypto][19]).toFixed(6)}
               </p>
             )}
             <div className="popup-buttons">
