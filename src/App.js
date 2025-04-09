@@ -1,8 +1,4 @@
 // Description: Application principale du simulateur de marché de cryptomonnaies
-// mode admin : mettre init à 10000000000000
-// mode user : mettre init à 1
-const init_balance = 1; // Solde initial en USD
-
 // Importation des bibliothèques et composants nécessaires
 import React, { useState, useEffect, useRef } from 'react';
 
@@ -101,6 +97,9 @@ const cryptoPrices = {
 function App() {
   // État utilisateur
   // `USD` représente le solde en dollars de l'utilisateur.
+  // mode admin : mettre init à 10000000000000
+  // mode user : mettre init à 1
+  const init_balance = 1; // Solde initial en USD
   const [USD, setUSD] = useState(init_balance);
   const [maxUSD, setMaxUSD] = useState(init_balance); // Solde maximum atteint
   const [username, setUsername] = useState(""); // Nom d'utilisateur
