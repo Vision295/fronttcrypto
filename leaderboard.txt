@@ -1,0 +1,194 @@
+[
+  {
+    "_id": {"$oid": "67e58b624a5dbe03430aabd2"},
+    "name": "Paul le Pionnier",
+    "score": 10000000000000,
+    "description": "Premier à avoir exploré les confins de la blockchain"
+  },
+  {
+    "_id": {"$oid": "67e58b624a5dbe03430aabd3"},
+    "name": "Théophile le Titan",
+    "score": 9000000000000,
+    "description": "A réalisé des trades légendaires"
+  },
+  {
+    "_id": {"$oid": "67e58b624a5dbe03430aabd4"},
+    "name": "Hugo le Héros",
+    "score": 8000000000000,
+    "description": "A sauvé des milliers de traders d'une arnaque"
+  },
+  {
+    "_id": {"$oid": "67e58b624a5dbe03430aabd5"},
+    "name": "Jean-Baptiste le Bâtisseur",
+    "score": 7000000000000,
+    "description": "A construit des infrastructures pour les plus grandes cryptos"
+  },
+  {
+    "_id": {"$oid": "67e58b624a5dbe03430aabd6"},
+    "name": "Paul le Prophète",
+    "score": 6000000000000,
+    "description": "Prédit les mouvements du marché avec une précision surnaturelle"
+  },
+  {
+    "_id": {"$oid": "67e58b624a5dbe03430aabd7"},
+    "name": "Théophile le Tornade",
+    "score": 5000000000000,
+    "description": "A survécu à trois krachs boursiers"
+  },
+  {
+    "_id": {"$oid": "67e58b624a5dbe03430aabd8"},
+    "name": "Hugo le Visionnaire",
+    "score": 4000000000000,
+    "description": "A investi dans des projets avant qu'ils ne deviennent célèbres"
+  },
+  {
+    "_id": {"$oid": "67e58b624a5dbe03430aabd9"},
+    "name": "Jean-Baptiste le Joueur",
+    "score": 3000000000000,
+    "description": "A gagné un pari fou sur une crypto émergente"
+  },
+  {
+    "_id": {"$oid": "67e58b624a5dbe03430aabda"},
+    "name": "Paul le Pirate",
+    "score": 2000000000000,
+    "description": "A découvert des trésors cachés dans des wallets oubliés"
+  },
+  {
+    "_id": {"$oid": "67e58b624a5dbe03430aabdb"},
+    "name": "Théophile le Téméraire",
+    "score": 1000000000000,
+    "description": "A investi tout son capital dans une crypto inconnue"
+  },
+  {
+    "_id": {"$oid": "67e58b624a5dbe03430aabdc"},
+    "name": "Hugo le Hacker",
+    "score": 500000000000,
+    "description": "A découvert des failles de sécurité dans des smart contracts"
+  },
+  {
+    "_id": {"$oid": "67e58b624a5dbe03430aabdd"},
+    "name": "Jean-Baptiste le Jongleur",
+    "score": 100000000000,
+    "description": "A jonglé avec plusieurs portefeuilles pour maximiser ses profits"
+  },
+  {
+    "_id": {"$oid": "67e58b624a5dbe03430aabde"},
+    "name": "Paul le Philosophe",
+    "score": 50000000000,
+    "description": "A écrit des essais sur la décentralisation et la blockchain"
+  },
+  {
+    "_id": {"$oid": "67e58b624a5dbe03430aabdf"},
+    "name": "Théophile le Technicien",
+    "score": 10000000000,
+    "description": "A optimisé des algorithmes de trading pour des gains maximaux"
+  },
+  {
+    "_id": {"$oid": "67e58b624a5dbe03430aabe0"},
+    "name": "Hugo le Hacker Éthique",
+    "score": 5000000000,
+    "description": "A sécurisé les plus grandes bourses de crypto"
+  },
+  {
+    "_id": {"$oid": "67e58b624a5dbe03430aabe1"},
+    "name": "Jean-Baptiste le Mineur",
+    "score": 1000000000,
+    "description": "A miné des blocs avec une efficacité redoutable"
+  },
+  {
+    "_id": {"$oid": "67e58b624a5dbe03430aabe2"},
+    "name": "Zeus le Tonnant",
+    "score": 500000000,
+    "description": "Maître des cryptos et des éclairs de gains"
+  },
+  {
+    "_id": {"$oid": "67e58b624a5dbe03430aabe3"},
+    "name": "Hadès le Sombre",
+    "score": 100000000,
+    "description": "Gardien des cryptos perdues et des wallets oubliés"
+  },
+  {
+    "_id": {"$oid": "67e58b624a5dbe03430aabe4"},
+    "name": "Poséidon le Fluctuant",
+    "score": 50000000,
+    "description": "Maître des marées du marché crypto"
+  },
+  {
+    "_id": {"$oid": "67e58b624a5dbe03430aabe5"},
+    "name": "Hermès le Rapide",
+    "score": 10000000,
+    "description": "Messager des tendances crypto et des opportunités éclair"
+  },
+  {
+    "_id": {"$oid": "67e58b624a5dbe03430aabe6"},
+    "name": "Athéna la Stratège",
+    "score": 5000000,
+    "description": "Déesse de la sagesse et des stratégies de trading"
+  },
+  {
+    "_id": {"$oid": "67e58b624a5dbe03430aabe7"},
+    "name": "Arès le Guerrier",
+    "score": 1000000,
+    "description": "Combattant des marchés volatils et des krachs boursiers"
+  },
+  {
+    "_id": {"$oid": "67e58b624a5dbe03430aabe8"},
+    "name": "Héphaïstos le Forgeron",
+    "score": 500000,
+    "description": "Créateur de smart contracts et d'outils de trading"
+  },
+  {
+    "_id": {"$oid": "67e58b624a5dbe03430aabe9"},
+    "name": "Aphrodite la Séductrice",
+    "score": 100000,
+    "description": "Charmeuse des marchés et des investisseurs"
+  },
+  {
+    "_id": {"$oid": "67e58b624a5dbe03430aabea"},
+    "name": "Dionysos le Festif",
+    "score": 50000,
+    "description": "Célébrateur des gains et des fêtes crypto"
+  },
+  {
+    "_id": {"$oid": "67e58b624a5dbe03430aabeb"},
+    "name": "Artémis la Chasseresse",
+    "score": 10000,
+    "description": "Chasseresse des opportunités et des cryptos rares"
+  },
+  {
+    "_id": {"$oid": "67e58b624a5dbe03430aabec"},
+    "name": "Apollon le Lumineux",
+    "score": 5000,
+    "description": "Guide des traders avec sa lumière et sa sagesse"
+  },
+  {
+    "_id": {"$oid": "67e58b624a5dbe03430aabed"},
+    "name": "Hestia la Gardienne",
+    "score": 1000,
+    "description": "Gardienne des foyers et des portefeuilles crypto"
+  },
+  {
+    "_id": {"$oid": "67e58b624a5dbe03430aabee"},
+    "name": "Noobus le Débutant",
+    "score": 500,
+    "description": "Premier pas dans le monde des cryptos"
+  },
+  {
+    "_id": {"$oid": "67e58b624a5dbe03430aabef"},
+    "name": "Noobina la Curieuse",
+    "score": 100,
+    "description": "Découvre les bases du trading crypto"
+  },
+  {
+    "_id": {"$oid": "67e58b624a5dbe03430aabf0"},
+    "name": "Noobulus l'Apprenti",
+    "score": 50,
+    "description": "Apprend les ficelles du marché crypto"
+  },
+  {
+    "_id": {"$oid": "67e58b624a5dbe03430aabf1"},
+    "name": "Noobetta la Prudente",
+    "score": 10,
+    "description": "Fait ses premiers investissements avec prudence"
+  }
+]

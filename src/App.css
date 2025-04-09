@@ -1,241 +1,749 @@
-.App {
+/* 
+ * Crypto Miner Game - App.css
+ * This CSS file defines the styling for the crypto mining and trading simulator.
+ * It includes styles for the main UI, crypto currency display, charts, shop items,
+ * popup dialogs, and leaderboard.
+ */
 
-}
+/* Import pixel font for the retro gaming style */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
-.crypto-item-button{
-  font-family: 'Pixelify Sans';
-}
-
-.App-logo {
-
-}
-
-.Bitcoin-logo {
-  height: 40vmin; /* Set the height of the Bitcoin logo */
-  cursor: pointer; /* Change cursor to pointer on hover */
-  transition: transform 0.1s ease-in-out; /* Smooth transition for transform property */
-}
-
-.Bitcoin-logo:active {
-  transform: scale(0.95); /* Scale down the logo when active */
-}
-
-
+/* Global styles */
 body {
-
-  /* font-family: 'Courier'; */
-  /* overflow: hidden;   Prevent scrolling on the base window */
-  background-color: #000000; /*Brighter background for day mode */
-  /* color: #000000; Dark text for better contrast in day mode */
+  background-color: #000000;
+  font-family: 'Press Start 2P', cursive;
+  margin: 0;
+  padding: 0;
+  color: #069506; /* Green terminal text color */
+  overflow: hidden;
 }
 
+button {
+  font-family: 'Press Start 2P', cursive;
+  cursor: pointer;
+  border: 2px solid #069506;
+  background-color: #000000;
+  color: #069506;
+  padding: 8px 15px;
+  transition: background-color 0.2s ease;
+}
 
+button:hover {
+  background-color: #069506;
+  color: #000000;
+}
 
+input {
+  font-family: 'Press Start 2P', cursive;
+  background-color: #000000;
+  border: 2px solid #069506;
+  color: #069506;
+  padding: 8px;
+}
 
+input::placeholder {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 10px;
+  color: #565f56; 
+  opacity: 0.7;
+}
 
+.pixel-input {
+  border: 2px solid #069506;
+  border-radius: 0;
+  padding: 10px;
+  width: 250px;
+}
 
+.Title-container {
+  display: flex;
+  flex-direction: column; /* This makes the logo come after the text */
+  gap: 1px; 
+  align-items: center;
 
+}
 
+.Title-button {
+  width: 120px;
+  
+  
+}
 
-
-
-
-
-
+/* Username screen styles */
 .App-header {
-  font-family: 'Pixelify Sans';
-  background-color: #000000; /* Bright header background */
-  /* min-height: 100vh; Minimum height of 100% viewport height */
-  /* display: flex; Use flexbox for layout */
-  /* flex-direction: row; Arrange children in a row */
-  /* align-items: flex-start; Align items to the start of the flex container */
-  /* justify-content: space-between; Distribute space between items */
-  font-size: calc(10px + 1vmin); /* Responsive font size */
-  color: #069506;  /* Ensure text in header is dark in day mode */
-  font-size: 14px;
-  /* 100% of the viewport height */
-  line-height: 0.5; 
+  font-family: 'Press Start 2P', cursive;
+  background-color: #000000;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+  color: #069506;
 }
 
 .App-header input {
   padding: 10px;
-  font-size: 16px;
+  font-size: 10px;
   margin: 10px 0;
 }
 
 .App-header button {
   padding: 10px 20px;
+  font-size: 10px;
+  margin-top: 20px;
+}
+
+.UsernameTitle {
+  font-size: 20px;
+  margin-bottom: 0;
+}
+
+.UsernameTitle2 {
+  font-size: 60px;
+  margin-top: 10px;
+}
+
+.Ask-username {
   font-size: 16px;
-  cursor: pointer;
+  margin-top: 40px;
 }
 
-.App-shop, .App-leaderboard {
-  color: #069506; 
-  font-size: 14px;
-  /* 100% of the viewport height */
-  line-height: 0.5; 
-  /* width: 20%; Set width to 20% */
-  /* height: 100vh; Full height of the webpage */
-  /* padding: 20px; Padding inside the container */
-  /* background-color: #e6e6e6; Light gray background for shop and leaderboard */
-  /* border-radius: 10px; Rounded corners */
-  /* display: flex; Use flexbox for layout */
-  /* flex-direction: column; Arrange children in a column */
-  /* align-items: center; Center align items horizontally */
-  /* justify-content: flex-start; Align items to the top */
-  /* overflow-y: auto; Make the section scrollable */
- /* Ensure text is dark in day mode */
-}
-
-.App-market {
-  position: absolute; /* Position button relative to its container */
-  top: 10px; /* 10px from the top */
-  right: 250px; /* 10px from the right */
-}
-
-.App-sidebar{
-  position: absolute;
-  top:10px;
-  right:600px;
-}
-
+/* Main game screen layout */
 .App-main {
-  font-family: 'Pixelify Sans';
-  font-size: 14px;
-  color: #069506; 
-   /* 100% of the viewport height */
-  line-height: 0.5; 
-  /* flex-grow: 1; Allow the main section to grow */
-  /* display: flex; Use flexbox for layout */
-  /* flex-direction: column; Arrange children in a column */
-  /* align-items: center; Center align items horizontally */
-  /* justify-content: center; Center align items vertically */
-  /* position: relative; Set relative positioning for child elements */
+  padding: 20px;
+  font-size: 10px;
+  color: #069506;
+  width: 100%;
+  max-width: 600px;
+  margin-left: 20px;
 }
 
-/* .App-link { */
-  /* color: #61dafb; Set link color */
-/* } */
+.App-main h1 {
+  font-size: 24px;
+  margin-bottom: 30px;
+}
+
+/* Balances container */
+.balances-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+  overflow : scroll;
+  overflow-x : hidden;
+  max-height: 85vh;
+}
+
+
+.balance-item {
+  position: relative; /* Required for tooltip positioning */
+  display: flex;
+  justify-content: space-between;  /* Distribute items between left and right */
+  flex-direction: row; /* This makes the logo come after the text */
+  gap: 100px; /* Space between text and logo */
+  border: 1px solid #069506;
+  padding: 10px;
+  background-color: #000000;
+}
+
+.balance-item:hover::after {
+  content: attr(title); /* Use the title attribute for the tooltip text */
+  position: absolute;
+  top: -40px; /* Position above the balance item */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #000000;
+  color: #069506;
+  border: 1px solid #069506;
+  padding: 5px 10px;
+  font-size: 10px;
+  white-space: normal; /* Allow text to wrap to the next line */
+  max-width: 200px; /* Limit the width of the tooltip */
+  word-wrap: break-word; /* Break long words if necessary */
+  z-index: 10;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+  text-align: center; /* Center-align the text */
+}
+
+.balance-item:hover::after {
+  opacity: 1;
+}
+
+.balance-item::after {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.balance-item.highlighted {
+  border: 5px solid #069506;
+  background-color: #0695063a; /* Light golden background */
+  transition: background-color 0.3s ease, border 0.3s ease;
+}
+
+.balance-item1 {
+  color: goldenrod;
+  display: flex;
+  flex-direction: column; /* This makes the logo come after the text */
+  gap: 5px; /* Space between text and logo */
+  border: 1px solid goldenrod;
+  padding: 10px;
+  background-color: #000000;
+}
+
+.balance-text {
+  display: flex;
+  flex-direction: column; /* Stack the balance and per second vertically */
+  gap: 5px; /* Space between balance and per-second text */
+}
+
+.crypto-balances {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+
+.Crypto-logo {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+  cursor: pointer;
+  transition: transform 0.1s ease-in-out;
+  border: 1px solid #069506;
+  padding: 5px;
+  background-color: #000000;
+ 
+}
+
+.Crypto-logo:active {
+  transform: scale(0.95);
+}
+
+/* Shop sidebar - Fixed position */
+.App-sidebar {
+  position: absolute;
+  top: 10px;
+  right: 585px;
+  width: 250px;
+  padding: 10px;
+  background-color: #000000;
+  border: 1px solid #069506;
+  max-height: 93vh; /* Limiter la hauteur */
+  overflow: hidden; /* Cacher le débordement */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Crypto selector styles */
+.crypto-selector {
+  margin: 15px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.crypto-selector label {
+  font-size: 12px;
+  color: #069506;
+}
+
+.crypto-selector select {
+  font-family: 'Press Start 2P', cursive;
+  background-color: #000000;
+  border: 2px solid #069506;
+  color: #069506;
+  padding: 8px;
+  cursor: pointer;
+  font-size: 10px;
+}
+
+.crypto-selector select:focus {
+  outline: none;
+  box-shadow: 0 0 5px #069506;
+}
+
+/* Miners container with scroll */
+.miners-container {
+  overflow-y: auto;
+  max-height: calc(90vh - 150px); /* Adjust based on other elements */
+  padding-right: 5px;
+}
+
+/* Shop item focus effects */
+.shop-item:hover {
+  background-color: rgba(6, 149, 6, 0.1);
+}
+
+/* Improved button styles */
+.shop-item button {
+  font-family: 'Press Start 2P', cursive;
+  cursor: pointer;
+  border: 2px solid #069506;
+  background-color: #000000;
+  color: #069506;
+  padding: 8px 15px;
+  transition: all 0.2s ease;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.shop-item button:hover {
+  background-color: #069506;
+  color: #000000;
+  transform: scale(1.02);
+}
+
+.shop-item button:active {
+  transform: scale(0.98);
+}
+
+.App-sidebar h2 {
+  font-size: 18px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.App-sidebar h3 {
+  font-size: 14px;
+  margin-top: 20px;
+  border-bottom: 1px solid #069506;
+  padding-bottom: 5px;
+}
 
 .shop-item {
-  
-  /* background-color: #f0f0f0; Light gray background for shop items */
-  /* padding: 5px; Reduce padding to fit content */
-  /* margin: 10px 0; Margin between items */
-  /* border-radius: 5px; Rounded corners */
-  /* text-align: center; Center align text */
-  /* width: 80%; Adjust the width to make the boxes smaller */
-  /* height: auto; Allow height to adjust based on content */
-  /* font-size: 0.8em; Reduce font size to fit content */
-  /* display: flex; Use flexbox for layout */
-  /* flex-direction: column; Arrange children in a column */
-  /* justify-content: center; Center align items vertically */
-  color: #069506;  /* Ensure text is dark in day mode */
+  color: #069506;
+  border: 1px solid #069506;
+  margin: 10px 0;
+  padding: 10px;
+  font-size: 10px;
+}
+
+.shop-item p {
+  margin: 5px 0;
 }
 
 .shop-item button {
-  font-family: 'Pixelify Sans';
-  /* margin-top: 5px; Margin above the button */
-  /* padding: 5px 10px; Padding inside the button */
-  cursor: pointer; /* Change cursor to pointer on hover */
+  margin-top: 10px;
+  width: 100%;
 }
 
-/* @keyframes App-logo-spin { */
-  /* from { */
-    /* transform: rotate(0deg); Start rotation at 0 degrees */
-  /* } */
-  /* to { */
-    /* transform: rotate(360deg); End rotation at 360 degrees */
-  /* } */
-/* } */
-
-/* .Options-button { */
-  /* position: absolute; */
-  /* top: 10px; */
-  /* left: 10px; */
-  /* padding: 10px 20px; */
-  /* background-color: #4a4f57; */
-  /* color: white; */
-  /* border: none; */
-  /* border-radius: 5px; */
-  /* cursor: pointer; */
-/* } */
+/* Vertical line divider */
 
 
-
-
-/* .Options-modal { */
-  /* position: fixed; */
-  /* top: 0; */
-  /* left: 0; */
-  /* width: 100%; */
-  /* height: 100%; */
-  /* background-color: rgba(0, 0, 0, 0.5); */
-  /* display: flex; */
-  /* justify-content: center; */
-  /* align-items: center; */
-/* } */
-
-/* .Options-content { */
-  /* background-color: #282c34; */
-  /* padding: 20px; */
-  /* border-radius: 10px; */
-  /* color: white; */
-  /* text-align: center; */
-  /* width: 300px; */
-/* } */
-
-.Bitcoin-container {
-  /* font-family: 'Courier'; */
-  /* position: relative; Position container for relative positioning of animation */
+/* Crypto currency market charts */
+.App-currencies {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 10px;
+  padding: 20px;
+  background-color: #000000;
+  z-index: 1;
+  max-height: 90.5vh;
+  overflow-y: hidden;
+  overflow-x: hidden;
+  border: 1px solid #069506;
 }
 
-/* .Click-animation { */
-  /* position: absolute; */
-  /* font-size: 1.5rem; */
-  /* font-weight: bold; */
-  /* color: orange; Change color to orange */
-  /* animation: fadeUp 0.3s ease-out; Quicker animation */
-  /* pointer-events: none; Prevent interaction with the animation */
-/* } */
-
-/* @keyframes fadeUp { */
-  /* 0% { */
-    /* opacity: 1; */
-    /* transform: translateY(0); */
-  /* } */
-  /* 100% { */
-    /* opacity: 0; */
-    /* transform: translateY(-20px); */
-  /* } */
-/* } */
-
-.Sell-BTC-Button{
-  font-family: 'Pixelify Sans';
-  cursor:pointer;
-}
-
-.Bitcoin-button{
-  font-family: 'Pixelify Sans';
-  cursor:pointer;
-}
-
-@import url("https://fonts.googleapis.com/css2?family=Pixelify+Sans&display=swap");
-
-.vertical-line{
-  position: absolute; /* Position button relative to its container */
-  top: 10px; /* 10px from the top */
-  right: 540px; /* 10px from the right */
-  font-size: 14px;
+.App-currencies h2 {
+  font-size: 18px;
+  text-align: center;
+  margin-bottom: 20px;
   color: #069506;
-  font-family: 'Pixelify Sans';
-  /* 100% of the viewport height */
-  line-height: 0.5; 
+}
+
+.App-currencies-title {
+  overflow-y:auto;
+  overflow-x:hidden;
+  width: 500px;
+
 }
 
 
- .Crypto-logo{
-  width: 50px;
-  height: 50px;
-  object-fit: contain; /* Ensures the entire image fits inside the box */
+
+.chart-container {
+  width: 90%;
+  height: 200px;
+  background-color: #000000;
+  border: 1px solid #069506;
+  border-radius: 0;
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-bottom: 75px;
+
+
+}
+
+.chart-container h3 {
+  font-size: 12px;
+  text-align: center;
+  margin-bottom: 10px;
+  color: #069506;
+}
+
+.chart-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.chart-buttons button {
+  background-color: #000000;
+  border: 1px solid #069506;
+  color: #069506;
+  padding: 5px 10px;
+  font-size: 8px;
+}
+
+.chart-buttons button:hover {
+  background-color: #069506;
+  color: #000000;
+}
+
+/* Button animation */
+.button-animation {
+  animation: button-click 0.3s ease-in-out;
+}
+
+@keyframes button-click {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Buy/Sell popup */
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.popup-content {
+  background-color: #000000;
+  color: #069506;
+  padding: 20px;
+  border: 2px solid #069506;
+  border-radius: 0;
+  text-align: center;
+  width: 400px;
+  line-height: 1.6;
+}
+
+.popup-content h3 {
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.popup-content input {
+  width: 80%;
+  padding: 10px;
+  margin: 10px 0;
+  font-size: 12px;
+  text-align: center;
+}
+
+.popup-content p {
+  margin: 10px 0;
+  font-size: 12px;
+}
+
+.popup-buttons {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+.popup-buttons button {
+  padding: 10px 20px;
+  background-color: #000000;
+  color: #069506;
+  border: 1px solid #069506;
+}
+
+.popup-buttons button:hover {
+  background-color: #069506;
+  color: #000000;
+}
+
+/* Vertical Edge Button - Leaderboard */
+.vertical-button {
+  position: fixed;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+  background-color: #000000;
+  color: #069506;
+  border: 2px solid #069506;
+  padding: 15px 8px;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 10px;
+  cursor: pointer;
+  z-index: 999;
+  transition: background-color 0.2s ease;
+}
+
+.leaderboard-title {
+  padding: 20px;
+  font-size: 12px;
+  color: #069506;
+  width: 100%;
+  max-width: 600px;
+  margin-left: 20px;
+}
+
+/* Leaderboard styles */
+.App-leaderboard {
+  position: absolute;
+  top: 95px;
+  left: 40px;
+  color: #069506;
+  font-size: 10px;
+  line-height: 1;
+  height: 370px;
+  width: 580px;
+  padding: 10px;
+  border: 1px solid #069506;
+  background-color: #000000;
+}
+
+.LdTitle {
+  font-size: 16px;
+  text-align: center;
+  margin-bottom: 15px;
+  color: #228B22;
+}
+
+.App-leaderboard table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.App-leaderboard th, .App-leaderboard td {
+  border: 1px solid #069506;
+  padding: 8px;
+  text-align: center;
+}
+
+.App-leaderboard th {
+  background-color: #000000;
+}
+
+.LdRank {
+  width: 20%;
+  font-size: 12px;
+  color: #2E8B57;
+}
+
+.LdName {
+  width: 50%;
+  font-size: 12px;
+  color: #2E8B57;
+}
+
+.LdScore {
+  width: 30%;
+  font-size: 12px;
+  color: #2E8B57;
+}
+
+.current-user {
+  background-color: rgba(0, 255, 153, 0.297);
+}
+
+.dynamic-message {
+  font-size: 14px;
+  color: #2E8B57;
+  text-align: center;
+  margin-top: 20px;
+  line-height: 1.5;
+}
+
+/* Tutorial overlay and interactive steps */
+.tutorial-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8); /* Effet de verre sombre */
+  z-index: 1000;
+  pointer-events: none; /* Empêche les interactions avec les éléments en dessous */
+}
+
+.tutorial-highlight {
+  position: absolute;
+  background-color: transparent; /* Pas d'effet sombre à l'intérieur de l'encadré */
+  border: 2px solid #069506; /* Bordure verte */
+  border-radius: 5px; /* Coins arrondis */
+  z-index: 1001;
+  pointer-events: none; /* Pas d'interaction possible */
+}
+
+.tutorial-bubble {
+  position: absolute;
+  background-color: #000000; /* Fond noir */
+  color: #069506; /* Texte vert */
+  border: 2px solid #069506; /* Bordure verte */
+  padding: 15px; /* Espacement interne */
+  border-radius: 5px; /* Coins arrondis */
+  z-index: 1002;
+  max-width: 300px; /* Largeur maximale */
+  font-size: 12px;
+  line-height: 1.5;
+  pointer-events: auto; /* Permet l'interaction avec la bulle */
+}
+
+.tutorial-bubble button {
+  margin-top: 10px;
+  padding: 5px 10px;
+  background-color: #069506; /* Fond vert */
+  color: #000000; /* Texte noir */
+  border: none;
+  cursor: pointer;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 10px;
+}
+
+.tutorial-bubble button:hover {
+  background-color: #000000; /* Fond noir au survol */
+  color: #069506; /* Texte vert au survol */
+  border: 1px solid #069506; /* Bordure verte */
+}
+
+/* Bouton "Passer" dans la bulle explicative */
+.tutorial-bubble .skip-button {
+  margin-top: 10px;
+  margin-left: 10px;
+  padding: 5px 10px;
+  background-color: #c22929; /* Fond rouge */
+  color: #ffffff; /* Texte blanc */
+  border: none;
+  cursor: pointer;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 10px;
+}
+
+.tutorial-bubble .skip-button:hover {
+  background-color: #ffffff; /* Fond blanc au survol */
+  color: #c22929; /* Texte rouge au survol */
+  border: 1px solid #c22929; /* Bordure rouge */
+}
+
+/* Empêche le défilement pendant le tutoriel */
+body.tutorial-active {
+  overflow: hidden;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+  .App-currencies {
+    width: 400px;
+ 
+  }
+  
+  .App-sidebar {
+    right: 450px;
+  }
+  
+  .vertical-line {
+    right: 420px;
+  }
+}
+
+@media (max-width: 900px) {
+  .App {
+    flex-direction: column;
+    overflow-y: auto;
+  }
+  
+  .App-main, .App-sidebar, .App-currencies, .App-leaderboard {
+    position: static;
+    width: 90%;
+    margin: 20px auto;
+  }
+  
+  .vertical-line {
+    display: none;
+  }
+}
+
+/* Tooltip styles */
+.crypto-tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.crypto-tooltip .tooltip-text {
+  visibility: hidden;
+  width: 200px;
+  background-color: #000;
+  color: #069506;
+  text-align: center;
+  border-radius: 0;
+  border: 1px solid #069506;
+  padding: 8px;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.3s;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 8px;
+  line-height: 4;
+}
+
+.crypto-tooltip:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Event banner styles */
+.event-banner {
+  position: fixed;
+  top: 0;
+  left: 100%;
+  width: auto;
+  padding: 10px 20px;
+  background-color: #069506;
+  color: #000000;
+  font-size: 12px;
+  font-family: 'Press Start 2P', cursive;
+  white-space: nowrap;
+  z-index: 1000;
+  animation: slide-banner 30s linear infinite; /* Increased duration to 60s */
+}
+
+@keyframes slide-banner {
+  0% {
+    left: 100%;
+  }
+  100% {
+    left: -100%;
+  }
 }

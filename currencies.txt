@@ -1,0 +1,178 @@
+[
+  {
+    "_id": {"$oid": "67e5a597070b6718d6392219"},
+    "name": "Shiba Inu",
+    "symbol": "SHIB",
+    "value": 0.01,
+    "total": {"$numberLong": "2000000000000000"},
+    "available": {"$numberLong": "2000000000000000"},
+    "volatility": 0.05,
+    "description": "Meme token that gained popularity in 2021",
+    "priceHistory": [
+      0.010198, 0.009802, 0.010196, 0.009804, 0.010194,
+      0.009806, 0.010192, 0.009808, 0.01019, 0.00981,
+      0.010188, 0.009812, 0.010186, 0.009814, 0.010184,
+      0.009816, 0.010182, 0.009818, 0.01018, 0.00982
+    ]
+  },
+  {
+    "_id": {"$oid": "67eaaf468340f26a844e1b1c"},
+    "name": "Dogecoin",
+    "symbol": "DOGE",
+    "value": 0.06,
+    "total": {"$numberLong": "150000000000"},
+    "available": {"$numberLong": "150000000000"},
+    "volatility": 0.04,
+    "description": "Original meme cryptocurrency started as a joke",
+    "priceHistory": [
+      0.061188, 0.058812, 0.061186, 0.058814, 0.061184,
+      0.058816, 0.061182, 0.058818, 0.06118, 0.05882,
+      0.061178, 0.058822, 0.061176, 0.058824, 0.061174,
+      0.058826, 0.061172, 0.058828, 0.06117, 0.05883
+    ]
+  },
+  {
+    "_id": {"$oid": "67eab06f8340f26a844e1b1e"},
+    "name": "Cardano",
+    "symbol": "ADA",
+    "value": 0.2,
+    "total": {"$numberLong": "50000000000"},
+    "available": {"$numberLong": "50000000000"},
+    "volatility": 0.038,
+    "description": "Proof-of-stake blockchain platform with academic research",
+    "priceHistory": [
+      0.20396, 0.19604, 0.20394, 0.19606, 0.20392,
+      0.19608, 0.2039, 0.1961, 0.20388, 0.19612,
+      0.20386, 0.19614, 0.20384, 0.19616, 0.20382,
+      0.19618, 0.2038, 0.1962, 0.20378, 0.19622
+    ]
+  },
+  {
+    "_id": {"$oid": "67eab06f8340f26a844e1b23"},
+    "name": "XRP",
+    "symbol": "XRP",
+    "value": 0.9,
+    "total": {"$numberLong": "110000000000"},
+    "available": {"$numberLong": "110000000000"},
+    "volatility": 0.035,
+    "description": "Digital payment protocol and cryptocurrency",
+    "priceHistory": [
+      0.9177, 0.8823, 0.9175, 0.8825, 0.9173,
+      0.8827, 0.9171, 0.8829, 0.9169, 0.8831,
+      0.9167, 0.8833, 0.9165, 0.8835, 0.9163,
+      0.8837, 0.9161, 0.8839, 0.9159, 0.8841
+    ]
+  },
+  {
+    "_id": {"$oid": "67eab06f8340f26a844e1b1f"},
+    "name": "Polkadot",
+    "symbol": "DOT",
+    "value": 5,
+    "total": {"$numberLong": "1200000000"},
+    "available": {"$numberLong": "1200000000"},
+    "volatility": 0.033,
+    "description": "Multi-chain protocol connecting different blockchains",
+    "priceHistory": [
+      5.099, 4.901, 5.098, 4.902, 5.097,
+      4.903, 5.096, 4.904, 5.095, 4.905,
+      5.094, 4.906, 5.093, 4.907, 5.092,
+      4.908, 5.091, 4.909, 5.09, 4.91
+    ]
+  },
+  {
+    "_id": {"$oid": "67eab06f8340f26a844e1b21"},
+    "name": "Avalanche",
+    "symbol": "AVAX",
+    "value": 15,
+    "total": {"$numberLong": "800000000"},
+    "available": {"$numberLong": "800000000"},
+    "volatility": 0.032,
+    "description": "Platform for custom blockchain networks and decentralized apps",
+    "priceHistory": [
+      15.296, 14.704, 15.294, 14.706, 15.292,
+      14.708, 15.29, 14.71, 15.288, 14.712,
+      15.286, 14.714, 15.284, 14.716, 15.282,
+      14.718, 15.28, 14.72, 15.278, 14.722
+    ]
+  },
+  {
+    "_id": {"$oid": "67eab06f8340f26a844e1b20"},
+    "name": "Solana",
+    "symbol": "SOL",
+    "value": 60,
+    "total": {"$numberLong": "600000000"},
+    "available": {"$numberLong": "600000000"},
+    "volatility": 0.034,
+    "description": "High-performance blockchain supporting smart contracts",
+    "priceHistory": [
+      61.192, 58.808, 61.188, 58.812, 61.184,
+      58.816, 61.18, 58.82, 61.176, 58.824,
+      61.172, 58.828, 61.168, 58.832, 61.164,
+      58.836, 61.16, 58.84, 61.156, 58.844
+    ]
+  },
+  {
+    "_id": {"$oid": "67eaafce8340f26a844e1b1d"},
+    "name": "Litecoin",
+    "symbol": "LTC",
+    "value": 120,
+    "total": {"$numberLong": "90000000"},
+    "available": {"$numberLong": "90000000"},
+    "volatility": 0.031,
+    "description": "Silver to Bitcoin's gold, faster transaction times",
+    "priceHistory": [
+      122.388, 117.612, 122.384, 117.616, 122.38,
+      117.62, 122.376, 117.624, 122.372, 117.628,
+      122.368, 117.632, 122.364, 117.636, 122.36,
+      117.64, 122.356, 117.644, 122.352, 117.648
+    ]
+  },
+  {
+    "_id": {"$oid": "67eab06f8340f26a844e1b22"},
+    "name": "Binance Coin",
+    "symbol": "BNB",
+    "value": 800,
+    "total": {"$numberLong": "200000000"},
+    "available": {"$numberLong": "200000000"},
+    "volatility": 0.026,
+    "description": "Utility token for the Binance exchange ecosystem",
+    "priceHistory": [
+      815.92, 784.08, 815.88, 784.12, 815.84,
+      784.16, 815.8, 784.2, 815.76, 784.24,
+      815.72, 784.28, 815.68, 784.32, 815.64,
+      784.36, 815.6, 784.4, 815.56, 784.44
+    ]
+  },
+  {
+    "_id": {"$oid": "67eab06f8340f26a844e1b24"},
+    "name": "Ethereum",
+    "symbol": "ETH",
+    "value": 4000,
+    "total": {"$numberLong": "130000000"},
+    "available": {"$numberLong": "130000000"},
+    "volatility": 0.023,
+    "description": "Decentralized computing platform with smart contract functionality",
+    "priceHistory": [
+      4086.8, 3913.2, 4086.4, 3913.6, 4086,
+      3914, 4085.6, 3914.4, 4085.2, 3914.8,
+      4084.8, 3915.2, 4084.4, 3915.6, 4084,
+      3916, 4083.6, 3916.4, 4083.2, 3916.8
+    ]
+  },
+  {
+    "_id": {"$oid": "67eab06f8340f26a844e1b25"},
+    "name": "Bitcoin",
+    "symbol": "BTC",
+    "value": 30000,
+    "total": {"$numberLong": "22000000"},
+    "available": {"$numberLong": "22000000"},
+    "volatility": 0.021,
+    "description": "First cryptocurrency and largest by market capitalization",
+    "priceHistory": [
+      30627, 29373, 30621, 29379, 30615,
+      29385, 30609, 29391, 30603, 29397,
+      30597, 29403, 30591, 29409, 30585,
+      29415, 30579, 29421, 30573, 29427
+    ]
+  }
+]
