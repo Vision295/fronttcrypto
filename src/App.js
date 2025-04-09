@@ -483,7 +483,7 @@ function App() {
         newItems[index] = {
           ...item,
           count: item.count + 1,
-          cost: Math.max(Math.round(item.cost * 1.15), cryptoPrices[crypto] * 100 * Math.pow(5, index)),
+          cost: Math.max(item.cost * 1.15, cryptoPrices[crypto] * 100 * Math.pow(5, index+1)),
         };
         newShopItems[crypto] = newItems;
         return newShopItems;
