@@ -22,7 +22,7 @@ import './App.css';
 
 // Configuration de l'API
 // Définition de l'adresse IP et du port pour communiquer avec le backend.
-const ip = "localhost";
+const ip = "10.56.5.162";
 const port = 5000;
 const API_BASE_URL = `http://${ip}:${port}`;
 
