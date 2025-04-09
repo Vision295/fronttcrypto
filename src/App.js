@@ -231,7 +231,7 @@ function App() {
   const [selectedCryptoForShop, setSelectedCryptoForShop] = useState(null);
 
   // État pour l'événement actuel
-  const [currentEvent, setCurrentEvent] = useRef(null);
+  const [currentEvent, setCurrentEvent] = useState(null);
   const eventBannerRef = useRef(null);
 
   // État pour gérer le tutoriel
