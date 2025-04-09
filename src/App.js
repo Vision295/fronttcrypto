@@ -231,6 +231,72 @@ function App() {
   const [currentEvent, setCurrentEvent] = useState(null);
   const eventBannerRef = useRef(null);
 
+  // État pour gérer le tutoriel
+  const [showTutorial, setShowTutorial] = useState(true); // Indique si le tutoriel est actif
+  const [tutorialStep, setTutorialStep] = useState(0); // Étape actuelle
+  const [highlightStyle, setHighlightStyle] = useState({}); // Style pour encadrer l'élément mis en avant
+  const [bubbleStyle, setBubbleStyle] = useState({}); // Style pour positionner la bulle explicative
+
+  // Liste des étapes du tutoriel
+  const tutorialSteps = [
+    { selector: ".App-main h1", text: "Bienvenue dans Crypto Market Simulator !", bubblePosition: "below" },
+    { selector: ".balance-item1", text: "Voici votre solde en USD. Tout votre argent est stocké ici.", bubblePosition: "below" },
+    { selector: ".balance-item", text: "Ceci est la crypto Shiba Inu. Cliquez sur le logo pour miner manuellement !", bubblePosition: "below" },
+    { selector: ".App-sidebar", text: "Voici la boutique où vous pouvez acheter des mineurs et débloquer de nouvelles cryptos.", bubblePosition: "right" },
+    { selector: ".chart-container", text: "Voici le graphique des prix. Utilisez les boutons Acheter/Vendre pour trader.", bubblePosition: "below" },
+    ];
+
+  // Met à jour les styles pour encadrer l'élément actuel et positionner la bulle
+  const updateHighlightAndBubble = () => {
+    const step = tutorialSteps[tutorialStep]; // Récupère l'étape actuelle
+    const element = document.querySelector(step.selector); // Sélectionne l'élément correspondant
+    if (element) {
+      const rect = element.getBoundingClientRect(); // Récupère les dimensions et la position de l'élément
+      setHighlightStyle({
+        top: `${rect.top}px`,
+        left: `${rect.left}px`,
+        width: `${rect.width}px`,
+        height: `${rect.height}px`,
+      });
+
+      // Positionne la bulle explicative en fonction de l'étape
+      const bubbleOffset = 10; // Décalage pour éviter que la bulle touche l'encadré
+      const bubblePosition = step.bubblePosition || "below";
+      if (bubblePosition === "below") {
+        setBubbleStyle({
+          top: `${rect.bottom + bubbleOffset}px`,
+          left: `${rect.left}px`,
+        });
+      } else if (bubblePosition === "right") {
+        setBubbleStyle({
+          top: `${rect.top}px`,
+          left: `${rect.right + bubbleOffset}px`,
+        });
+      }
+    }
+  };
+
+  // Passe à l'étape suivante du tutoriel ou termine le tutoriel
+  const handleNextStep = () => {
+    if (tutorialStep < tutorialSteps.length - 1) {
+      setTutorialStep(tutorialStep + 1); // Passe à l'étape suivante
+    } else {
+      setShowTutorial(false); // Termine le tutoriel
+    }
+  };
+
+  // Permet de sauter le tutoriel
+  const handleSkipTutorial = () => {
+    setShowTutorial(false); // Désactive le tutoriel
+  };
+
+  // Met à jour les styles à chaque changement d'étape ou activation du tutoriel
+  useEffect(() => {
+    if (showTutorial) {
+      updateHighlightAndBubble();
+    }
+  }, [tutorialStep, showTutorial]);
+
   // Fin des useState, début des useEffect
 
   // Fonction pour update la crypto-monnaie sélectionnée dans le shop
@@ -649,6 +715,21 @@ function App() {
 
   return (
     <div className="App">
+      {showTutorial && (
+        <div className="tutorial-overlay">
+          {/* Encadré autour de l'élément mis en avant */}
+          <div className="tutorial-highlight" style={highlightStyle}></div>
+          {/* Bulle explicative */}
+          <div className="tutorial-bubble" style={bubbleStyle}>
+            <p>{tutorialSteps[tutorialStep].text}</p>
+            <button onClick={handleNextStep}>Suivant</button>
+            {/* Affiche le bouton "Passer" uniquement lors de la première bulle */}
+            {tutorialStep === 0 && (
+              <button onClick={handleSkipTutorial} className="skip-button">Passer</button>
+            )}
+          </div>
+        </div>
+      )}
       {currentEvent && (
         <div ref={eventBannerRef} className="event-banner">
           <strong>{currentEvent.name}:</strong> {currentEvent.description}

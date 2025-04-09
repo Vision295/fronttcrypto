@@ -582,6 +582,82 @@ input::placeholder {
   line-height: 1.5;
 }
 
+/* Tutorial overlay and interactive steps */
+.tutorial-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8); /* Effet de verre sombre */
+  z-index: 1000;
+  pointer-events: none; /* Empêche les interactions avec les éléments en dessous */
+}
+
+.tutorial-highlight {
+  position: absolute;
+  background-color: transparent; /* Pas d'effet sombre à l'intérieur de l'encadré */
+  border: 2px solid #069506; /* Bordure verte */
+  border-radius: 5px; /* Coins arrondis */
+  z-index: 1001;
+  pointer-events: none; /* Pas d'interaction possible */
+}
+
+.tutorial-bubble {
+  position: absolute;
+  background-color: #000000; /* Fond noir */
+  color: #069506; /* Texte vert */
+  border: 2px solid #069506; /* Bordure verte */
+  padding: 15px; /* Espacement interne */
+  border-radius: 5px; /* Coins arrondis */
+  z-index: 1002;
+  max-width: 300px; /* Largeur maximale */
+  font-size: 12px;
+  line-height: 1.5;
+  pointer-events: auto; /* Permet l'interaction avec la bulle */
+}
+
+.tutorial-bubble button {
+  margin-top: 10px;
+  padding: 5px 10px;
+  background-color: #069506; /* Fond vert */
+  color: #000000; /* Texte noir */
+  border: none;
+  cursor: pointer;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 10px;
+}
+
+.tutorial-bubble button:hover {
+  background-color: #000000; /* Fond noir au survol */
+  color: #069506; /* Texte vert au survol */
+  border: 1px solid #069506; /* Bordure verte */
+}
+
+/* Bouton "Passer" dans la bulle explicative */
+.tutorial-bubble .skip-button {
+  margin-top: 10px;
+  margin-left: 10px;
+  padding: 5px 10px;
+  background-color: #c22929; /* Fond rouge */
+  color: #ffffff; /* Texte blanc */
+  border: none;
+  cursor: pointer;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 10px;
+}
+
+.tutorial-bubble .skip-button:hover {
+  background-color: #ffffff; /* Fond blanc au survol */
+  color: #c22929; /* Texte rouge au survol */
+  border: 1px solid #c22929; /* Bordure rouge */
+}
+
+/* Empêche le défilement pendant le tutoriel */
+body.tutorial-active {
+  overflow: hidden;
+}
+
 /* Responsive adjustments */
 @media (max-width: 1200px) {
   .App-currencies {
