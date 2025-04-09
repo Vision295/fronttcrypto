@@ -736,7 +736,7 @@ body.tutorial-active {
   font-family: 'Press Start 2P', cursive;
   white-space: nowrap;
   z-index: 1000;
-  animation: slide-banner 60s linear infinite; /* Increased duration to 60s */
+  animation: slide-banner 30s linear infinite; /* Increased duration to 60s */
 }
 
 @keyframes slide-banner {
